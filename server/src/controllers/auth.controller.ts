@@ -18,8 +18,10 @@ const signUpUser = async (req: Request, res: Response, next: NextFunction) => {
 const signInUser = async (req: Request, res: Response, next: NextFunction) => {
   const authUserSignInDto: AuthUserSignInDto = req.body;
   try {
-    const authUserResponseDto = await AuthService.signInUser(authUserSignInDto);
-    return res.json(authUserResponseDto);
+    const accessTokenResponseDto = await AuthService.signInUser(
+      authUserSignInDto
+    );
+    return res.json(accessTokenResponseDto);
   } catch (e) {
     return next(e);
   }

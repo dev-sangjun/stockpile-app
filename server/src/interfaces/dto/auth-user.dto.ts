@@ -12,3 +12,7 @@ export interface AuthUserSignInDto {
 export interface AuthUserResponseDto {
   id: string;
 }
+
+export interface AccessTokenResponseDto {
+  accessToken: string;
+}

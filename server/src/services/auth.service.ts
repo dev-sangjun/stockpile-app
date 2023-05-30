@@ -2,14 +2,17 @@ import {
   AuthUserSignUpDto,
   AuthUserResponseDto,
   AuthUserSignInDto,
+  AccessTokenResponseDto,
 } from "../interfaces/dto/auth-user.dto";
 import DBClient from "../../prisma/DBClient";
 import bcrypt from "bcryptjs";
-import { User } from "@prisma/client";
 import {
   EntityNotFoundError,
   UnauthorizedError,
 } from "../global/errors.global";
+import jwt from "jsonwebtoken";
+
+const JWT_SECRET_KEY = process.env.JWT_SECRET_KEY!;
 
 const createUser = async (
   authUserSignUpDto: AuthUserSignUpDto
@@ -35,7 +38,7 @@ const createUser = async (
 
 const signInUser = async (
   authUserSignInDto: AuthUserSignInDto
-): Promise<AuthUserResponseDto> => {
+): Promise<AccessTokenResponseDto> => {
   const { email, password } = authUserSignInDto;
   const user = await DBClient.user.findFirst({
     where: {
@@ -49,8 +52,15 @@ const signInUser = async (
   if (!(await bcrypt.compare(password, user.password))) {
     throw new UnauthorizedError();
   }
+  // generate access token
+  const accessToken = jwt.sign(
+    {
+      id: user.id,
+    },
+    JWT_SECRET_KEY
+  );
   return {
-    id: user.id,
+    accessToken,
   };
 };
 
