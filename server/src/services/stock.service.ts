@@ -69,12 +69,15 @@ const getStockSymbols = (
   stockGetSymbolsRequestDto: StockGetSymbolsRequestDto
 ): string[] => {
   const MAX_NUM = 20;
-  const { q, start = 0, num = MAX_NUM } = stockGetSymbolsRequestDto;
+  const { q, start = "0", num = "20" } = stockGetSymbolsRequestDto;
   // Get symbols that start with a given keyword
   const filteredSymbols: string[] = allSymbols.filter((symbol: string) =>
     new RegExp(`^${q}`, "i").test(symbol)
   );
-  return filteredSymbols.slice(start, start + Math.min(num, MAX_NUM));
+  return filteredSymbols.slice(
+    parseInt(start),
+    parseInt(start) + Math.min(parseInt(num), MAX_NUM)
+  );
 };
 
 export default {

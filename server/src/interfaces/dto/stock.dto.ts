@@ -4,6 +4,6 @@ export interface StockGetRequestDto {
 
 export interface StockGetSymbolsRequestDto {
   q: string;
-  start?: number;
-  num?: number;
+  start?: string;
+  num?: string;
 }
