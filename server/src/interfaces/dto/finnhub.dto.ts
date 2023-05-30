@@ -7,8 +7,11 @@ export interface FinnhubStockResponseDto {
   pc: number; // previous close price
 }
 
-export type FinnhubCompanyResponseDto = {
+export interface FinnhubCompanyResponseDto {
   name: string;
-  ipo: string;
   logo: string;
+}
+
+export type FinnhubStockDto = FinnhubStockResponseDto & {
+  company: FinnhubCompanyResponseDto;
 };

@@ -1,5 +1,8 @@
 import DBClient from "../../prisma/DBClient";
-import { FinnhubStockResponseDto } from "../interfaces/dto/finnhub.dto";
+import {
+  FinnhubCompanyResponseDto,
+  FinnhubStockResponseDto,
+} from "../interfaces/dto/finnhub.dto";
 import {
   StockGetRequestDto,
   StockGetSymbolsRequestDto,
@@ -16,12 +19,18 @@ const needsResync = (updatedAt: Date) => {
 
 const createStock = async (
   q: string,
-  finnhubStockResponseDto: FinnhubStockResponseDto
+  finnhubStockResponseDto: FinnhubStockResponseDto,
+  finnhubCompanyResponseDto: FinnhubCompanyResponseDto
 ) => {
   const stock = await DBClient.stock.create({
     data: {
       id: q.toUpperCase(),
       ...finnhubStockResponseDto,
+      company: {
+        create: {
+          ...finnhubCompanyResponseDto,
+        },
+      },
     },
   });
   return stock;
@@ -48,12 +57,22 @@ const getStock = async (stockGetRequestDto: StockGetRequestDto) => {
     where: {
       id: q.toUpperCase(),
     },
+    include: {
+      company: true,
+    },
   });
   if (!stock) {
     // create new stock if finnhub returns stock data
     const finnhubStockResponseDto: FinnhubStockResponseDto =
       await finnhubService.fetchStock(q);
-    const newStock = await createStock(q, finnhubStockResponseDto);
+    // add company data upon creating new stock entity
+    const FinnhubCompanyResponseDto: FinnhubCompanyResponseDto =
+      await finnhubService.fetchCompany(q);
+    const newStock = await createStock(
+      q,
+      finnhubStockResponseDto,
+      FinnhubCompanyResponseDto
+    );
     return newStock;
   }
   if (needsResync(stock.updated_at)) {

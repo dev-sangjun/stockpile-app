@@ -26,4 +26,15 @@ model Stock {
   l          Float
   pc         Float
   updated_at DateTime @updatedAt
+
+  company Company?
+}
+
+model Company {
+  id   String @id @default(uuid())
+  name String
+  logo String
+
+  Stock   Stock  @relation(fields: [stockId], references: [id])
+  stockId String @unique
 }

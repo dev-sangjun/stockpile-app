@@ -46,14 +46,18 @@ const fetchStock = async (q: string): Promise<FinnhubStockResponseDto> => {
  * @param q company's stock symbol
  * @returns company data
  */
-const fetchCompany = async (q: string) => {
+const fetchCompany = async (q: string): Promise<FinnhubCompanyResponseDto> => {
   const companyResponseDto: FinnhubCompanyResponseDto = await fetch(
     getFetchCompanyUrl(q),
     {
       cache: "no-cache",
     }
   ).then(res => res.json());
-  return companyResponseDto;
+  if (isEmpty(companyResponseDto)) {
+    throw new ResourceNotFoundError();
+  }
+  const { name, logo } = companyResponseDto;
+  return { name, logo };
 };
 
 export default {
