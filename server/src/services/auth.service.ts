@@ -1,9 +1,13 @@
-import { User } from "@prisma/client";
-import { AuthUserDto } from "../dto/auth-user.dto";
+import {
+  AuthUserDto,
+  AuthUserResponseDto,
+} from "../interfaces/dto/auth-user.dto";
 import DBClient from "../../prisma/DBClient";
 import bcrypt from "bcryptjs";
 
-const createUser = async (authUserDto: AuthUserDto): Promise<User> => {
+const createUser = async (
+  authUserDto: AuthUserDto
+): Promise<AuthUserResponseDto> => {
   const { email, username, password } = authUserDto;
   const salt = await bcrypt.genSalt();
   const hashedPassword = await bcrypt.hash(password, salt);
@@ -15,7 +19,9 @@ const createUser = async (authUserDto: AuthUserDto): Promise<User> => {
         password: hashedPassword,
       },
     });
-    return user;
+    return {
+      id: user.id,
+    };
   } catch (e) {
     throw e;
   }
