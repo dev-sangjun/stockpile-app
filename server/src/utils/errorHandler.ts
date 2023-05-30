@@ -12,12 +12,13 @@ export const errorHandler: ErrorRequestHandler = (
   next: NextFunction
 ) => {
   console.error(err);
+  const errorMessage = err.message || "Something went wrong";
   if (err && err.status) {
     return res.status(err.status).json({
-      message: err.message,
+      message: errorMessage,
     });
   }
   return res.status(400).json({
-    message: "Something went wrong",
+    message: errorMessage,
   });
 };
