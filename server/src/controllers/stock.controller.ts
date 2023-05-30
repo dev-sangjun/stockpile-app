@@ -1,9 +1,12 @@
 import { NextFunction, Request, Response } from "express";
-import { StockGetRequestDto } from "../interfaces/dto/stock.dto";
+import {
+  StockGetRequestDto,
+  StockGetSymbolsRequestDto,
+} from "../interfaces/dto/stock.dto";
 import { stockService } from "../services";
 
 const getStock = async (
-  req: Request<{ q: string }>,
+  req: Request<StockGetRequestDto>,
   res: Response,
   next: NextFunction
 ) => {
@@ -16,6 +19,16 @@ const getStock = async (
   }
 };
 
+const getStockSymbols = (
+  req: Request<undefined, any, any, StockGetSymbolsRequestDto>,
+  res: Response
+) => {
+  const stockGetSymbolRequestDto: StockGetSymbolsRequestDto = req.query;
+  const stock = stockService.getStockSymbols(stockGetSymbolRequestDto);
+  return res.json(stock);
+};
+
 export default {
   getStock,
+  getStockSymbols,
 };

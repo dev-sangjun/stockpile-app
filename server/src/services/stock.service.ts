@@ -1,7 +1,11 @@
 import DBClient from "../../prisma/DBClient";
 import { FinnhubStockResponseDto } from "../interfaces/dto/finnhub.dto";
-import { StockGetRequestDto } from "../interfaces/dto/stock.dto";
+import {
+  StockGetRequestDto,
+  StockGetSymbolsRequestDto,
+} from "../interfaces/dto/stock.dto";
 import finnhubService from "./finnhub.service";
+import allSymbols from "../data/all_symbols.json";
 
 const STOCK_RESYNC_INTERVAL_IN_MS = 3600 * Math.pow(10, 3);
 const needsResync = (updatedAt: Date) => {
@@ -61,6 +65,19 @@ const getStock = async (stockGetRequestDto: StockGetRequestDto) => {
   return stock;
 };
 
+const getStockSymbols = (
+  stockGetSymbolsRequestDto: StockGetSymbolsRequestDto
+): string[] => {
+  const MAX_NUM = 20;
+  const { q, start = 0, num = MAX_NUM } = stockGetSymbolsRequestDto;
+  // Get symbols that start with a given keyword
+  const filteredSymbols: string[] = allSymbols.filter((symbol: string) =>
+    new RegExp(`^${q}`, "i").test(symbol)
+  );
+  return filteredSymbols.slice(start, start + Math.min(num, MAX_NUM));
+};
+
 export default {
   getStock,
+  getStockSymbols,
 };
