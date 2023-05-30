@@ -3,12 +3,12 @@ import {
   AuthUserSignInDto,
   AuthUserSignUpDto,
 } from "../interfaces/dto/auth-user.dto";
-import { AuthService } from "../services";
+import { authService } from "../services";
 
 const signUpUser = async (req: Request, res: Response, next: NextFunction) => {
   const authUserSignUpDto: AuthUserSignUpDto = req.body;
   try {
-    const authUserResponseDto = await AuthService.createUser(authUserSignUpDto);
+    const authUserResponseDto = await authService.createUser(authUserSignUpDto);
     return res.json(authUserResponseDto);
   } catch (e) {
     return next(e);
@@ -18,7 +18,7 @@ const signUpUser = async (req: Request, res: Response, next: NextFunction) => {
 const signInUser = async (req: Request, res: Response, next: NextFunction) => {
   const authUserSignInDto: AuthUserSignInDto = req.body;
   try {
-    const accessTokenResponseDto = await AuthService.signInUser(
+    const accessTokenResponseDto = await authService.signInUser(
       authUserSignInDto
     );
     return res.json(accessTokenResponseDto);

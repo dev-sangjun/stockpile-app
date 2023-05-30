@@ -1,3 +1,4 @@
-import AuthController from "./auth.controller";
+import authController from "./auth.controller";
+import stockController from "./stock.controller";
 
-export { AuthController };
+export { authController, stockController };

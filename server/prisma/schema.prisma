@@ -16,3 +16,14 @@ model User {
   username String @unique
   password String
 }
+
+model Stock {
+  id         String   @id // stock symbol
+  c          Float
+  d          Float
+  dp         Float
+  h          Float
+  l          Float
+  pc         Float
+  updated_at DateTime @updatedAt
+}

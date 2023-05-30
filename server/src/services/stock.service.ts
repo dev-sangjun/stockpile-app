@@ -1,0 +1,66 @@
+import DBClient from "../../prisma/DBClient";
+import { FinnhubStockResponseDto } from "../interfaces/dto/finnhub.dto";
+import { StockGetRequestDto } from "../interfaces/dto/stock.dto";
+import finnhubService from "./finnhub.service";
+
+const STOCK_RESYNC_INTERVAL_IN_MS = 3600 * Math.pow(10, 3);
+const needsResync = (updatedAt: Date) => {
+  return (
+    new Date().getTime() - updatedAt.getTime() > STOCK_RESYNC_INTERVAL_IN_MS
+  );
+};
+
+const createStock = async (
+  q: string,
+  finnhubStockResponseDto: FinnhubStockResponseDto
+) => {
+  const stock = await DBClient.stock.create({
+    data: {
+      id: q.toUpperCase(),
+      ...finnhubStockResponseDto,
+    },
+  });
+  return stock;
+};
+
+const updateStock = async (
+  id: string,
+  finnhubStockResponseDto: FinnhubStockResponseDto
+) => {
+  const stock = await DBClient.stock.update({
+    data: {
+      ...finnhubStockResponseDto,
+    },
+    where: {
+      id,
+    },
+  });
+  return stock;
+};
+
+const getStock = async (stockGetRequestDto: StockGetRequestDto) => {
+  const { q } = stockGetRequestDto;
+  const stock = await DBClient.stock.findUnique({
+    where: {
+      id: q.toUpperCase(),
+    },
+  });
+  if (!stock) {
+    // create new stock if finnhub returns stock data
+    const finnhubStockResponseDto: FinnhubStockResponseDto =
+      await finnhubService.fetchStock(q);
+    const newStock = await createStock(q, finnhubStockResponseDto);
+    return newStock;
+  }
+  if (needsResync(stock.updated_at)) {
+    const finnhubStockResponseDto: FinnhubStockResponseDto =
+      await finnhubService.fetchStock(q);
+    const updatedStock = await updateStock(q, finnhubStockResponseDto);
+    return updatedStock;
+  }
+  return stock;
+};
+
+export default {
+  getStock,
+};
