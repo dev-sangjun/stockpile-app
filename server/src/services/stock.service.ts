@@ -36,7 +36,7 @@ const updateStock = async (
       ...finnhubStockResponseDto,
     },
     where: {
-      id,
+      id: id.toUpperCase(),
     },
   });
   return stock;

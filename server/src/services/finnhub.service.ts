@@ -11,6 +11,10 @@ const getFetchStockUrl = (q: string) =>
 const getFetchCompanyUrl = (q: string) =>
   `${FINNHUB_API_ENDPOINT}/stock/profile2?symbol=${q}&token=${FINNHUB_API_KEY}`;
 
+// finnhub will return non-empty response with c == 0 & pc == 0 for invalid stock symobl
+const isStockResponseValid = (stockResponseDto: FinnhubStockResponseDto) =>
+  stockResponseDto.c !== 0 && stockResponseDto.pc !== 0;
+
 /**
  *
  * @param q stock symbol
@@ -23,7 +27,7 @@ const fetchStock = async (q: string): Promise<FinnhubStockResponseDto> => {
       cache: "no-cache",
     }
   ).then(res => res.json());
-  if (isEmpty(stockResponseDto)) {
+  if (!isStockResponseValid(stockResponseDto)) {
     throw new ResourceNotFoundError();
   }
   const { c, d, dp, h, l, pc } = stockResponseDto;
@@ -49,9 +53,6 @@ const fetchCompany = async (q: string) => {
       cache: "no-cache",
     }
   ).then(res => res.json());
-  if (isEmpty(companyResponseDto)) {
-    throw new ResourceNotFoundError();
-  }
   return companyResponseDto;
 };
 
