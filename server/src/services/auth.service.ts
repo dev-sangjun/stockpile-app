@@ -1,7 +1,7 @@
 import {
-  AuthUserSignUpDto,
+  AuthUserSignUpRequestDto,
   AuthUserResponseDto,
-  AuthUserSignInDto,
+  AuthUserSignInRequestDto,
   AccessTokenResponseDto,
 } from "../interfaces/dto/auth-user.dto";
 import DBClient from "../../prisma/DBClient";
@@ -15,9 +15,9 @@ import jwt from "jsonwebtoken";
 const JWT_SECRET_KEY = process.env.JWT_SECRET_KEY!;
 
 const createUser = async (
-  authUserSignUpDto: AuthUserSignUpDto
+  authUserSignUpRequestDto: AuthUserSignUpRequestDto
 ): Promise<AuthUserResponseDto> => {
-  const { email, username, password } = authUserSignUpDto;
+  const { email, username, password } = authUserSignUpRequestDto;
   const salt = await bcrypt.genSalt();
   const hashedPassword = await bcrypt.hash(password, salt);
   const user = await DBClient.user.create({
@@ -33,9 +33,9 @@ const createUser = async (
 };
 
 const signInUser = async (
-  authUserSignInDto: AuthUserSignInDto
+  authUserSignInRequestDto: AuthUserSignInRequestDto
 ): Promise<AccessTokenResponseDto> => {
-  const { email, password } = authUserSignInDto;
+  const { email, password } = authUserSignInRequestDto;
   const user = await DBClient.user.findFirst({
     where: {
       email,

@@ -1,14 +1,16 @@
 import { NextFunction, Request, Response } from "express";
 import {
-  AuthUserSignInDto,
-  AuthUserSignUpDto,
+  AuthUserSignInRequestDto,
+  AuthUserSignUpRequestDto,
 } from "../interfaces/dto/auth-user.dto";
 import { authService } from "../services";
 
 const signUpUser = async (req: Request, res: Response, next: NextFunction) => {
-  const authUserSignUpDto: AuthUserSignUpDto = req.body;
+  const authUserSignUpRequestDto: AuthUserSignUpRequestDto = req.body;
   try {
-    const authUserResponseDto = await authService.createUser(authUserSignUpDto);
+    const authUserResponseDto = await authService.createUser(
+      authUserSignUpRequestDto
+    );
     return res.json(authUserResponseDto);
   } catch (e) {
     return next(e);
@@ -16,10 +18,10 @@ const signUpUser = async (req: Request, res: Response, next: NextFunction) => {
 };
 
 const signInUser = async (req: Request, res: Response, next: NextFunction) => {
-  const authUserSignInDto: AuthUserSignInDto = req.body;
+  const authUserSignInRequestDto: AuthUserSignInRequestDto = req.body;
   try {
     const accessTokenResponseDto = await authService.signInUser(
-      authUserSignInDto
+      authUserSignInRequestDto
     );
     return res.json(accessTokenResponseDto);
   } catch (e) {

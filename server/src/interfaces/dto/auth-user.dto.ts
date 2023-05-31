@@ -1,10 +1,10 @@
-export interface AuthUserSignUpDto {
+export interface AuthUserSignUpRequestDto {
   email: string;
   username: string;
   password: string;
 }
 
-export interface AuthUserSignInDto {
+export interface AuthUserSignInRequestDto {
   email: string;
   password: string;
 }
