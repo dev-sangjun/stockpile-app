@@ -27,7 +27,7 @@ const Navbar: FC<NavbarProps> = ({ navbarItems }) => {
     ));
   };
   return (
-    <div className="navbar bg-base-100 p-0 max-w-7xl mx-auto">
+    <div className="navbar p-0 max-w-7xl mx-auto">
       <div className="flex-1">
         <Link
           className="btn btn-ghost normal-case text-xl mx-auto md:mx-0 flex gap-2"

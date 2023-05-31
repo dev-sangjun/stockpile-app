@@ -4,12 +4,12 @@ import navbarItems from "./layouts/Navbar/navbar-items";
 import "./App.css";
 
 const Layout = () => (
-  <>
+  <div className="h-screen flex flex-col bg-slate-100">
     <Navbar navbarItems={navbarItems} />
-    <div className="max-w-7xl mx-auto px-4">
+    <div className="max-w-7xl w-full h-full mx-auto px-4">
       <Outlet />
     </div>
-  </>
+  </div>
 );
 
 const router = createBrowserRouter([
