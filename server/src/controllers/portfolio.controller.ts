@@ -1,6 +1,9 @@
 import { NextFunction, Request, Response } from "express";
 import { portfolioService } from "../services";
-import { PortfolioGetRequestDto } from "../interfaces/dto/portfolio.dto";
+import {
+  PortfolioCreateDto,
+  PortfolioGetRequestDto,
+} from "../interfaces/dto/portfolio.dto";
 
 const getPortfolios = async (
   req: Request<undefined, any, any, PortfolioGetRequestDto>,
@@ -18,4 +21,20 @@ const getPortfolios = async (
   }
 };
 
-export default { getPortfolios };
+const createPortfolio = async (
+  req: Request<PortfolioCreateDto>,
+  res: Response,
+  next: NextFunction
+) => {
+  const portfolioCreateDto: PortfolioCreateDto = req.body;
+  try {
+    const portfolio = await portfolioService.createPortfolio(
+      portfolioCreateDto
+    );
+    return res.json(portfolio);
+  } catch (e) {
+    return next(e);
+  }
+};
+
+export default { getPortfolios, createPortfolio };

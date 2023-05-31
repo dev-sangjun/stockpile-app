@@ -12,3 +12,8 @@ export class ResourceNotFoundError extends Error implements Error {
   status: number = 404;
   message: string = "Resource not found";
 }
+
+export class DuplicateEntityError extends Error implements Error {
+  status: number = 409;
+  message: string = "Entity already exists";
+}
