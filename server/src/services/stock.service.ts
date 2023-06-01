@@ -32,6 +32,9 @@ const createStock = async (
         },
       },
     },
+    include: {
+      company: true,
+    },
   });
   return stock;
 };
@@ -46,6 +49,9 @@ const updateStock = async (
     },
     where: {
       id: id.toUpperCase(),
+    },
+    include: {
+      company: true,
     },
   });
   return stock;

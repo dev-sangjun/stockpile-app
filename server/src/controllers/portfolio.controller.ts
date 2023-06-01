@@ -46,7 +46,9 @@ const getInvestments = async (
 ) => {
   const { portfolioId } = req.params;
   try {
-    const investments = await portfolioService.getInvestments(portfolioId);
+    const investments = await portfolioService.getInvestmentsByPortfolioId(
+      portfolioId
+    );
     return res.json(investments);
   } catch (e) {
     return next(e);

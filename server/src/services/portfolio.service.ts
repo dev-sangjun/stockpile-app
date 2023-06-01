@@ -7,6 +7,7 @@ import {
   PortfolioGetRequestDto,
 } from "../interfaces/dto/portfolio.dto";
 import stockService from "./stock.service";
+import userService from "./user.service";
 
 const getAvgCost = (
   prevInvestment: Investment,
@@ -27,6 +28,9 @@ const getPortfolios = async (
   const portfolios = await DBClient.portfolio.findMany({
     where: {
       userId,
+    },
+    include: {
+      investments: true,
     },
   });
   return portfolios;
@@ -54,7 +58,9 @@ const createPortfolio = async (
   return newPortfolio;
 };
 
-const getInvestments = async (portfolioId: string): Promise<Investment[]> => {
+const getInvestmentsByPortfolioId = async (
+  portfolioId: string
+): Promise<Investment[]> => {
   const investments = await DBClient.investment.findMany({
     where: {
       portfolioId,
@@ -69,7 +75,8 @@ const addInvestment = async (
 ): Promise<Investment> => {
   const { quantity, cost, userId, stockId } = investmentAddRequestDto;
   // invoke getStock to check if the stockId is valid
-  await stockService.getStock({ q: stockId });
+  const stock = await stockService.getStock({ q: stockId });
+  await userService.addStock(userId, stock);
 
   // find investment
   const investment = await DBClient.investment.findFirst({
@@ -104,6 +111,6 @@ const addInvestment = async (
 export default {
   getPortfolios,
   createPortfolio,
-  getInvestments,
+  getInvestmentsByPortfolioId,
   addInvestment,
 };

@@ -18,6 +18,7 @@ model User {
 
   portfolios  Portfolio[]
   investments Investment[]
+  stocks      Stock[]
 }
 
 model Stock {
@@ -32,6 +33,7 @@ model Stock {
 
   investments Investment[]
   company     Company?
+  users       User[]
 }
 
 model Company {
