@@ -1,18 +1,16 @@
-import axios from "axios";
-import { FC, useEffect } from "react";
-import { DEV_SERVER_ENDPOINT, TEST_USER_ID } from "../dev/constants";
+import { FC } from "react";
+import PortfolioList from "../components/PortfolioList";
 
 const Portfolios: FC = () => {
-  useEffect(() => {
-    const fetchPortfolios = async () => {
-      const res = await axios.get(
-        `${DEV_SERVER_ENDPOINT}/portfolios?userId=${TEST_USER_ID}`
-      );
-      console.log(res.data);
-    };
-    fetchPortfolios();
-  }, []);
-  return <div>Portfolios</div>;
+  return (
+    <div className="w-full h-full grid grid-cols-2 gap-4 p-4">
+      <div className="bg-base-100">
+        <h2 className="text-2xl font-bold">Portfolios</h2>
+        <PortfolioList />
+      </div>
+      <div className="card bg-base-100 shadow-xl"></div>
+    </div>
+  );
 };
 
 export default Portfolios;
