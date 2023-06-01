@@ -9,7 +9,7 @@ const PortfolioList: FC = () => {
       <PortfolioListItem key={portfolio.id} portfolio={portfolio} />
     ));
   };
-  return <ul>{renderPortfolios()}</ul>;
+  return <ul className="flex flex-col gap-4">{renderPortfolios()}</ul>;
 };
 
 export default PortfolioList;
