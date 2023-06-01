@@ -73,6 +73,7 @@ const addInvestment = async (
   portfolioId: string,
   investmentAddRequestDto: InvestmentAddRequestDto
 ): Promise<Investment> => {
+  console.log(portfolioId);
   const { quantity, cost, userId, stockId } = investmentAddRequestDto;
   // invoke getStock to check if the stockId is valid
   const stock = await stockService.getStock({ q: stockId });
@@ -81,6 +82,8 @@ const addInvestment = async (
   // find investment
   const investment = await DBClient.investment.findFirst({
     where: {
+      userId,
+      portfolioId,
       stockId: stockId.toUpperCase(),
     },
   });

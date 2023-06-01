@@ -54,7 +54,10 @@ const fetchCompany = async (q: string): Promise<FinnhubCompanyResponseDto> => {
     }
   ).then(res => res.json());
   if (isEmpty(companyResponseDto)) {
-    throw new ResourceNotFoundError();
+    return {
+      name: "N/A",
+      logo: "N/A",
+    };
   }
   const { name, logo } = companyResponseDto;
   return { name, logo };
