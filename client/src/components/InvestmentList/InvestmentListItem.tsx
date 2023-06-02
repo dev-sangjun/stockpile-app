@@ -68,14 +68,14 @@ const InvestmentListItem: FC<InvestmentItemProps> = ({ investment }) => {
   const getCompanyLogo = () => {
     const logoUrl = stocks?.[investment.stockId]?.company?.logo;
     return logoUrl ? (
-      <div className="rounded-xl overflow-hidden w-12 shadow-xl">
+      <div className="rounded-xl overflow-hidden w-10 shadow-xl">
         <img
           src={logoUrl}
           alt={stocks?.[investment.stockId]?.company?.name || "company"}
         />
       </div>
     ) : (
-      <div className="flex justify-center items-center rounded-xl w-12 h-12 text-3xl shadow-xl bg-slate-500 text-base-100">
+      <div className="flex justify-center items-center rounded-xl w-10 h-10 text-xl shadow-xl bg-slate-500 text-base-100">
         <HiBuildingOffice2 />
       </div>
     );
