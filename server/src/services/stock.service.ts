@@ -8,7 +8,7 @@ import {
   StockGetSymbolsRequestDto,
 } from "../interfaces/dto/stock.dto";
 import finnhubService from "./finnhub.service";
-import allSymbols from "../data/all_symbols.json";
+import allStockSymbols from "../data/all_stock_symbols.json";
 
 const createStock = async (
   q: string,
@@ -83,7 +83,7 @@ const getStockSymbols = (
   const MAX_NUM = 20;
   const { q, start = "0", num = "20" } = stockGetSymbolsRequestDto;
   // Get symbols that start with a given keyword
-  const filteredSymbols: string[] = allSymbols.filter((symbol: string) =>
+  const filteredSymbols: string[] = allStockSymbols.filter((symbol: string) =>
     new RegExp(`^${q}`, "i").test(symbol)
   );
   return filteredSymbols.slice(
@@ -92,8 +92,11 @@ const getStockSymbols = (
   );
 };
 
+const getAllStockSymbols = () => allStockSymbols;
+
 export default {
+  updateStock,
   getStock,
   getStockSymbols,
-  updateStock,
+  getAllStockSymbols,
 };

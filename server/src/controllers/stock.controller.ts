@@ -28,7 +28,13 @@ const getStockSymbols = (
   return res.json(stock);
 };
 
+const getAllStockSymbols = (req: Request, res: Response) => {
+  const allStockSymbols = stockService.getAllStockSymbols();
+  return res.json(allStockSymbols);
+};
+
 export default {
   getStock,
   getStockSymbols,
+  getAllStockSymbols,
 };
