@@ -108,4 +108,5 @@ const getStockSymbols = (
 export default {
   getStock,
   getStockSymbols,
+  updateStock,
 };
