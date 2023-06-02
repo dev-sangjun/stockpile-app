@@ -31,3 +31,7 @@ export const useFetchUserStocks = (
   }, [stocks]);
   return [formattedStocks, error, loading];
 };
+
+export const useFetchStockSymbols = () => {
+  return useFetch<string[]>(`${DEV_SERVER_ENDPOINT}/stocks/symbols`, []);
+};

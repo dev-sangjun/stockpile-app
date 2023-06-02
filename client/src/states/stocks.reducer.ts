@@ -8,10 +8,12 @@ export interface Stocks {
 
 interface StocksState {
   stocks: Stocks;
+  symbols: string[];
 }
 
 const initialState: StocksState = {
   stocks: {},
+  symbols: [],
 };
 
 export const stocksSlice = createSlice({
@@ -21,11 +23,16 @@ export const stocksSlice = createSlice({
     updateStocks: (state, action: PayloadAction<Stocks>) => {
       state.stocks = action.payload;
     },
+    updateSymbols: (state, action: PayloadAction<string[]>) => {
+      state.symbols = action.payload;
+    },
   },
 });
 
-export const { updateStocks } = stocksSlice.actions;
+export const { updateStocks, updateSymbols } = stocksSlice.actions;
 
 export const getStocks = (state: RootState) => state.stocksReducer.stocks;
+
+export const getSymbols = (state: RootState) => state.stocksReducer.symbols;
 
 export default stocksSlice.reducer;

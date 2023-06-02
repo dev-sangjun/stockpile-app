@@ -1,10 +1,14 @@
 import { createBrowserRouter, Outlet, RouterProvider } from "react-router-dom";
-import { updateStocks } from "./states/stocks.reducer";
+import { updateStocks, updateSymbols } from "./states/stocks.reducer";
 import Navbar from "./layouts/Navbar";
 import navbarItems from "./layouts/Navbar/navbar-items";
 import "./App.css";
 import { useEffect } from "react";
-import { useFetchPortfolios, useFetchUserStocks } from "./utils/api.utils";
+import {
+  useFetchPortfolios,
+  useFetchStockSymbols,
+  useFetchUserStocks,
+} from "./utils/api.utils";
 import { useDispatch } from "react-redux";
 import { updatePortfolios } from "./states/portfolios.reducer";
 import { getInvestmentsFromPortfolios } from "./utils/entity.utils";
@@ -32,13 +36,15 @@ const router = createBrowserRouter([
 function App() {
   const [stocks] = useFetchUserStocks();
   const [portfolios] = useFetchPortfolios();
+  const [symbols] = useFetchStockSymbols();
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(updateStocks(stocks));
     dispatch(updatePortfolios(portfolios));
+    dispatch(updateSymbols(symbols));
     const investments = getInvestmentsFromPortfolios(portfolios);
     dispatch(updateInvestments(investments));
-  }, [stocks, portfolios, dispatch]);
+  }, [stocks, portfolios, symbols, dispatch]);
   return <RouterProvider router={router} />;
 }
 
