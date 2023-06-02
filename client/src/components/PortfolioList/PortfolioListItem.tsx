@@ -5,6 +5,8 @@ import { RootState } from "../../states/store";
 import { getStocks } from "../../states/stocks.reducer";
 import { toUSD } from "../../utils/numeral.utils";
 import ValueChangeText from "../ValueChangeText";
+import { useDispatch } from "react-redux";
+import { selectPortfolio } from "../../states/portfolios.reducer";
 
 interface GridItemProps {
   title: string;
@@ -24,6 +26,7 @@ interface PortfolioListItemProps {
 
 const PortfolioListItem: FC<PortfolioListItemProps> = ({ portfolio }) => {
   const stocks = useSelector((state: RootState) => getStocks(state));
+  const dispatch = useDispatch();
   const portfolioDetails = useMemo(() => {
     let totalValue = 0;
     let totalCost = 0;
@@ -67,8 +70,14 @@ const PortfolioListItem: FC<PortfolioListItemProps> = ({ portfolio }) => {
   );
   const renderGridItems = () =>
     gridItems.map(gridItem => <GridItem key={gridItem.title} {...gridItem} />);
+  const handleClick = () => {
+    dispatch(selectPortfolio(portfolio));
+  };
   return (
-    <li className="card bg-base-100 shadow-xl p-4 flex flex-col gap-4">
+    <li
+      className="card bg-base-100 shadow-xl p-4 flex flex-col gap-4 cursor-pointer"
+      onClick={handleClick}
+    >
       <div className="flex justify-between items-center h-30">
         <h3 className="text-lg font-bold">{portfolio.name}</h3>
         <div className="flex flex-col">

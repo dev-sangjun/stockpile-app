@@ -2,12 +2,14 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import type { RootState } from "./store";
 import { Portfolio } from "../types/entity.types";
 
-interface StocksState {
+interface PortfoliosState {
   portfolios: Portfolio[];
+  selectedPortfolio: Portfolio | null;
 }
 
-const initialState: StocksState = {
+const initialState: PortfoliosState = {
   portfolios: [],
+  selectedPortfolio: null,
 };
 
 export const portfoliosSlice = createSlice({
@@ -17,12 +19,22 @@ export const portfoliosSlice = createSlice({
     updatePortfolios: (state, action: PayloadAction<Portfolio[]>) => {
       state.portfolios = action.payload;
     },
+    selectPortfolio: (state, action: PayloadAction<Portfolio>) => {
+      state.selectedPortfolio = action.payload;
+    },
+    deselectPortfolio: state => {
+      state.selectedPortfolio = null;
+    },
   },
 });
 
-export const { updatePortfolios } = portfoliosSlice.actions;
+export const { updatePortfolios, selectPortfolio, deselectPortfolio } =
+  portfoliosSlice.actions;
 
 export const getPortfolios = (state: RootState) =>
   state.portfoliosReducer.portfolios;
+
+export const getSelectedPortfolio = (state: RootState) =>
+  state.portfoliosReducer.selectedPortfolio;
 
 export default portfoliosSlice.reducer;

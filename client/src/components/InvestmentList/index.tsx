@@ -1,11 +1,12 @@
 import { FC } from "react";
-import { useSelector } from "react-redux";
-import { RootState } from "../../states/store";
 import InvestmentListItem from "./InvestmentListItem";
-import { getInvestments } from "../../states/investments.reducer";
+import { Investment } from "../../types/entity.types";
 
-const InvestmentList: FC = () => {
-  const investments = useSelector((state: RootState) => getInvestments(state));
+interface InvestmentListProps {
+  investments: Investment[];
+}
+
+const InvestmentList: FC<InvestmentListProps> = ({ investments }) => {
   const renderInvestments = () => {
     return Object.values(investments).map(investment => (
       <InvestmentListItem key={investment.id} investment={investment} />
