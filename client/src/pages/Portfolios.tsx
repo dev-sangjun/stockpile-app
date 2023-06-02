@@ -8,6 +8,7 @@ import {
   getSelectedPortfolio,
 } from "../states/portfolios.reducer";
 import { useDispatch, useSelector } from "react-redux";
+import AddInvestment from "../components/AddInvestment";
 
 const Portfolios: FC = () => {
   const dispatch = useDispatch();
@@ -17,7 +18,19 @@ const Portfolios: FC = () => {
   const selectedPortfolio = useSelector((state: RootState) =>
     getSelectedPortfolio(state)
   );
-  const handleShowAllClick = () => dispatch(deselectPortfolio());
+  const title = selectedPortfolio?.name || "All Investments";
+  const getActionButtons = () => {
+    const handleShowAllClick = () => dispatch(deselectPortfolio());
+    return (
+      <div className="flex items-center gap-2">
+        <button className="btn btn-xs btn-outline" onClick={handleShowAllClick}>
+          Show All
+        </button>
+        <AddInvestment />
+      </div>
+    );
+  };
+
   return (
     <div className="w-full h-full grid md:grid-cols-2 gap-4 p-4 pb-40 overflow-y-auto">
       <div className="flex flex-col gap-4">
@@ -26,17 +39,8 @@ const Portfolios: FC = () => {
       </div>
       <div className="flex flex-col gap-4">
         <div className="flex justify-between items-center">
-          <h2 className="text-2xl font-bold">
-            {selectedPortfolio?.name || "All Investments"}
-          </h2>
-          {selectedPortfolio && (
-            <button
-              className="btn btn-xs btn-outline"
-              onClick={handleShowAllClick}
-            >
-              Show All
-            </button>
-          )}
+          <h2 className="text-2xl font-bold">{title}</h2>
+          {selectedPortfolio && getActionButtons()}
         </div>
         <InvestmentList
           investments={
