@@ -30,7 +30,6 @@ const InvestmentListItem: FC<InvestmentItemProps> = ({ investment }) => {
     const totalCost = investment.avgCost * investment.quantity;
     const dayChange =
       stocks?.[investment.stockId]?.c - stocks?.[investment.stockId]?.pc;
-
     return {
       totalValue,
       totalCost,
