@@ -28,14 +28,14 @@ const InvestmentListItem: FC<InvestmentItemProps> = ({ investment }) => {
   const investmentDetails = useMemo(() => {
     const totalValue = stocks?.[investment.stockId]?.c * investment.quantity;
     const totalCost = investment.avgCost * investment.quantity;
-    const prevTotalValue =
-      stocks?.[investment.stockId]?.pc * investment.quantity;
+    const dayChange =
+      stocks?.[investment.stockId]?.c - stocks?.[investment.stockId]?.pc;
 
     return {
       totalValue,
       totalCost,
       quantity: investment.quantity,
-      dayChange: totalValue - prevTotalValue,
+      dayChange,
     };
   }, [investment, stocks]);
   const gridItems: GridItemProps[] = useMemo(
