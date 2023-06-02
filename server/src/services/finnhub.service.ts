@@ -56,7 +56,7 @@ const fetchCompany = async (q: string): Promise<FinnhubCompanyResponseDto> => {
   if (isEmpty(companyResponseDto)) {
     return {
       name: "N/A",
-      logo: "N/A",
+      logo: "",
     };
   }
   const { name, logo } = companyResponseDto;

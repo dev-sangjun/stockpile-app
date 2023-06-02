@@ -1,10 +1,11 @@
 import { FC, ReactNode, useMemo } from "react";
-import { Investment, Stock } from "../../types/entity.types";
+import { Investment } from "../../types/entity.types";
 import { toUSD } from "../../utils/numeral.utils";
 import { useSelector } from "react-redux";
 import { RootState } from "../../states/store";
 import { getStocks } from "../../states/stocks.reducer";
 import ValueChangeText from "../ValueChangeText";
+import { HiBuildingOffice2 } from "react-icons/hi2";
 
 interface GridItemProps {
   title: string;
@@ -64,10 +65,26 @@ const InvestmentListItem: FC<InvestmentItemProps> = ({ investment }) => {
   );
   const renderGridItems = () =>
     gridItems.map(gridItem => <GridItem key={gridItem.title} {...gridItem} />);
+  const getCompanyLogo = () => {
+    const logoUrl = stocks?.[investment.stockId]?.company?.logo;
+    return logoUrl ? (
+      <div className="rounded-xl overflow-hidden w-12 shadow-xl">
+        <img
+          src={logoUrl}
+          alt={stocks?.[investment.stockId]?.company?.name || "company"}
+        />
+      </div>
+    ) : (
+      <div className="flex justify-center items-center rounded-xl w-12 h-12 text-3xl shadow-xl bg-slate-500 text-base-100">
+        <HiBuildingOffice2 />
+      </div>
+    );
+  };
   return (
     <li className="card bg-base-100 shadow-xl p-4 flex flex-col gap-4">
-      <div className="flex justify-between items-center h-30">
-        <h3 className="text-lg font-bold">{investment.stockId}</h3>
+      <div className="flex items-center h-30 gap-2">
+        {getCompanyLogo()}
+        <h3 className="flex-1 text-lg font-bold">{investment.stockId}</h3>
         <div className="flex flex-col">
           <span className="text-xs font-bold text-slate-400">
             Current Price
