@@ -22,12 +22,14 @@ const Portfolios: FC = () => {
   const getActionButtons = () => {
     const handleShowAllClick = () => dispatch(deselectPortfolio());
     return (
-      <div className="flex items-center gap-2">
-        <button className="btn btn-xs btn-outline" onClick={handleShowAllClick}>
-          Show All
-        </button>
-        <AddInvestment />
-      </div>
+      selectedPortfolio && (
+        <div className="flex items-center gap-2">
+          <button className="btn btn-xs btn-ghost" onClick={handleShowAllClick}>
+            Show All
+          </button>
+          <AddInvestment portfolio={selectedPortfolio} />
+        </div>
+      )
     );
   };
 
@@ -40,7 +42,7 @@ const Portfolios: FC = () => {
       <div className="flex flex-col gap-4">
         <div className="flex justify-between items-center">
           <h2 className="text-2xl font-bold">{title}</h2>
-          {selectedPortfolio && getActionButtons()}
+          {getActionButtons()}
         </div>
         <InvestmentList
           investments={

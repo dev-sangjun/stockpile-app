@@ -5,11 +5,11 @@ type RequestType = "GET" | "POST" | "PATCH" | "DELETE";
 
 const useFetch = <T>(
   url: string,
-  defaultValue: T,
+  defaultValue: T | undefined,
   requestType: RequestType = "GET",
   body?: object | undefined
-): [T, Error | undefined, boolean] => {
-  const [data, setData] = useState<T>(defaultValue);
+): [T | undefined, Error | undefined, boolean] => {
+  const [data, setData] = useState<T | undefined>(defaultValue);
   const [error, setError] = useState<Error>();
   const [loading, setLoading] = useState(true);
 

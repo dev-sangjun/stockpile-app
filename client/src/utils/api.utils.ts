@@ -1,14 +1,18 @@
 import { DEV_SERVER_ENDPOINT, TEST_USER_ID } from "../dev/constants";
-import { Portfolio, Stock } from "../types/entity.types";
+import { Investment, Portfolio, Stock } from "../types/entity.types";
 import { useFetch } from "../hooks";
 import { useEffect, useState } from "react";
 import { Stocks } from "../states/stocks.reducer";
+import axios, { AxiosResponse } from "axios";
 
-export const useFetchPortfolios = (userId: string = TEST_USER_ID) => {
-  return useFetch<Portfolio[]>(
+export const useFetchPortfolios = (
+  userId: string = TEST_USER_ID
+): [Portfolio[], Error | undefined, boolean] => {
+  const [data, error, loading] = useFetch<Portfolio[]>(
     `${DEV_SERVER_ENDPOINT}/portfolios?userId=${userId}`,
     []
   );
+  return [data || [], error, loading];
 };
 
 export const useFetchUserStocks = (
@@ -32,6 +36,38 @@ export const useFetchUserStocks = (
   return [formattedStocks, error, loading];
 };
 
-export const useFetchStockSymbols = () => {
-  return useFetch<string[]>(`${DEV_SERVER_ENDPOINT}/stocks/symbols`, []);
+export const useFetchStockSymbols = (): [
+  string[],
+  Error | undefined,
+  boolean
+] => {
+  const [data, error, loading] = useFetch<string[]>(
+    `${DEV_SERVER_ENDPOINT}/stocks/symbols`,
+    []
+  );
+  return [data || [], error, loading];
+};
+
+interface AddInvestmentRequestDto {
+  quantity: number;
+  cost: number;
+  userId: string;
+  stockId: string;
+}
+export const addInvestment = async (
+  addInvestmentRequestDto: AddInvestmentRequestDto & { portfolioId: string }
+): Promise<Investment> => {
+  const { quantity, cost, userId, stockId, portfolioId } =
+    addInvestmentRequestDto;
+  const body: AddInvestmentRequestDto = {
+    quantity,
+    cost,
+    userId,
+    stockId,
+  };
+  const res: AxiosResponse<Investment> = await axios.post(
+    `${DEV_SERVER_ENDPOINT}/portfolios/${portfolioId}/investments`,
+    body
+  );
+  return res.data;
 };
