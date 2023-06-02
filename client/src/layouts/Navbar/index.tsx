@@ -27,21 +27,23 @@ const Navbar: FC<NavbarProps> = ({ navbarItems }) => {
     ));
   };
   return (
-    <div className="navbar p-0 max-w-7xl mx-auto">
-      <div className="flex-1">
-        <Link
-          className="btn btn-ghost normal-case text-xl mx-auto md:mx-0 flex gap-2"
-          to="/"
-        >
-          <span>Stockpile</span>
-        </Link>
-      </div>
-      <div className="hidden md:flex">
-        <div className="flex-none">
-          <ul className="menu menu-horizontal">{renderNavbarItems()}</ul>
+    <div className="bg-white">
+      <div className="navbar p-0 max-w-7xl mx-auto sticky top-0 z-10">
+        <div className="flex-1 top-0">
+          <Link
+            className="btn btn-ghost normal-case text-xl mx-auto md:mx-0 flex gap-2"
+            to="/"
+          >
+            <span>Stockpile</span>
+          </Link>
         </div>
+        <div className="hidden md:flex">
+          <div className="flex-none">
+            <ul className="menu menu-horizontal">{renderNavbarItems()}</ul>
+          </div>
+        </div>
+        <div className="btm-nav md:hidden">{renderBottomNavbarItems()}</div>
       </div>
-      <div className="btm-nav md:hidden">{renderBottomNavbarItems()}</div>
     </div>
   );
 };

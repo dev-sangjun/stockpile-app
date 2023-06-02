@@ -1,9 +1,9 @@
 import { FC, ReactNode, useMemo } from "react";
+import { Investment, Stock } from "../../types/entity.types";
+import { toUSD } from "../../utils/numeral.utils";
 import { useSelector } from "react-redux";
-import { Portfolio } from "../../types/entity.types";
 import { RootState } from "../../states/store";
 import { getStocks } from "../../states/stocks.reducer";
-import { toUSD } from "../../utils/numeral.utils";
 import ValueChangeText from "../ValueChangeText";
 
 interface GridItemProps {
@@ -18,73 +18,68 @@ const GridItem: FC<GridItemProps> = ({ title, text }) => (
   </div>
 );
 
-interface PortfolioListItemProps {
-  portfolio: Portfolio;
+interface InvestmentItemProps {
+  investment: Investment;
 }
 
-const PortfolioListItem: FC<PortfolioListItemProps> = ({ portfolio }) => {
+const InvestmentListItem: FC<InvestmentItemProps> = ({ investment }) => {
   const stocks = useSelector((state: RootState) => getStocks(state));
-  const portfolioDetails = useMemo(() => {
-    let totalValue = 0;
-    let totalCost = 0;
-    let prevTotalValue = 0;
-    portfolio.investments.forEach(({ avgCost, quantity, stockId }) => {
-      totalValue += (stocks?.[stockId]?.c || 0) * quantity;
-      totalCost += avgCost * quantity;
-      prevTotalValue += stocks?.[stockId]?.pc * quantity;
-    });
+  const investmentDetails = useMemo(() => {
+    const totalValue = stocks?.[investment.stockId]?.c * investment.quantity;
+    const totalCost = investment.avgCost * investment.quantity;
+    const prevTotalValue =
+      stocks?.[investment.stockId]?.pc * investment.quantity;
+
     return {
       totalValue,
       totalCost,
-      investmentsCount: portfolio.investments.length,
+      quantity: investment.quantity,
       dayChange: totalValue - prevTotalValue,
     };
-  }, [stocks, portfolio.investments]);
+  }, [investment, stocks]);
   const gridItems: GridItemProps[] = useMemo(
     () => [
       {
         title: "Invested Amount",
-        text: toUSD(portfolioDetails.totalCost),
+        text: toUSD(investmentDetails.totalCost),
       },
       {
         title: "Gain/Loss",
         text: (
           <ValueChangeText
-            value={portfolioDetails.totalValue - portfolioDetails.totalCost}
+            value={investmentDetails.totalValue - investmentDetails.totalCost}
           />
         ),
       },
       {
         title: "Day Change",
-        text: <ValueChangeText value={portfolioDetails.dayChange} />,
+        text: <ValueChangeText value={investmentDetails.dayChange} />,
       },
       {
-        title: "# of Investments",
-        text: String(portfolioDetails.investmentsCount),
+        title: "# of Shares",
+        text: String(investmentDetails.quantity),
       },
     ],
-    [portfolioDetails]
+    [investmentDetails]
   );
   const renderGridItems = () =>
     gridItems.map(gridItem => <GridItem key={gridItem.title} {...gridItem} />);
   return (
     <li className="card bg-base-100 shadow-xl p-4 flex flex-col gap-4">
       <div className="flex justify-between items-center h-30">
-        <h3 className="text-lg font-bold">{portfolio.name}</h3>
+        <h3 className="text-lg font-bold">{investment.stockId}</h3>
         <div className="flex flex-col">
           <span className="text-xs font-bold text-slate-400">
-            Total Balance
+            Current Price
           </span>
           <span className="font-bold text-lg">
-            {toUSD(portfolioDetails.totalValue)}
+            {toUSD(stocks?.[investment.stockId]?.c || 0)}
           </span>
         </div>
       </div>
-      <div className="grid grid-cols-2 grid-rows-2 gap-2">
-        {renderGridItems()}
-      </div>
+      <div className="grid grid-cols-2 gap-2">{renderGridItems()}</div>
     </li>
   );
 };
 
-export default PortfolioListItem;
+export default InvestmentListItem;
