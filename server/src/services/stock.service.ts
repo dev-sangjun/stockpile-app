@@ -10,13 +10,6 @@ import {
 import finnhubService from "./finnhub.service";
 import allSymbols from "../data/all_symbols.json";
 
-const STOCK_RESYNC_INTERVAL_IN_MS = 3600 * Math.pow(10, 3);
-const needsResync = (updatedAt: Date) => {
-  return (
-    new Date().getTime() - updatedAt.getTime() > STOCK_RESYNC_INTERVAL_IN_MS
-  );
-};
-
 const createStock = async (
   q: string,
   finnhubStockResponseDto: FinnhubStockResponseDto,
@@ -80,12 +73,6 @@ const getStock = async (stockGetRequestDto: StockGetRequestDto) => {
       FinnhubCompanyResponseDto
     );
     return newStock;
-  }
-  if (needsResync(stock.updated_at)) {
-    const finnhubStockResponseDto: FinnhubStockResponseDto =
-      await finnhubService.fetchStock(q);
-    const updatedStock = await updateStock(q, finnhubStockResponseDto);
-    return updatedStock;
   }
   return stock;
 };
