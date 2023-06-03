@@ -1,6 +1,13 @@
-import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import type { RootState } from "./store";
 import { Portfolio } from "../types/entity.types";
+import axios from "axios";
+import { DEV_SERVER_ENDPOINT } from "../dev/constants";
+import {
+  addInvestment,
+  AddInvestmentRequestDto,
+  fetchPortfoliosByUserId,
+} from "../utils/api.utils";
 
 interface PortfoliosState {
   portfolios: Portfolio[];
@@ -11,6 +18,14 @@ const initialState: PortfoliosState = {
   portfolios: [],
   selectedPortfolio: null,
 };
+
+export const asyncFetchPortfolios = createAsyncThunk(
+  "portfolios/asyncFetchPortfolios",
+  async (userId: string) => {
+    const portfolios = await fetchPortfoliosByUserId(userId);
+    return portfolios;
+  }
+);
 
 export const portfoliosSlice = createSlice({
   name: "portfolios",
@@ -25,6 +40,20 @@ export const portfoliosSlice = createSlice({
     deselectPortfolio: state => {
       state.selectedPortfolio = null;
     },
+  },
+  extraReducers: builder => {
+    builder.addCase(asyncFetchPortfolios.fulfilled, (state, action) => {
+      state.portfolios = action.payload;
+      // update selectedPortfolio to reflect the fetched results without refreshing the page
+      if (state.selectedPortfolio) {
+        const updatedPortfolio = action.payload.find(
+          portfolio => portfolio.id === state.selectedPortfolio?.id
+        );
+        if (updatedPortfolio) {
+          state.selectedPortfolio = updatedPortfolio;
+        }
+      }
+    });
   },
 });
 

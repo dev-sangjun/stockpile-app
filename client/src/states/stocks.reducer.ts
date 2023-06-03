@@ -1,6 +1,7 @@
-import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import type { RootState } from "./store";
 import { Stock } from "../types/entity.types";
+import { fetchStocksByUserId } from "../utils/api.utils";
 
 export interface Stocks {
   [key: string]: Stock; // key: stock symbol, value: price
@@ -16,6 +17,14 @@ const initialState: StocksState = {
   symbols: [],
 };
 
+export const asyncFetchStocks = createAsyncThunk(
+  "stocks/asyncFetchStocks",
+  async (userId: string) => {
+    const stocks = await fetchStocksByUserId(userId);
+    return stocks;
+  }
+);
+
 export const stocksSlice = createSlice({
   name: "stocks",
   initialState,
@@ -26,6 +35,11 @@ export const stocksSlice = createSlice({
     updateSymbols: (state, action: PayloadAction<string[]>) => {
       state.symbols = action.payload;
     },
+  },
+  extraReducers: builder => {
+    builder.addCase(asyncFetchStocks.fulfilled, (state, action) => {
+      state.stocks = action.payload;
+    });
   },
 });
 

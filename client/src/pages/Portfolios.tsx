@@ -27,7 +27,7 @@ const Portfolios: FC = () => {
           <button className="btn btn-xs btn-ghost" onClick={handleShowAllClick}>
             Show All
           </button>
-          <AddInvestment portfolio={selectedPortfolio} />
+          <AddInvestment />
         </div>
       )
     );

@@ -48,12 +48,24 @@ export const useFetchStockSymbols = (): [
   return [data || [], error, loading];
 };
 
-interface AddInvestmentRequestDto {
+export const fetchStocksByUserId = async (userId: string): Promise<Stocks> => {
+  const res: AxiosResponse<Stock[]> = await axios.get(
+    `${DEV_SERVER_ENDPOINT}/users/${userId}/stocks`
+  );
+  const stocks: Stocks = {};
+  res.data.forEach(stock => {
+    stocks[stock.id] = stock;
+  });
+  return stocks;
+};
+
+export interface AddInvestmentRequestDto {
   quantity: number;
-  cost: number;
+  cost: number | undefined;
   userId: string;
   stockId: string;
 }
+
 export const addInvestment = async (
   addInvestmentRequestDto: AddInvestmentRequestDto & { portfolioId: string }
 ): Promise<Investment> => {
@@ -68,6 +80,15 @@ export const addInvestment = async (
   const res: AxiosResponse<Investment> = await axios.post(
     `${DEV_SERVER_ENDPOINT}/portfolios/${portfolioId}/investments`,
     body
+  );
+  return res.data;
+};
+
+export const fetchPortfoliosByUserId = async (
+  userId: string
+): Promise<Portfolio[]> => {
+  const res = await axios.get(
+    `${DEV_SERVER_ENDPOINT}/portfolios?userId=${userId}`
   );
   return res.data;
 };

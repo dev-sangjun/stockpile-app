@@ -13,7 +13,7 @@ export interface PortfolioPostRequestDto {
 
 export interface InvestmentAddRequestDto {
   quantity: number;
-  cost: number;
+  cost: number | undefined;
   userId: string;
   stockId: string;
 }

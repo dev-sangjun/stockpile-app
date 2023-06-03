@@ -73,10 +73,12 @@ const addInvestment = async (
   portfolioId: string,
   investmentAddRequestDto: InvestmentAddRequestDto
 ): Promise<Investment> => {
-  console.log(portfolioId);
   const { quantity, cost, userId, stockId } = investmentAddRequestDto;
   // invoke getStock to check if the stockId is valid
   const stock = await stockService.getStock({ q: stockId });
+  // set cost to current price if nullish cost was passed
+  const adjustedCost = cost ?? stock.c;
+  console.log(adjustedCost);
   await userService.addStock(userId, stock);
 
   // find investment
@@ -91,7 +93,7 @@ const addInvestment = async (
     const newInvestment = await DBClient.investment.create({
       data: {
         quantity,
-        avgCost: cost,
+        avgCost: adjustedCost,
         userId,
         portfolioId,
         stockId: stockId.toUpperCase(),
@@ -102,7 +104,7 @@ const addInvestment = async (
   const updatedInvestment = await DBClient.investment.update({
     data: {
       quantity: investment.quantity + quantity,
-      avgCost: getAvgCost(investment, cost, quantity),
+      avgCost: getAvgCost(investment, adjustedCost, quantity),
     },
     where: {
       id: investment.id,
