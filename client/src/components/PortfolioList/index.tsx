@@ -11,7 +11,12 @@ const PortfolioList: FC = () => {
       <PortfolioListItem key={portfolio.id} portfolio={portfolio} />
     ));
   };
-  return <ul className="flex flex-col gap-4">{renderPortfolios()}</ul>;
+  return (
+    <div className="flex flex-col gap-4">
+      <h2 className="text-2xl font-bold">Portfolios</h2>
+      <ul className="flex flex-col gap-4">{renderPortfolios()}</ul>
+    </div>
+  );
 };
 
 export default PortfolioList;
