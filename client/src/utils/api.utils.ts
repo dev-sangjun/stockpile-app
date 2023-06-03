@@ -54,3 +54,18 @@ export const fetchPortfoliosByUserId = async (
   );
   return res.data;
 };
+
+export interface AddPortfolioRequestDto {
+  name: string;
+  userId: string;
+}
+
+export const addPortfolio = async (
+  addPortfolioRequestDto: AddPortfolioRequestDto
+): Promise<Portfolio> => {
+  const res: AxiosResponse<Portfolio> = await axios.post(
+    `${DEV_SERVER_ENDPOINT}/portfolios`,
+    addPortfolioRequestDto
+  );
+  return res.data;
+};

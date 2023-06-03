@@ -78,7 +78,6 @@ const addInvestment = async (
   const stock = await stockService.getStock({ q: stockId });
   // set cost to current price if nullish cost was passed
   const adjustedCost = cost ?? stock.c;
-  console.log(adjustedCost);
   await userService.addStock(userId, stock);
 
   // find investment

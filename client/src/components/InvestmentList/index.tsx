@@ -20,12 +20,12 @@ const InvestmentList: FC = () => {
   // show all investments if no portfolio is selected
   const investments =
     selectedPortfolio?.investments ?? Object.values(allInvestments);
+  const title = selectedPortfolio?.name || "All Investments";
   const renderInvestments = () => {
     return Object.values(investments).map(investment => (
       <InvestmentListItem key={investment.id} investment={investment} />
     ));
   };
-  const title = selectedPortfolio?.name || "All Investments";
   const getActionButtons = () => {
     const handleShowAllClick = () => dispatch(deselectPortfolio());
     return (

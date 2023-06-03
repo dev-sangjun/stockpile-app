@@ -1,23 +1,16 @@
 import { FC } from "react";
-import { useSelector } from "react-redux";
-import { RootState } from "../../states/store";
-import { getSymbols } from "../../states/stocks.reducer";
 import isEmpty from "is-empty";
 import { useOutsideClick } from "../../hooks";
-import useAddInvestmentForm from "./useAddInvestmentForm";
-
-export interface FormData {
-  keyword: string;
-  quantity: number;
-  price: number | undefined;
-  filteredSymbols: string[];
-  selectedSymbol: string;
-}
+import useAddEntityForm from "./useAddInvestmentForm";
 
 const AddInvestment: FC = () => {
-  const symbols = useSelector((state: RootState) => getSymbols(state));
-  const [formData, setFormData, resetFormData, handleFormChange, handleSubmit] =
-    useAddInvestmentForm(symbols);
+  const {
+    formData,
+    setFormData,
+    resetFormData,
+    handleFormChange,
+    handleSubmit,
+  } = useAddEntityForm();
   const formRef = useOutsideClick<HTMLFormElement>(resetFormData);
 
   const handleSymbolClick = (symbol: string) => {
@@ -80,9 +73,12 @@ const AddInvestment: FC = () => {
           </label>
           <input
             type="number"
+            name="cost"
             placeholder="Current Price"
             min={0}
             className="input input-sm input-bordered w-full max-w-xs"
+            onChange={handleFormChange}
+            value={formData.cost || ""}
           />
           <button
             className="btn btn-sm btn-primary"

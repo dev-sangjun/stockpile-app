@@ -1,7 +1,7 @@
-import { FormData } from ".";
+import { AddInvestmentFormData } from "./useAddInvestmentForm";
 
 export const renderFilteredSymbols = (
-  formData: FormData,
+  formData: AddInvestmentFormData,
   handleSymbolClick: (symbol: string) => void
 ) => (
   <ul className="menu menu-sm bg-base-200 w-full rounded-box">

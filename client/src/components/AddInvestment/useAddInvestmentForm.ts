@@ -1,6 +1,5 @@
 import isEmpty from "is-empty";
 import { ChangeEvent, Dispatch, FormEvent, useState } from "react";
-import { FormData } from ".";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../../states/store";
 import { addInvestment } from "../../utils/api.utils";
@@ -9,12 +8,24 @@ import {
   getSelectedPortfolio,
 } from "../../states/portfolios.reducer";
 import { TEST_USER_ID } from "../../dev/constants";
-import { asyncFetchStocks, getStocks } from "../../states/stocks.reducer";
+import {
+  asyncFetchStocks,
+  getStocks,
+  getSymbols,
+} from "../../states/stocks.reducer";
 
-const formDataInitialState: FormData = {
+export interface AddInvestmentFormData {
+  keyword: string;
+  quantity: number;
+  cost: number | undefined;
+  filteredSymbols: string[];
+  selectedSymbol: string;
+}
+
+const formDataInitialState: AddInvestmentFormData = {
   keyword: "",
   quantity: 1,
-  price: undefined,
+  cost: undefined,
   filteredSymbols: [],
   selectedSymbol: "",
 };
@@ -27,21 +38,21 @@ const getFilteredSymbols = (q: string, symbols: string[]) => {
   return filteredSymbols.slice(0, 5);
 };
 
-const useAddInvestmentForm = (
-  symbols: string[]
-): [
-  FormData,
-  Dispatch<React.SetStateAction<FormData>>,
-  () => void,
-  (e: ChangeEvent<HTMLInputElement>) => void,
-  (e: FormEvent) => Promise<void>
-] => {
-  const [formData, setFormData] = useState<FormData>(formDataInitialState);
+const useAddInvestmentForm = (): {
+  formData: AddInvestmentFormData;
+  setFormData: Dispatch<React.SetStateAction<AddInvestmentFormData>>;
+  resetFormData: () => void;
+  handleFormChange: (e: ChangeEvent<HTMLInputElement>) => void;
+  handleSubmit: (e: FormEvent) => Promise<void>;
+} => {
+  const [formData, setFormData] =
+    useState<AddInvestmentFormData>(formDataInitialState);
   const dispatch = useDispatch<AppDispatch>();
   const selectedPortfolio = useSelector((state: RootState) =>
     getSelectedPortfolio(state)
   );
   const stocks = useSelector((state: RootState) => getStocks(state));
+  const symbols = useSelector((state: RootState) => getSymbols(state));
   const handleFormChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.currentTarget;
     if (name === "keyword") {
@@ -61,17 +72,17 @@ const useAddInvestmentForm = (
         return;
       }
       setFormData({ ...formData, quantity });
-    } else if (name === "price") {
-      const price = parseFloat(value);
-      if (isNaN(price) || price < 0) {
+    } else if (name === "cost") {
+      const cost = parseFloat(value);
+      if (isNaN(cost) || cost < 0) {
         return;
       }
-      if (price === 0) {
-        const currentPrice = stocks?.[formData.selectedSymbol]?.c || price;
-        setFormData({ ...formData, price: currentPrice });
+      if (cost === 0) {
+        const currentCost = stocks?.[formData.selectedSymbol]?.c || cost;
+        setFormData({ ...formData, cost: currentCost });
         return;
       }
-      setFormData({ ...formData });
+      setFormData({ ...formData, cost });
     } else {
       setFormData({
         ...formData,
@@ -84,15 +95,15 @@ const useAddInvestmentForm = (
   };
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
-    if (!formData.selectedSymbol || !selectedPortfolio) {
+    const { quantity, cost, selectedSymbol } = formData;
+    if (!selectedSymbol || !selectedPortfolio) {
       return;
     }
-    const { quantity, price, selectedSymbol } = formData;
     try {
       // add investment -> fetch stocks owned by the user -> fetch portfolios
       await addInvestment({
         quantity,
-        cost: price,
+        cost,
         userId: TEST_USER_ID,
         stockId: selectedSymbol,
         portfolioId: selectedPortfolio.id,
@@ -104,7 +115,13 @@ const useAddInvestmentForm = (
       console.error(e);
     }
   };
-  return [formData, setFormData, resetFormData, handleFormChange, handleSubmit];
+  return {
+    formData,
+    setFormData,
+    resetFormData,
+    handleFormChange,
+    handleSubmit,
+  };
 };
 
 export default useAddInvestmentForm;
