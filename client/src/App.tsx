@@ -1,18 +1,15 @@
 import { createBrowserRouter, Outlet, RouterProvider } from "react-router-dom";
-import { updateStocks, updateSymbols } from "./states/stocks.reducer";
+import { asyncFetchStocks, asyncFetchSymbols } from "./states/stocks.reducer";
 import Navbar from "./layouts/Navbar";
 import navbarItems from "./layouts/Navbar/navbar-items";
 import "./App.css";
 import { useEffect } from "react";
-import {
-  useFetchPortfolios,
-  useFetchStockSymbols,
-  useFetchUserStocks,
-} from "./utils/api.utils";
 import { useDispatch } from "react-redux";
-import { updatePortfolios } from "./states/portfolios.reducer";
+import { asyncFetchPortfolios } from "./states/portfolios.reducer";
 import { getInvestmentsFromPortfolios } from "./utils/entity.utils";
 import { updateInvestments } from "./states/investments.reducer";
+import { AppDispatch } from "./states/store";
+import { TEST_USER_ID } from "./dev/constants";
 
 const Layout = () => (
   <div className="h-screen flex flex-col bg-slate-100 overflow-hidden">
@@ -34,17 +31,19 @@ const router = createBrowserRouter([
 ]);
 
 function App() {
-  const [stocks] = useFetchUserStocks();
-  const [portfolios] = useFetchPortfolios();
-  const [symbols] = useFetchStockSymbols();
-  const dispatch = useDispatch();
+  const dispatch = useDispatch<AppDispatch>();
   useEffect(() => {
-    dispatch(updateStocks(stocks));
-    dispatch(updatePortfolios(portfolios));
-    dispatch(updateSymbols(symbols));
-    const investments = getInvestmentsFromPortfolios(portfolios);
-    dispatch(updateInvestments(investments));
-  }, [stocks, portfolios, symbols, dispatch]);
+    const fetchStates = async () => {
+      await dispatch(asyncFetchStocks(TEST_USER_ID));
+      await dispatch(asyncFetchPortfolios(TEST_USER_ID))
+        .unwrap()
+        .then(portfolios =>
+          dispatch(updateInvestments(getInvestmentsFromPortfolios(portfolios)))
+        );
+      await dispatch(asyncFetchSymbols());
+    };
+    fetchStates();
+  }, [dispatch]);
   return <RouterProvider router={router} />;
 }
 

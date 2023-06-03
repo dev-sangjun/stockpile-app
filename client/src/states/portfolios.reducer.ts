@@ -1,13 +1,7 @@
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import type { RootState } from "./store";
 import { Portfolio } from "../types/entity.types";
-import axios from "axios";
-import { DEV_SERVER_ENDPOINT } from "../dev/constants";
-import {
-  addInvestment,
-  AddInvestmentRequestDto,
-  fetchPortfoliosByUserId,
-} from "../utils/api.utils";
+import { fetchPortfoliosByUserId } from "../utils/api.utils";
 
 interface PortfoliosState {
   portfolios: Portfolio[];
