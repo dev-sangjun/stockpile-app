@@ -1,22 +1,18 @@
 import { NextFunction, Request, Response } from "express";
 import { portfolioService } from "../services";
 import {
-  InvestmentAddRequestDto,
-  PortfolioCreateRequestDto,
-  PortfolioGetRequestDto,
-  PortfolioPostRequestDto,
+  CreatePortfolioDto,
+  AddInvestmentToPortfolioDto,
 } from "../interfaces/dto/portfolio.dto";
 
 const getPortfolios = async (
-  req: Request<undefined, any, any, PortfolioGetRequestDto>,
+  req: Request<undefined, any, any, { userId: string }>,
   res: Response,
   next: NextFunction
 ) => {
-  const portfolioGetRequestDto: PortfolioGetRequestDto = req.query;
+  const { userId } = req.query;
   try {
-    const portfolios = await portfolioService.getPortfolios(
-      portfolioGetRequestDto
-    );
+    const portfolios = await portfolioService.getPortfoliosByUserId(userId);
     return res.json(portfolios);
   } catch (e) {
     return next(e);
@@ -24,14 +20,14 @@ const getPortfolios = async (
 };
 
 const createPortfolio = async (
-  req: Request<PortfolioCreateRequestDto>,
+  req: Request,
   res: Response,
   next: NextFunction
 ) => {
-  const portfolioCreateDto: PortfolioCreateRequestDto = req.body;
+  const createPortfolioDto: CreatePortfolioDto = req.body;
   try {
     const portfolio = await portfolioService.createPortfolio(
-      portfolioCreateDto
+      createPortfolioDto
     );
     return res.json(portfolio);
   } catch (e) {
@@ -39,33 +35,17 @@ const createPortfolio = async (
   }
 };
 
-const getInvestments = async (
-  req: Request<{ portfolioId: string }>,
+const addInvestmentToPortfolio = async (
+  req: Request,
   res: Response,
   next: NextFunction
 ) => {
   const { portfolioId } = req.params;
+  const addInvestmentToPortfolioDto: AddInvestmentToPortfolioDto = req.body;
   try {
-    const investments = await portfolioService.getInvestmentsByPortfolioId(
-      portfolioId
-    );
-    return res.json(investments);
-  } catch (e) {
-    return next(e);
-  }
-};
-
-const addInvestment = async (
-  req: Request<PortfolioPostRequestDto>,
-  res: Response,
-  next: NextFunction
-) => {
-  const { portfolioId } = req.params;
-  const investmentAddRequestDto: InvestmentAddRequestDto = req.body;
-  try {
-    const portfolio = await portfolioService.addInvestment(
+    const portfolio = await portfolioService.addInvestmentToPortfolio(
       portfolioId,
-      investmentAddRequestDto
+      addInvestmentToPortfolioDto
     );
     return res.json(portfolio);
   } catch (e) {
@@ -74,7 +54,7 @@ const addInvestment = async (
 };
 
 const deleteInvestment = async (
-  req: Request<{ investmentId: string }>,
+  req: Request,
   res: Response,
   next: NextFunction
 ) => {
@@ -90,7 +70,6 @@ const deleteInvestment = async (
 export default {
   getPortfolios,
   createPortfolio,
-  getInvestments,
-  addInvestment,
+  addInvestmentToPortfolio,
   deleteInvestment,
 };

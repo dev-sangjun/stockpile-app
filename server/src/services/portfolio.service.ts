@@ -5,9 +5,8 @@ import {
   InternalServerError,
 } from "../global/errors.global";
 import {
-  InvestmentAddRequestDto,
-  PortfolioCreateRequestDto,
-  PortfolioGetRequestDto,
+  CreatePortfolioDto,
+  AddInvestmentToPortfolioDto,
 } from "../interfaces/dto/portfolio.dto";
 import stockService from "./stock.service";
 import userService from "./user.service";
@@ -16,7 +15,7 @@ const getAvgCost = (
   prevInvestment: Investment,
   newCost: number,
   newQuantity: number
-) => {
+): number => {
   const prevInvestmentTotalPrice =
     prevInvestment.avgCost * prevInvestment.quantity;
   const newInvestmentTotalPrice = newCost * newQuantity;
@@ -24,10 +23,7 @@ const getAvgCost = (
   return (prevInvestmentTotalPrice + newInvestmentTotalPrice) / totalQuantity;
 };
 
-const getPortfolios = async (
-  portfolioGetRequestDto: PortfolioGetRequestDto
-): Promise<Portfolio[]> => {
-  const { userId } = portfolioGetRequestDto;
+const getPortfoliosByUserId = async (userId: string): Promise<Portfolio[]> => {
   const portfolios = await DBClient.portfolio.findMany({
     where: {
       userId,
@@ -40,9 +36,9 @@ const getPortfolios = async (
 };
 
 const createPortfolio = async (
-  portfolioCreateDto: PortfolioCreateRequestDto
+  createPortfolioDto: CreatePortfolioDto
 ): Promise<Portfolio> => {
-  const { userId, name } = portfolioCreateDto;
+  const { userId, name } = createPortfolioDto;
   const portfolio = await DBClient.portfolio.findFirst({
     where: {
       userId,
@@ -61,28 +57,16 @@ const createPortfolio = async (
   return newPortfolio;
 };
 
-const getInvestmentsByPortfolioId = async (
-  portfolioId: string
-): Promise<Investment[]> => {
-  const investments = await DBClient.investment.findMany({
-    where: {
-      portfolioId,
-    },
-  });
-  return investments;
-};
-
-const addInvestment = async (
+const addInvestmentToPortfolio = async (
   portfolioId: string,
-  investmentAddRequestDto: InvestmentAddRequestDto
+  addInvestmentToPortfolioDto: AddInvestmentToPortfolioDto
 ): Promise<Investment> => {
-  const { quantity, cost, userId, stockId } = investmentAddRequestDto;
+  const { quantity, cost, userId, stockId } = addInvestmentToPortfolioDto;
   // invoke getStock to check if the stockId is valid
   const stock = await stockService.getStock({ q: stockId });
   // set cost to current price if nullish cost was passed
   const adjustedCost = cost ?? stock.c;
   await userService.addStock(userId, stock);
-
   // find investment
   const investment = await DBClient.investment.findFirst({
     where: {
@@ -115,23 +99,20 @@ const addInvestment = async (
   return updatedInvestment;
 };
 
-const deleteInvestment = async (investmentId: string) => {
+const deleteInvestment = async (investmentId: string): Promise<void> => {
   const investment = await DBClient.investment.delete({
     where: {
       id: investmentId,
     },
   });
-  console.log(investment);
   if (!investment) {
     throw new InternalServerError();
   }
-  return investment;
 };
 
 export default {
-  getPortfolios,
+  getPortfoliosByUserId,
   createPortfolio,
-  getInvestmentsByPortfolioId,
-  addInvestment,
+  addInvestmentToPortfolio,
   deleteInvestment,
 };

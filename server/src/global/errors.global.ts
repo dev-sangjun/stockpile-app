@@ -22,3 +22,8 @@ export class InternalServerError extends Error implements Error {
   status: number = 502;
   message: string = "Internal Server Error";
 }
+
+export class BadRequestError extends Error implements Error {
+  status: number = 400;
+  message: string = "Bad Request";
+}

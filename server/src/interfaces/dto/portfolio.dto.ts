@@ -1,8 +1,4 @@
-export interface PortfolioGetRequestDto {
-  userId: string;
-}
-
-export interface PortfolioCreateRequestDto {
+export interface CreatePortfolioDto {
   userId: string;
   name: string;
 }
@@ -11,7 +7,7 @@ export interface PortfolioPostRequestDto {
   portfolioId: string;
 }
 
-export interface InvestmentAddRequestDto {
+export interface AddInvestmentToPortfolioDto {
   quantity: number;
   cost: number | undefined;
   userId: string;
