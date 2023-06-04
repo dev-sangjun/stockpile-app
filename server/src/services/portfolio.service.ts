@@ -121,6 +121,7 @@ const deleteInvestment = async (investmentId: string) => {
       id: investmentId,
     },
   });
+  console.log(investment);
   if (!investment) {
     throw new InternalServerError();
   }
