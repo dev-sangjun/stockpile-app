@@ -50,11 +50,11 @@ model Investment {
   quantity Float
   avgCost  Float
 
-  user        User      @relation(fields: [userId], references: [id])
+  user        User      @relation(fields: [userId], references: [id], onDelete: Cascade)
   userId      String
-  Portfolio   Portfolio @relation(fields: [portfolioId], references: [id])
+  Portfolio   Portfolio @relation(fields: [portfolioId], references: [id], onDelete: Cascade)
   portfolioId String
-  stock       Stock     @relation(fields: [stockId], references: [id])
+  stock       Stock     @relation(fields: [stockId], references: [id], onDelete: Cascade)
   stockId     String
 }
 

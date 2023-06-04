@@ -1,6 +1,9 @@
 import { Investment, Portfolio } from "@prisma/client";
 import DBClient from "../../prisma/DBClient";
-import { DuplicateEntityError } from "../global/errors.global";
+import {
+  DuplicateEntityError,
+  InternalServerError,
+} from "../global/errors.global";
 import {
   InvestmentAddRequestDto,
   PortfolioCreateRequestDto,
@@ -112,9 +115,22 @@ const addInvestment = async (
   return updatedInvestment;
 };
 
+const deleteInvestment = async (investmentId: string) => {
+  const investment = await DBClient.investment.delete({
+    where: {
+      id: investmentId,
+    },
+  });
+  if (!investment) {
+    throw new InternalServerError();
+  }
+  return investment;
+};
+
 export default {
   getPortfolios,
   createPortfolio,
   getInvestmentsByPortfolioId,
   addInvestment,
+  deleteInvestment,
 };

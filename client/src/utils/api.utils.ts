@@ -69,3 +69,18 @@ export const addPortfolio = async (
   );
   return res.data;
 };
+
+export interface DeleteInvestmentRequestDto {
+  portfolioId: string;
+  investmentId: string;
+}
+
+export const deleteInvestment = async (
+  deleteInvestmentRequestDto: DeleteInvestmentRequestDto
+): Promise<Investment> => {
+  const { portfolioId, investmentId } = deleteInvestmentRequestDto;
+  const res: AxiosResponse<Investment> = await axios.delete(
+    `${DEV_SERVER_ENDPOINT}/portfolios/${portfolioId}/investments/${investmentId}`
+  );
+  return res.data;
+};

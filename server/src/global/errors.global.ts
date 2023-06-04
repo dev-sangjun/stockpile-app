@@ -17,3 +17,8 @@ export class DuplicateEntityError extends Error implements Error {
   status: number = 409;
   message: string = "Entity already exists";
 }
+
+export class InternalServerError extends Error implements Error {
+  status: number = 502;
+  message: string = "Internal Server Error";
+}

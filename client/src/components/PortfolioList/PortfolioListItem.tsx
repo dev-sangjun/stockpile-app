@@ -1,4 +1,4 @@
-import { FC, ReactNode, useMemo } from "react";
+import { FC, useMemo } from "react";
 import { useSelector } from "react-redux";
 import { Portfolio } from "../../types/entity.types";
 import { RootState } from "../../states/store";
@@ -7,18 +7,8 @@ import { toUSD } from "../../utils/numeral.utils";
 import ValueChangeText from "../ValueChangeText";
 import { useDispatch } from "react-redux";
 import { selectPortfolio } from "../../states/portfolios.reducer";
-
-interface GridItemProps {
-  title: string;
-  text: string | ReactNode;
-}
-
-const GridItem: FC<GridItemProps> = ({ title, text }) => (
-  <div className="bg-slate-100 rounded-lg p-2 flex flex-col gap-2">
-    <h4 className="text-slate-500 text-sm">{title}</h4>
-    <div className="font-bold">{text}</div>
-  </div>
-);
+import { GridItemProps } from "../ListGridItem";
+import { renderGridItems } from "../ListGridItem/renderer";
 
 interface PortfolioListItemProps {
   portfolio: Portfolio;
@@ -68,8 +58,6 @@ const PortfolioListItem: FC<PortfolioListItemProps> = ({ portfolio }) => {
     ],
     [portfolioDetails]
   );
-  const renderGridItems = () =>
-    gridItems.map(gridItem => <GridItem key={gridItem.title} {...gridItem} />);
   const handleClick = () => {
     dispatch(selectPortfolio(portfolio));
   };
@@ -90,7 +78,7 @@ const PortfolioListItem: FC<PortfolioListItemProps> = ({ portfolio }) => {
         </div>
       </div>
       <div className="grid grid-cols-2 grid-rows-2 gap-2">
-        {renderGridItems()}
+        {renderGridItems(gridItems)}
       </div>
     </li>
   );

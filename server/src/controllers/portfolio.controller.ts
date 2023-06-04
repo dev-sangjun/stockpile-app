@@ -73,9 +73,24 @@ const addInvestment = async (
   }
 };
 
+const deleteInvestment = async (
+  req: Request<{ investmentId: string }>,
+  res: Response,
+  next: NextFunction
+) => {
+  const { investmentId } = req.params;
+  try {
+    const investment = await portfolioService.deleteInvestment(investmentId);
+    return res.json(investment);
+  } catch (e) {
+    return next(e);
+  }
+};
+
 export default {
   getPortfolios,
   createPortfolio,
   getInvestments,
   addInvestment,
+  deleteInvestment,
 };

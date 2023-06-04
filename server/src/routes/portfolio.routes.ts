@@ -12,5 +12,9 @@ portfolioRouter.post(
   "/:portfolioId/investments",
   portfolioController.addInvestment
 );
+portfolioRouter.delete(
+  "/:portfolioId/investments/:investmentId",
+  portfolioController.deleteInvestment
+);
 
 export default portfolioRouter;
