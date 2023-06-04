@@ -2,7 +2,6 @@ import isEmpty from "is-empty";
 import { ChangeEvent, Dispatch, FormEvent, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../../states/store";
-import { addInvestment } from "../../utils/api.utils";
 import {
   asyncFetchPortfolios,
   getSelectedPortfolio,
@@ -13,6 +12,7 @@ import {
   getStocks,
   getSymbols,
 } from "../../states/stocks.reducer";
+import { addInvestmentToPortfolio } from "../../api/portfolio.api";
 
 export interface AddInvestmentFormData {
   keyword: string;
@@ -101,7 +101,7 @@ const useAddInvestmentForm = (): {
     }
     try {
       // add investment -> fetch stocks owned by the user -> fetch portfolios
-      await addInvestment({
+      await addInvestmentToPortfolio({
         quantity,
         cost,
         userId: TEST_USER_ID,

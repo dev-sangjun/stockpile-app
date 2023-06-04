@@ -1,7 +1,7 @@
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import type { RootState } from "./store";
 import { Stock } from "../types/entity.types";
-import { fetchStocksByUserId, fetchStockSymbols } from "../utils/api.utils";
+import { fetchStocksByUserId, fetchStockSymbols } from "../api/stock.api";
 
 export interface Stocks {
   [key: string]: Stock; // key: stock symbol, value: price

@@ -4,7 +4,7 @@ import { useDispatch } from "react-redux";
 import { AppDispatch } from "../../states/store";
 import { asyncFetchPortfolios } from "../../states/portfolios.reducer";
 import { TEST_USER_ID } from "../../dev/constants";
-import { addPortfolio } from "../../utils/api.utils";
+import { addPortfolio } from "../../api/portfolio.api";
 
 export interface AddPortfolioFormData {
   name: string;

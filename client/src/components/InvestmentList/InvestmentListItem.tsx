@@ -13,8 +13,8 @@ import {
 } from "../../states/portfolios.reducer";
 import { renderCompanyLogo } from "./renderer";
 import { HiTrash } from "react-icons/hi2";
-import { deleteInvestment } from "../../utils/api.utils";
 import { TEST_USER_ID } from "../../dev/constants";
+import { deleteInvestmentFromPortfolio } from "../../api/portfolio.api";
 
 interface InvestmentItemProps {
   investment: Investment;
@@ -67,7 +67,7 @@ const InvestmentListItem: FC<InvestmentItemProps> = ({ investment }) => {
     if (!selectedPortfolio) {
       return;
     }
-    await deleteInvestment({
+    await deleteInvestmentFromPortfolio({
       portfolioId: selectedPortfolio.id,
       investmentId: investment.id,
     });
