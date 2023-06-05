@@ -1,5 +1,5 @@
 import { Investments } from "../states/investments.reducer";
-import { Investment, Portfolio } from "../types/entity.types";
+import { Investment } from "../types/entity.types";
 
 const addInvestments = (
   prevInvestment: Investment,
@@ -16,23 +16,26 @@ const addInvestments = (
   };
 };
 
-export const getInvestmentsFromPortfolios = (
-  portfolios: Portfolio[]
+/**
+ *
+ * @param investments Investment[] fetched from the server
+ * @returns Investments object with key == stockId & value == Investment
+ */
+export const getInvestmentsObject = (
+  investments: Investment[]
 ): Investments => {
-  const investments: Investments = {};
-  portfolios.forEach(portfolio => {
-    portfolio.investments.forEach(investment => {
-      // update investment if it already exists in investments
-      const prevInvestment = investments?.[investment.stockId]; // use stock symbol as the key
-      if (prevInvestment) {
-        investments[investment.stockId] = addInvestments(
-          prevInvestment,
-          investment
-        );
-      } else {
-        investments[investment.stockId] = investment;
-      }
-    });
+  const investmentsObject: Investments = {};
+  investments.forEach(investment => {
+    // update investment if it already exists in investments
+    const prevInvestment = investmentsObject?.[investment.stockId]; // use stock symbol as the key
+    if (prevInvestment) {
+      investmentsObject[investment.stockId] = addInvestments(
+        prevInvestment,
+        investment
+      );
+    } else {
+      investmentsObject[investment.stockId] = investment;
+    }
   });
-  return investments;
+  return investmentsObject;
 };

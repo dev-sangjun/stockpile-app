@@ -6,8 +6,7 @@ import "./App.css";
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { asyncFetchPortfolios } from "./states/portfolios.reducer";
-import { getInvestmentsFromPortfolios } from "./utils/entity.utils";
-import { updateInvestments } from "./states/investments.reducer";
+import { asyncFetchInvestments } from "./states/investments.reducer";
 import { AppDispatch } from "./states/store";
 import { TEST_USER_ID } from "./dev/constants";
 
@@ -35,11 +34,8 @@ function App() {
   useEffect(() => {
     const fetchStates = async () => {
       await dispatch(asyncFetchStocks(TEST_USER_ID));
-      await dispatch(asyncFetchPortfolios(TEST_USER_ID))
-        .unwrap()
-        .then(portfolios =>
-          dispatch(updateInvestments(getInvestmentsFromPortfolios(portfolios)))
-        );
+      await dispatch(asyncFetchPortfolios(TEST_USER_ID));
+      await dispatch(asyncFetchInvestments(TEST_USER_ID));
       await dispatch(asyncFetchSymbols());
     };
     fetchStates();
