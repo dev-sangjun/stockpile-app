@@ -2,9 +2,9 @@ import isEmpty from "is-empty";
 import { ChangeEvent, Dispatch, FormEvent, useState } from "react";
 import { useDispatch } from "react-redux";
 import { AppDispatch } from "../../states/store";
-import { asyncFetchPortfolios } from "../../states/portfolios.reducer";
 import { TEST_USER_ID } from "../../dev/constants";
 import { addPortfolio } from "../../api/portfolio.api";
+import { asyncFetchUser } from "../../states/user.reducer";
 
 export interface AddPortfolioFormData {
   name: string;
@@ -43,7 +43,7 @@ const useAddPortfolioForm = (): {
     try {
       // add portfolio
       await addPortfolio({ name, userId: TEST_USER_ID });
-      dispatch(asyncFetchPortfolios(TEST_USER_ID));
+      dispatch(asyncFetchUser(TEST_USER_ID));
     } catch (e) {
       console.error(e);
     }

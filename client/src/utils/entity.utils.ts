@@ -1,5 +1,4 @@
-import { Investments } from "../states/investments.reducer";
-import { Investment } from "../types/entity.types";
+import { Investment, Investments, Stock, Stocks } from "../types/entity.types";
 
 const addInvestments = (
   prevInvestment: Investment,
@@ -38,4 +37,17 @@ export const getInvestmentsObject = (
     }
   });
   return investmentsObject;
+};
+
+/**
+ *
+ * @param stocks Stock[] fetched from the server
+ * @returns Stocks object with key == stockId & value == Stock
+ */
+export const getStocksObject = (stocks: Stock[]): Stocks => {
+  const stocksObject: Stocks = {};
+  stocks.forEach(stock => {
+    stocksObject[stock.id] = stock;
+  });
+  return stocksObject;
 };

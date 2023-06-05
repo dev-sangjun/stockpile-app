@@ -1,14 +1,13 @@
 import { createBrowserRouter, Outlet, RouterProvider } from "react-router-dom";
-import { asyncFetchStocks, asyncFetchSymbols } from "./states/stocks.reducer";
 import Navbar from "./layouts/Navbar";
 import navbarItems from "./layouts/Navbar/navbar-items";
 import "./App.css";
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
-import { asyncFetchPortfolios } from "./states/portfolios.reducer";
-import { asyncFetchInvestments } from "./states/investments.reducer";
 import { AppDispatch } from "./states/store";
 import { TEST_USER_ID } from "./dev/constants";
+import { asyncFetchUser } from "./states/user.reducer";
+import { asyncFetchSymbols } from "./states/stocks.reducer";
 
 const Layout = () => (
   <div className="h-screen flex flex-col bg-slate-100 overflow-hidden">
@@ -33,10 +32,8 @@ function App() {
   const dispatch = useDispatch<AppDispatch>();
   useEffect(() => {
     const fetchStates = async () => {
-      await dispatch(asyncFetchStocks(TEST_USER_ID));
-      await dispatch(asyncFetchPortfolios(TEST_USER_ID));
-      await dispatch(asyncFetchInvestments(TEST_USER_ID));
       await dispatch(asyncFetchSymbols());
+      await dispatch(asyncFetchUser(TEST_USER_ID));
     };
     fetchStates();
   }, [dispatch]);

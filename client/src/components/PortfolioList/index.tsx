@@ -2,8 +2,8 @@ import { FC } from "react";
 import PortfolioListItem from "./PortfolioListItem";
 import { useSelector } from "react-redux";
 import { RootState } from "../../states/store";
-import { getPortfolios } from "../../states/portfolios.reducer";
 import AddPortfolio from "../AddPortfolio";
+import { getPortfolios } from "../../states/user.reducer";
 
 const PortfolioList: FC = () => {
   const portfolios = useSelector((state: RootState) => getPortfolios(state));

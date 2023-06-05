@@ -3,18 +3,18 @@ import { Investment } from "../../types/entity.types";
 import { toUSD } from "../../utils/numeral.utils";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../../states/store";
-import { asyncFetchStocks, getStocks } from "../../states/stocks.reducer";
 import ValueChangeText from "../ValueChangeText";
 import { GridItemProps } from "../ListGridItem";
 import { renderGridItems } from "../ListGridItem/renderer";
-import {
-  asyncFetchPortfolios,
-  getSelectedPortfolio,
-} from "../../states/portfolios.reducer";
 import { renderCompanyLogo } from "./renderer";
 import { HiTrash } from "react-icons/hi2";
 import { TEST_USER_ID } from "../../dev/constants";
 import { deleteInvestmentFromPortfolio } from "../../api/portfolio.api";
+import {
+  asyncFetchUser,
+  getSelectedPortfolio,
+  getStocks,
+} from "../../states/user.reducer";
 
 interface InvestmentItemProps {
   investment: Investment;
@@ -63,6 +63,7 @@ const InvestmentListItem: FC<InvestmentItemProps> = ({ investment }) => {
     ],
     [investmentDetails]
   );
+  const logoUrl = stocks?.[investment.stockId]?.company?.logo;
   const handleDeleteInvestment = async () => {
     if (!selectedPortfolio) {
       return;
@@ -71,15 +72,13 @@ const InvestmentListItem: FC<InvestmentItemProps> = ({ investment }) => {
       portfolioId: selectedPortfolio.id,
       investmentId: investment.id,
     });
-    dispatch(asyncFetchStocks(TEST_USER_ID)).then(() =>
-      dispatch(asyncFetchPortfolios(TEST_USER_ID))
-    );
+    dispatch(asyncFetchUser(TEST_USER_ID));
   };
   return (
     <li className="card bg-base-100 shadow-xl p-4 flex flex-col gap-4">
       <div className="flex items-center h-30 gap-2">
         <div className="flex flex-1 items-center gap-2">
-          {renderCompanyLogo(investment, stocks)}
+          {renderCompanyLogo(logoUrl)}
           <h3 className="text-lg font-bold">{investment.stockId}</h3>
           {selectedPortfolio && (
             <button

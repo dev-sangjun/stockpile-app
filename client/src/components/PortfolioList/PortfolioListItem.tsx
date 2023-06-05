@@ -2,13 +2,12 @@ import { FC, useMemo } from "react";
 import { useSelector } from "react-redux";
 import { Portfolio } from "../../types/entity.types";
 import { RootState } from "../../states/store";
-import { getStocks } from "../../states/stocks.reducer";
 import { toUSD } from "../../utils/numeral.utils";
 import ValueChangeText from "../ValueChangeText";
 import { useDispatch } from "react-redux";
-import { selectPortfolio } from "../../states/portfolios.reducer";
 import { GridItemProps } from "../ListGridItem";
 import { renderGridItems } from "../ListGridItem/renderer";
+import { getStocks, selectPortfolio } from "../../states/user.reducer";
 
 interface PortfolioListItemProps {
   portfolio: Portfolio;

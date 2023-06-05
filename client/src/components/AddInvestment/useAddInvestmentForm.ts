@@ -2,17 +2,14 @@ import isEmpty from "is-empty";
 import { ChangeEvent, Dispatch, FormEvent, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../../states/store";
-import {
-  asyncFetchPortfolios,
-  getSelectedPortfolio,
-} from "../../states/portfolios.reducer";
 import { TEST_USER_ID } from "../../dev/constants";
-import {
-  asyncFetchStocks,
-  getStocks,
-  getSymbols,
-} from "../../states/stocks.reducer";
+import { getSymbols } from "../../states/stocks.reducer";
 import { addInvestmentToPortfolio } from "../../api/portfolio.api";
+import {
+  asyncFetchUser,
+  getSelectedPortfolio,
+  getStocks,
+} from "../../states/user.reducer";
 
 export interface AddInvestmentFormData {
   keyword: string;
@@ -108,9 +105,7 @@ const useAddInvestmentForm = (): {
         stockId: selectedSymbol,
         portfolioId: selectedPortfolio.id,
       });
-      dispatch(asyncFetchStocks(TEST_USER_ID)).then(() =>
-        dispatch(asyncFetchPortfolios(TEST_USER_ID))
-      );
+      dispatch(asyncFetchUser(TEST_USER_ID));
     } catch (e) {
       console.error(e);
     }

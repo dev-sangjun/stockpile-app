@@ -1,18 +1,24 @@
-import { Company, Investment, Portfolio, Stock, User } from "@prisma/client";
+import { Investment, Portfolio, Stock } from "@prisma/client";
 import DBClient from "../../prisma/DBClient";
 import { EntityNotFoundError } from "../global/errors.global";
 
 interface PublicUser {
   id: string;
+  email: string;
+  username: string;
+
   portfolios: Portfolio[];
   investments: Investment[];
   stocks: Stock[];
 }
+
 const getPublicUser = async (id: string): Promise<PublicUser> => {
   const user = await getUser(id);
-  const { portfolios, investments, stocks } = user;
+  const { email, username, portfolios, investments, stocks } = user;
   return {
     id,
+    email,
+    username,
     portfolios,
     investments,
     stocks,
