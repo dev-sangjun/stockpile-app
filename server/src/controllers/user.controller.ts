@@ -1,14 +1,20 @@
 import { NextFunction, Request, Response } from "express";
 import { investmentService, userService } from "../services";
-import { UserGetRequestDto } from "../interfaces/dto/user.dto";
 
-const getStocks = async (
-  req: Request<UserGetRequestDto>,
-  res: Response,
-  next: NextFunction
-) => {
+const getUser = async (req: Request, res: Response, next: NextFunction) => {
   try {
-    const stocks = await userService.getStocks(req.params.userId);
+    const { userId } = req.params;
+    const user = await userService.getPublicUser(userId);
+    return res.json(user);
+  } catch (e) {
+    return next(e);
+  }
+};
+
+const getStocks = async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    const { userId } = req.params;
+    const stocks = await userService.getStocks(userId);
     return res.json(stocks);
   } catch (e) {
     return next(e);
@@ -34,6 +40,7 @@ const getInvestments = async (
 };
 
 export default {
+  getUser,
   getStocks,
   getInvestments,
 };
