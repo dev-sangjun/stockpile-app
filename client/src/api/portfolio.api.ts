@@ -71,3 +71,12 @@ export const deleteInvestmentFromPortfolio = async (
   );
   return res.data;
 };
+
+export const deletePortfolio = async (
+  portfolioId: string
+): Promise<Portfolio> => {
+  const res: AxiosResponse<Portfolio> = await axios.delete(
+    `${DEV_SERVER_ENDPOINT}/portfolios/${portfolioId}`
+  );
+  return res.data;
+};

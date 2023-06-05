@@ -70,6 +70,8 @@ export const userSlice = createSlice({
         );
         if (updatedPortfolio) {
           state.selectedPortfolio = updatedPortfolio;
+        } else {
+          state.selectedPortfolio = null;
         }
       }
     });

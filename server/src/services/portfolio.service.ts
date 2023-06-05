@@ -110,9 +110,21 @@ const deleteInvestment = async (investmentId: string): Promise<void> => {
   }
 };
 
+const deletePortfolio = async (portfolioId: string): Promise<void> => {
+  const portfolio = await DBClient.portfolio.delete({
+    where: {
+      id: portfolioId,
+    },
+  });
+  if (!portfolio) {
+    throw new InternalServerError();
+  }
+};
+
 export default {
   getPortfoliosByUserId,
   createPortfolio,
   addInvestmentToPortfolio,
   deleteInvestment,
+  deletePortfolio,
 };
