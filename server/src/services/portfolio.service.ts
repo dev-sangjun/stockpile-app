@@ -63,7 +63,7 @@ const addInvestmentToPortfolio = async (
 ): Promise<Investment> => {
   const { quantity, cost, userId, stockId } = addInvestmentToPortfolioDto;
   // invoke getStock to check if the stockId is valid
-  const stock = await stockService.getStock({ q: stockId });
+  const stock = await stockService.getStock(stockId);
   // set cost to current price if nullish cost was passed
   const adjustedCost = cost ?? stock.c;
   await userService.addStock(userId, stock);
@@ -108,6 +108,10 @@ const deleteInvestment = async (investmentId: string): Promise<void> => {
   if (!investment) {
     throw new InternalServerError();
   }
+  await userService.deleteStockWithNoReferenceFromUser(
+    investment.userId,
+    investment.stockId
+  );
 };
 
 const deletePortfolio = async (portfolioId: string): Promise<void> => {

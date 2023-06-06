@@ -1,6 +1,8 @@
 import { Investment, Portfolio, Stock, User } from "@prisma/client";
 import DBClient from "../../prisma/DBClient";
 import { EntityNotFoundError } from "../global/errors.global";
+import stockService from "./stock.service";
+import { InternalServerError } from "../global/errors.global";
 
 interface PublicUser {
   id: string;
@@ -186,6 +188,22 @@ const getFavoritStocks = async (id: string) => {
   return user.favoriteStocks;
 };
 
+const getNewStocks = (
+  investments: { stockId: string }[],
+  stocks: Stock[],
+  stockId: string
+) => {
+  // - add stocks only if it doens't already exist
+  // - upon deleting from favorite stocks,
+  //   delete the stock from stocks if it's not one of the user's investments
+  const investmentWithStockId = investments.find(
+    investment => investment.stockId === stockId
+  );
+  return investmentWithStockId
+    ? stocks
+    : stocks.filter(stock => stock.id !== stockId);
+};
+
 const addToFavoriteStocks = async (id: string, stockId: string) => {
   const user = await DBClient.user.findUnique({
     where: {
@@ -193,6 +211,12 @@ const addToFavoriteStocks = async (id: string, stockId: string) => {
     },
     select: {
       favoriteStocks: true,
+      investments: {
+        select: {
+          stockId: true,
+        },
+      },
+      stocks: true,
     },
   });
   if (!user) {
@@ -202,10 +226,22 @@ const addToFavoriteStocks = async (id: string, stockId: string) => {
     return user.favoriteStocks;
   }
   // add portfolioId to favorites only if it doesn't already exist
+  const stock = await stockService.getStock(stockId);
+  if (!stock) {
+    throw new EntityNotFoundError();
+  }
+  const newStocks = getNewStocks(user.investments, user.stocks, stockId).map(
+    stock => ({
+      id: stock.id,
+    })
+  );
   const udpatedUser = await DBClient.user.update({
     data: {
       favoriteStocks: {
         set: [...user.favoriteStocks, stockId],
+      },
+      stocks: {
+        set: newStocks,
       },
     },
     where: {
@@ -222,14 +258,22 @@ const deleteFromFavoriteStocks = async (id: string, stockId: string) => {
     },
     select: {
       favoriteStocks: true,
+      investments: {
+        select: {
+          stockId: true,
+        },
+      },
+      stocks: true,
     },
   });
   if (!user) {
     throw new EntityNotFoundError();
   }
-  if (!user.favoriteStocks.includes(stockId)) {
-    return user.favoriteStocks;
-  }
+  const newStocks = getNewStocks(user.investments, user.stocks, stockId).map(
+    stock => ({
+      id: stock.id,
+    })
+  );
   const udpatedUser = await DBClient.user.update({
     data: {
       favoriteStocks: {
@@ -237,12 +281,49 @@ const deleteFromFavoriteStocks = async (id: string, stockId: string) => {
           favoriteStockId => favoriteStockId !== stockId
         ),
       },
+      stocks: {
+        set: newStocks,
+      },
     },
     where: {
       id,
     },
   });
   return udpatedUser.favoriteStocks;
+};
+
+const deleteStockWithNoReferenceFromUser = async (
+  userId: string,
+  stockId: string
+) => {
+  const user = await getUser(userId);
+  if (user.investments.find(investment => investment.stockId === stockId)) {
+    return;
+  }
+  if (user.favoriteStocks.includes(stockId)) {
+    return;
+  }
+  // delete stock only if it's not part of any entities (investment, favoriteStocks)
+  const updatedUser = await DBClient.user.update({
+    data: {
+      stocks: {
+        set: user.stocks
+          .filter(stock => stock.id !== stockId)
+          .map(stock => ({
+            id: stock.id,
+          })),
+      },
+    },
+    where: {
+      id: userId,
+    },
+    include: {
+      stocks: true,
+    },
+  });
+  if (!updatedUser) {
+    return new InternalServerError();
+  }
 };
 
 export interface StockPrice {
@@ -286,4 +367,5 @@ export default {
   getFavoritStocks,
   addToFavoriteStocks,
   deleteFromFavoriteStocks,
+  deleteStockWithNoReferenceFromUser,
 };

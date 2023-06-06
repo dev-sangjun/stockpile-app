@@ -1,18 +1,15 @@
 import { NextFunction, Request, Response } from "express";
-import {
-  StockGetRequestDto,
-  StockGetSymbolsRequestDto,
-} from "../interfaces/dto/stock.dto";
+import { StockGetSymbolsRequestDto } from "../interfaces/dto/stock.dto";
 import { stockService } from "../services";
 
 const getStock = async (
-  req: Request<StockGetRequestDto>,
+  req: Request<{ q: string }>,
   res: Response,
   next: NextFunction
 ) => {
-  const stockGetRequestDto: StockGetRequestDto = req.params;
+  const { q } = req.params;
   try {
-    const stock = await stockService.getStock(stockGetRequestDto);
+    const stock = await stockService.getStock(q.toUpperCase());
     return res.json(stock);
   } catch (e) {
     return next(e);

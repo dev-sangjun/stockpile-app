@@ -3,10 +3,7 @@ import {
   FinnhubCompanyResponseDto,
   FinnhubStockResponseDto,
 } from "../interfaces/dto/finnhub.dto";
-import {
-  StockGetRequestDto,
-  StockGetSymbolsRequestDto,
-} from "../interfaces/dto/stock.dto";
+import { StockGetSymbolsRequestDto } from "../interfaces/dto/stock.dto";
 import finnhubService from "./finnhub.service";
 import allStockSymbols from "../data/all_stock_symbols.json";
 
@@ -50,11 +47,10 @@ const updateStock = async (
   return stock;
 };
 
-const getStock = async (stockGetRequestDto: StockGetRequestDto) => {
-  const { q } = stockGetRequestDto;
+const getStock = async (stockId: string) => {
   const stock = await DBClient.stock.findUnique({
     where: {
-      id: q.toUpperCase(),
+      id: stockId,
     },
     include: {
       company: true,
@@ -63,12 +59,12 @@ const getStock = async (stockGetRequestDto: StockGetRequestDto) => {
   if (!stock) {
     // create new stock if finnhub returns stock data
     const finnhubStockResponseDto: FinnhubStockResponseDto =
-      await finnhubService.fetchStock(q);
+      await finnhubService.fetchStock(stockId);
     // add company data upon creating new stock entity
     const FinnhubCompanyResponseDto: FinnhubCompanyResponseDto =
-      await finnhubService.fetchCompany(q);
+      await finnhubService.fetchCompany(stockId);
     const newStock = await createStock(
-      q,
+      stockId,
       finnhubStockResponseDto,
       FinnhubCompanyResponseDto
     );
