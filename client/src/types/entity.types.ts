@@ -2,6 +2,8 @@ export interface User {
   id: string;
   email: string;
   username: string;
+  favoritePortfolios: string[];
+  favoriteStocks: string[];
 
   portfolios: Portfolio[];
   investments: Investment[];

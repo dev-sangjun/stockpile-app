@@ -2,9 +2,18 @@ import { HiBuildingOffice2 } from "react-icons/hi2";
 import { Investment } from "../../types/entity.types";
 import InvestmentListItem from "./InvestmentListItem";
 
-export const renderInvestments = (investments: Investment[]) => {
+export const renderInvestmentListItems = (
+  investments: Investment[],
+  favoriteStocks: string[]
+) => {
+  const isFavorite = (investmentId: string) =>
+    favoriteStocks.includes(investmentId);
   return investments.map(investment => (
-    <InvestmentListItem key={investment.id} investment={investment} />
+    <InvestmentListItem
+      key={investment.id}
+      investment={investment}
+      isFavorite={isFavorite(investment.stockId)}
+    />
   ));
 };
 

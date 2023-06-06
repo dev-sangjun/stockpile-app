@@ -1,6 +1,10 @@
 import { PayloadAction, createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import type { RootState } from "./store";
-import { fetchUser } from "../api/user.api";
+import {
+  addToFavoriteStocks,
+  deleteFromFavoriteStocks,
+  fetchUser,
+} from "../api/user.api";
 import {
   Portfolio,
   Investments,
@@ -11,6 +15,8 @@ import { getInvestmentsObject, getStocksObject } from "../utils/entity.utils";
 
 interface UserState {
   userInfo: UserInfo | null;
+  favoritePortfolios: string[];
+  favoriteStocks: string[];
   portfolios: Portfolio[];
   selectedPortfolio?: Portfolio | null;
   investments: Investments;
@@ -19,6 +25,8 @@ interface UserState {
 
 const initialState: UserState = {
   userInfo: null,
+  favoritePortfolios: [],
+  favoriteStocks: [],
   portfolios: [],
   selectedPortfolio: null,
   investments: {},
@@ -29,7 +37,16 @@ export const asyncFetchUser = createAsyncThunk(
   "user/asyncFetchUser",
   async (userId: string): Promise<UserState> => {
     const user = await fetchUser(userId);
-    const { id, email, username, portfolios, investments, stocks } = user;
+    const {
+      id,
+      email,
+      username,
+      favoritePortfolios,
+      favoriteStocks,
+      portfolios,
+      investments,
+      stocks,
+    } = user;
     const userInfo: UserInfo = {
       id,
       email,
@@ -37,10 +54,30 @@ export const asyncFetchUser = createAsyncThunk(
     };
     return {
       userInfo,
+      favoritePortfolios,
+      favoriteStocks,
       portfolios,
       investments: getInvestmentsObject(investments),
       stocks: getStocksObject(stocks),
     };
+  }
+);
+
+export const asyncAddToFavoriteStocks = createAsyncThunk(
+  "user/asyncAddToFavoriteStocks",
+  async (payload: { userId: string; stockId: string }) => {
+    const { userId, stockId } = payload;
+    const favoriteStocks = await addToFavoriteStocks(userId, stockId);
+    return favoriteStocks;
+  }
+);
+
+export const asyncDeleteFromFavoriteStocks = createAsyncThunk(
+  "user/asyncDeleteFromFavoriteStocks",
+  async (payload: { userId: string; stockId: string }) => {
+    const { userId, stockId } = payload;
+    const favoriteStocks = await deleteFromFavoriteStocks(userId, stockId);
+    return favoriteStocks;
   }
 );
 
@@ -57,9 +94,18 @@ export const userSlice = createSlice({
   },
   extraReducers: builder => {
     builder.addCase(asyncFetchUser.fulfilled, (state, action) => {
-      const { userInfo, portfolios, investments, stocks } = action.payload;
+      const {
+        userInfo,
+        favoritePortfolios,
+        favoriteStocks,
+        portfolios,
+        investments,
+        stocks,
+      } = action.payload;
       state.userInfo = userInfo;
       state.portfolios = portfolios;
+      state.favoritePortfolios = favoritePortfolios;
+      state.favoriteStocks = favoriteStocks;
       state.investments = investments;
       state.stocks = stocks;
 
@@ -75,12 +121,26 @@ export const userSlice = createSlice({
         }
       }
     });
+    builder.addCase(asyncAddToFavoriteStocks.fulfilled, (state, action) => {
+      state.favoriteStocks = action.payload;
+    });
+    builder.addCase(
+      asyncDeleteFromFavoriteStocks.fulfilled,
+      (state, action) => {
+        state.favoriteStocks = action.payload;
+      }
+    );
   },
 });
 
 export const { selectPortfolio, deselectPortfolio } = userSlice.actions;
 
 export const getUser = (state: RootState) => state.userReducer;
+export const getUserInfo = (state: RootState) => state.userReducer.userInfo;
+export const getFavoritePortfolios = (state: RootState) =>
+  state.userReducer.favoritePortfolios;
+export const getFavoriteStocks = (state: RootState) =>
+  state.userReducer.favoriteStocks;
 export const getPortfolios = (state: RootState) => state.userReducer.portfolios;
 export const getSelectedPortfolio = (state: RootState) =>
   state.userReducer.selectedPortfolio;

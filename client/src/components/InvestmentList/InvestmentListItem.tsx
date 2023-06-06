@@ -11,16 +11,23 @@ import { HiTrash } from "react-icons/hi2";
 import { TEST_USER_ID } from "../../dev/constants";
 import { deleteInvestmentFromPortfolio } from "../../api/portfolio.api";
 import {
+  asyncAddToFavoriteStocks,
+  asyncDeleteFromFavoriteStocks,
   asyncFetchUser,
   getSelectedPortfolio,
   getStocks,
 } from "../../states/user.reducer";
+import FavoritesButton from "../FavoritesButton";
 
 interface InvestmentItemProps {
   investment: Investment;
+  isFavorite: boolean;
 }
 
-const InvestmentListItem: FC<InvestmentItemProps> = ({ investment }) => {
+const InvestmentListItem: FC<InvestmentItemProps> = ({
+  investment,
+  isFavorite,
+}) => {
   const stocks = useSelector((state: RootState) => getStocks(state));
   const selectedPortfolio = useSelector((state: RootState) =>
     getSelectedPortfolio(state)
@@ -74,12 +81,31 @@ const InvestmentListItem: FC<InvestmentItemProps> = ({ investment }) => {
     });
     dispatch(asyncFetchUser(TEST_USER_ID));
   };
+  const handleFavoriteClick = () => {
+    isFavorite
+      ? dispatch(
+          asyncDeleteFromFavoriteStocks({
+            userId: TEST_USER_ID,
+            stockId: investment.stockId,
+          })
+        )
+      : dispatch(
+          asyncAddToFavoriteStocks({
+            userId: TEST_USER_ID,
+            stockId: investment.stockId,
+          })
+        );
+  };
   return (
     <li className="card bg-base-100 shadow-xl p-4 flex flex-col gap-4">
       <div className="flex items-center h-30 gap-2">
         <div className="flex flex-1 items-center gap-2">
           {renderCompanyLogo(logoUrl)}
           <h3 className="text-lg font-bold">{investment.stockId}</h3>
+          <FavoritesButton
+            isFavorite={isFavorite}
+            onClick={handleFavoriteClick}
+          />
           {selectedPortfolio && (
             <button
               className="btn btn-xs btn-ghost"
