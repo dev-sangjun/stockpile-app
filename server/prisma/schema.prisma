@@ -19,17 +19,18 @@ model User {
   portfolios  Portfolio[]
   investments Investment[]
   stocks      Stock[]
+  netWorth    NetWorth?
 }
 
 model Stock {
-  id         String   @id // stock symbol
-  c          Float
-  d          Float
-  dp         Float
-  h          Float
-  l          Float
-  pc         Float
-  updated_at DateTime @updatedAt
+  id        String   @id // stock symbol
+  c         Float
+  d         Float
+  dp        Float
+  h         Float
+  l         Float
+  pc        Float
+  updatedAt DateTime @updatedAt
 
   investments Investment[]
   company     Company?
@@ -65,4 +66,14 @@ model Portfolio {
   user        User         @relation(fields: [userId], references: [id], onDelete: Cascade)
   userId      String
   investments Investment[]
+}
+
+model NetWorth {
+  id      String  @id @default(uuid())
+  weekly  Float[]
+  monthly Float[]
+  yearly  Float[]
+
+  user   User   @relation(fields: [userId], references: [id])
+  userId String @unique
 }

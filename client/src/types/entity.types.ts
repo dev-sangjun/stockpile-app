@@ -44,7 +44,7 @@ export interface Stock {
   id: string;
   l: number;
   pc: number;
-  updated_at: Date;
+  updatedAt: Date;
 }
 
 export interface Stocks {
