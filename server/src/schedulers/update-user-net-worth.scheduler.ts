@@ -24,14 +24,14 @@ const updateUserNetWorth = async () => {
     },
   });
   const userIds = users.map(user => user.id);
-  for (const userId of userIds) {
-    try {
-      await userService.updateNetWorth(userId, stockPrice);
-    } catch (e) {
-      console.error(e);
-      console.log(`There was an error while updating user: ${userId}`);
-    }
-  }
+  // for (const userId of userIds) {
+  //   try {
+  //     await userService.updateNetWorth(userId, stockPrice);
+  //   } catch (e) {
+  //     console.error(e);
+  //     console.log(`There was an error while updating user: ${userId}`);
+  //   }
+  // }
   const endTime = new Date().getTime();
   console.log(`Net worth update complete in ${endTime - startTime}ms`);
 };

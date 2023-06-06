@@ -25,7 +25,7 @@ const createUser = async (
       email,
       username,
       password: hashedPassword,
-      netWorths: [],
+      favorites: [],
     },
   });
   return {

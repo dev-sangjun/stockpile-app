@@ -86,30 +86,35 @@ export interface StockPrice {
   [key: string]: number; // key: stock symbol, value: price
 }
 
-const updateNetWorth = async (id: string, stockPrice: StockPrice) => {
-  const user = await getUser(id, ["investments"]);
-  const getCurrenNetWorth = () => {
-    const netWorth = user.investments.reduce((prev, investment) => {
-      return prev + stockPrice[investment.stockId] * investment.quantity;
-    }, 0);
-    return netWorth;
-  };
-  await DBClient.user.update({
-    data: {
-      netWorths: {
-        push: [getCurrenNetWorth()],
-      },
-    },
-    where: {
-      id,
-    },
-  });
-};
+/**
+ *
+ * @param id userId
+ * @param stockPrice { [stockId]: price (number)}
+ */
+
+// const updateNetWorth = async (id: string, stockPrice: StockPrice) => {
+//   const user = await getUser(id, ["investments"]);
+//   const getCurrenNetWorth = () => {
+//     const netWorth = user.investments.reduce((prev, investment) => {
+//       return prev + stockPrice[investment.stockId] * investment.quantity;
+//     }, 0);
+//     return netWorth;
+//   };
+//   await DBClient.user.update({
+//     data: {
+//       netWorths: {
+//         push: [getCurrenNetWorth()],
+//       },
+//     },
+//     where: {
+//       id,
+//     },
+//   });
+// };
 
 export default {
   getPublicUser,
   getUser,
   addStock,
   getStocks,
-  updateNetWorth,
 };
