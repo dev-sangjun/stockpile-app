@@ -54,17 +54,6 @@ CREATE TABLE "Portfolio" (
 );
 
 -- CreateTable
-CREATE TABLE "NetWorth" (
-    "id" TEXT NOT NULL,
-    "weekly" DOUBLE PRECISION[],
-    "monthly" DOUBLE PRECISION[],
-    "yearly" DOUBLE PRECISION[],
-    "userId" TEXT NOT NULL,
-
-    CONSTRAINT "NetWorth_pkey" PRIMARY KEY ("id")
-);
-
--- CreateTable
 CREATE TABLE "_StockToUser" (
     "A" TEXT NOT NULL,
     "B" TEXT NOT NULL
@@ -78,9 +67,6 @@ CREATE UNIQUE INDEX "User_username_key" ON "User"("username");
 
 -- CreateIndex
 CREATE UNIQUE INDEX "Company_stockId_key" ON "Company"("stockId");
-
--- CreateIndex
-CREATE UNIQUE INDEX "NetWorth_userId_key" ON "NetWorth"("userId");
 
 -- CreateIndex
 CREATE UNIQUE INDEX "_StockToUser_AB_unique" ON "_StockToUser"("A", "B");
@@ -102,9 +88,6 @@ ALTER TABLE "Investment" ADD CONSTRAINT "Investment_stockId_fkey" FOREIGN KEY ("
 
 -- AddForeignKey
 ALTER TABLE "Portfolio" ADD CONSTRAINT "Portfolio_userId_fkey" FOREIGN KEY ("userId") REFERENCES "User"("id") ON DELETE CASCADE ON UPDATE CASCADE;
-
--- AddForeignKey
-ALTER TABLE "NetWorth" ADD CONSTRAINT "NetWorth_userId_fkey" FOREIGN KEY ("userId") REFERENCES "User"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "_StockToUser" ADD CONSTRAINT "_StockToUser_A_fkey" FOREIGN KEY ("A") REFERENCES "Stock"("id") ON DELETE CASCADE ON UPDATE CASCADE;
