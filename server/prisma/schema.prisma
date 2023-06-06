@@ -11,11 +11,12 @@ datasource db {
 }
 
 model User {
-  id        String   @id @default(uuid())
-  email     String   @unique
-  username  String   @unique
-  password  String
-  favorites String[] // stockIds
+  id                 String   @id @default(uuid())
+  email              String   @unique
+  username           String   @unique
+  password           String
+  favoritePortfolios String[] // portfolioIds
+  favoriteStocks     String[] // stockIds
 
   portfolios  Portfolio[]
   investments Investment[]
