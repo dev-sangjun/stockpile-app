@@ -30,6 +30,6 @@
     "build": "npx tsc -p .",
     "start": "node dist/server.js",
     "dev": "nodemon --watch \"src/**/*.ts\" --exec \"ts-node\" src/server.ts",
-    "scheduler": "kill $(lsof -t -i:8080) && nodemon --watch \"src/schedulers/**/*.ts\" --exec \"ts-node\" src/schedulers/main.ts"
+    "scheduler": "nodemon --watch \"src/schedulers/**/*.ts\" --exec \"ts-node\" src/schedulers/main.ts"
   }
 }

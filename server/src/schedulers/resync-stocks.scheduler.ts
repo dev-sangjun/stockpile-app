@@ -18,11 +18,11 @@ const resyncStocks = async () => {
       await stockService.updateStock(stockId, finnhubStockResponseDto);
     } catch (e) {
       console.error(e);
-      console.log(`There was an error while updating ${stockId}`);
+      console.log(`There was an error while updating stock: ${stockId}`);
     }
   }
   const endTime = new Date().getTime();
-  console.log(`Resync complete in ${endTime - startTime}ms`);
+  console.log(`Stocks resync complete in ${endTime - startTime}ms`);
 };
 
 export default resyncStocks;
