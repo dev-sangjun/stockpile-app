@@ -10,9 +10,9 @@ import { asyncFetchUser } from "./states/user.reducer";
 import { asyncFetchSymbols } from "./states/stocks.reducer";
 
 const Layout = () => (
-  <div className="h-screen flex flex-col bg-slate-100 overflow-hidden">
+  <div className="flex flex-col bg-slate-200">
     <Navbar navbarItems={navbarItems} />
-    <div className="max-w-7xl w-full h-full mx-auto">
+    <div className="max-w-7xl w-full mx-auto">
       <Outlet />
     </div>
   </div>

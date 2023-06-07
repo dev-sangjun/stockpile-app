@@ -1,4 +1,10 @@
-import { Investment, Investments, Stock, Stocks } from "../types/entity.types";
+import {
+  Investment,
+  Investments,
+  Portfolio,
+  Stock,
+  Stocks,
+} from "../types/entity.types";
 
 const addInvestments = (
   prevInvestment: Investment,
@@ -51,3 +57,9 @@ export const getStocksObject = (stocks: Stock[]): Stocks => {
   });
   return stocksObject;
 };
+
+export const getPortfolioTotalValue = (portfolio: Portfolio, stocks: Stocks) =>
+  portfolio.investments.reduce((prev, investment) => {
+    const { quantity, stockId } = investment;
+    return prev + (stocks?.[stockId]?.c || 0) * quantity;
+  }, 0);

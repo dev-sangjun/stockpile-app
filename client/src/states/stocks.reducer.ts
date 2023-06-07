@@ -3,10 +3,6 @@ import type { RootState } from "./store";
 import { Stock } from "../types/entity.types";
 import { fetchStockSymbols } from "../api/stock.api";
 
-export interface Stocks {
-  [key: string]: Stock; // key: stock symbol, value: price
-}
-
 interface StocksState {
   symbols: string[];
 }

@@ -25,7 +25,7 @@ const FavoriteStockList: FC<FavoriteStockListProps> = ({ stocks }) => {
     });
   };
   return (
-    <div className="carousel carousel-center rounded-box" ref={carouselRef}>
+    <div className="carousel carousel-center rounded-box " ref={carouselRef}>
       <ul className="flex gap-4">
         {stocks.map(stock => (
           <StockListItem
