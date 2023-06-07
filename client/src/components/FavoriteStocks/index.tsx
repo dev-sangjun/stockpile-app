@@ -21,7 +21,6 @@ const FavoriteStocks: FC = () => {
   };
   return (
     <div className="flex flex-col gap-4 h-full">
-      <h2 className="text-xl font-bold">Favorite Stocks</h2>
       {<FavoriteStockList stocks={filterFavoriteStocks()} />}
     </div>
   );
