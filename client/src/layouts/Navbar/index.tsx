@@ -1,6 +1,7 @@
 import { FC } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { NavbarItem } from "./navbar-items";
+import logo from "../../assets/logo.png";
 
 interface NavbarProps {
   navbarItems: NavbarItem[];
@@ -34,6 +35,7 @@ const Navbar: FC<NavbarProps> = ({ navbarItems }) => {
             className="btn btn-ghost normal-case text-xl mx-auto md:mx-0 flex gap-2"
             to="/"
           >
+            <img src={logo} alt="logo" className="w-12" />
             <span>Stockpile</span>
           </Link>
         </div>

@@ -9,7 +9,7 @@ const PortfolioValuesCard: FC = () => {
   return (
     <div className="card flex flex-row h-full bg-base-100 p-4 gap-2">
       <div className="flex flex-1 flex-col h-full text-lg font-bold overflow-hidden">
-        <h3>Portfolio Values</h3>
+        <h3 className="text-lg font-bold">Portfolio Values</h3>
         <PortfolioChart portfolios={portfolios} />
       </div>
     </div>
