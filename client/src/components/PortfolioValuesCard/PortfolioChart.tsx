@@ -88,7 +88,7 @@ const constructChartConfig = (
 const PortfolioChart: FC<PortfolioChartProps> = ({ portfolios }) => {
   const stocks = useSelector((state: RootState) => getStocks(state));
   const { data, options } = constructChartConfig(portfolios, stocks);
-  return <Bar data={data} options={options} className="my-auto p-2 md:p-8" />;
+  return <Bar data={data} options={options} className="my-auto pt-2 md:p-8" />;
 };
 
 export default PortfolioChart;
