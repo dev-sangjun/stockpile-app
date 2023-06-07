@@ -12,6 +12,7 @@ import {
   UserInfo,
 } from "../types/entity.types";
 import { getInvestmentsObject, getStocksObject } from "../utils/entity.utils";
+import { fetchStocksByUserId } from "../api/stock.api";
 
 interface UserState {
   userInfo: UserInfo | null;
@@ -60,6 +61,14 @@ export const asyncFetchUser = createAsyncThunk(
       investments: getInvestmentsObject(investments),
       stocks: getStocksObject(stocks),
     };
+  }
+);
+
+export const asyncFetchStocks = createAsyncThunk(
+  "user/asyncFetchStocks",
+  async (userId: string) => {
+    const stocks = await fetchStocksByUserId(userId);
+    return stocks;
   }
 );
 
@@ -120,6 +129,9 @@ export const userSlice = createSlice({
           state.selectedPortfolio = null;
         }
       }
+    });
+    builder.addCase(asyncFetchStocks.fulfilled, (state, action) => {
+      state.stocks = action.payload;
     });
     builder.addCase(asyncAddToFavoriteStocks.fulfilled, (state, action) => {
       state.favoriteStocks = action.payload;

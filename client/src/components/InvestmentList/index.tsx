@@ -21,7 +21,6 @@ const InvestmentList: FC = () => {
   const favoriteStocks = useSelector((state: RootState) =>
     getFavoriteStocks(state)
   );
-  console.log(favoriteStocks);
   // show all investments if no portfolio is selected
   const investments =
     selectedPortfolio?.investments ?? Object.values(allInvestments);
