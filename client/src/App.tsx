@@ -8,6 +8,7 @@ import { AppDispatch } from "./states/store";
 import { TEST_USER_ID } from "./dev/constants";
 import { asyncFetchUser } from "./states/user.reducer";
 import { asyncFetchSymbols } from "./states/stocks.reducer";
+import SignIn from "./pages/SignIn";
 
 const Layout = () => (
   <div className="flex flex-col bg-slate-200">
@@ -21,10 +22,16 @@ const Layout = () => (
 const router = createBrowserRouter([
   {
     element: <Layout />,
-    children: navbarItems.map(({ path, element }) => ({
-      path,
-      element,
-    })),
+    children: [
+      ...navbarItems.map(({ path, element }) => ({
+        path,
+        element,
+      })),
+      {
+        path: "/signin",
+        element: <SignIn />,
+      },
+    ],
   },
 ]);
 

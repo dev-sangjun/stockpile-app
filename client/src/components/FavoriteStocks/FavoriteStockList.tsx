@@ -1,4 +1,4 @@
-import { FC, useRef, useState } from "react";
+import { FC, useRef } from "react";
 import { Stock } from "../../types/entity.types";
 import StockListItem from "./FavoriteStockListItem";
 import { useSelector } from "react-redux";
@@ -18,12 +18,12 @@ const FavoriteStockList: FC<FavoriteStockListProps> = ({ stocks }) => {
     }
     return 0;
   };
-  const scroll = () => {
-    carouselRef.current?.scroll({
-      left: carouselRef.current?.scrollLeft + 100,
-      behavior: "smooth",
-    });
-  };
+  // const scroll = () => {
+  //   carouselRef.current?.scroll({
+  //     left: carouselRef.current?.scrollLeft + 100,
+  //     behavior: "smooth",
+  //   });
+  // };
   return (
     <div className="carousel carousel-center rounded-box " ref={carouselRef}>
       <ul className="flex gap-4">
