@@ -28,7 +28,7 @@ const Navbar: FC<NavbarProps> = ({ navbarItems }) => {
     ));
   };
   return (
-    <div className="bg-white">
+    <div className="bg-white absolute w-full">
       <div className="navbar p-0 max-w-7xl mx-auto sticky top-0 z-10">
         <div className="flex-1 top-0">
           <Link

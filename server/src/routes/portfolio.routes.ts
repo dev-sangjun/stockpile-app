@@ -1,7 +1,9 @@
 import { Router } from "express";
 import { portfolioController } from "../controllers";
+import { authMiddleware } from "../middlewares/auth.middleware";
 
 const portfolioRouter = Router();
+portfolioRouter.use(authMiddleware);
 portfolioRouter.get("/", portfolioController.getPortfolios);
 portfolioRouter.post("/", portfolioController.createPortfolio);
 portfolioRouter.post(

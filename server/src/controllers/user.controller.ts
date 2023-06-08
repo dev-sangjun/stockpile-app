@@ -1,10 +1,15 @@
 import { NextFunction, Request, Response } from "express";
 import { investmentService, userService } from "../services";
 import { BadRequestError } from "../global/errors.global";
+import { AuthorizedRequest } from "../middlewares/auth.middleware";
 
 const getUser = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const { userId } = req.params;
+    const { authorizedUserId } = req as AuthorizedRequest;
+    if (userId !== authorizedUserId) {
+      return res.sendStatus(401);
+    }
     const user = await userService.getPublicUser(userId);
     return res.json(user);
   } catch (e) {

@@ -13,7 +13,8 @@ export const fetchInvestments = async (
 
 export const fetchUser = async (userId: string): Promise<User> => {
   const res: AxiosResponse<User> = await axios.get(
-    `${DEV_SERVER_ENDPOINT}/users/${userId}`
+    `${DEV_SERVER_ENDPOINT}/users/${userId}`,
+    { withCredentials: true }
   );
   return res.data;
 };

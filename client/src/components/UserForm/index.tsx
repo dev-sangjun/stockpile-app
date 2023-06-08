@@ -3,15 +3,15 @@ import useUserForm from "./useUserForm";
 
 const UserForm: FC = () => {
   const [isSignIn, setIsSignIn] = useState(true);
-  const { handleInputChange, handleSubmit } = useUserForm();
+  const { handleInputChange, handleSubmit } = useUserForm(isSignIn);
   const formActionText = isSignIn ? "Sign in" : "Sign up";
   return (
-    <div className="flex flex-col gap-4 bg-base-100 p-8 w-full max-w-lg">
+    <div className="card flex flex-col gap-4 bg-base-100 p-12 w-full max-w-lg">
       <div className="flex flex-col gap-2">
         <h2 className="text-2xl font-bold">{formActionText}</h2>
         <span className="">
           {isSignIn
-            ? "Welcome back! Let's verify it's you."
+            ? "Welcome back! Let's verify your identity."
             : "Welcome! Please enter your details to sign up."}
         </span>
       </div>

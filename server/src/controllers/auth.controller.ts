@@ -20,10 +20,15 @@ const signUpUser = async (req: Request, res: Response, next: NextFunction) => {
 const signInUser = async (req: Request, res: Response, next: NextFunction) => {
   const authUserSignInRequestDto: AuthUserSignInRequestDto = req.body;
   try {
-    const accessTokenResponseDto = await authService.signInUser(
+    const { accessToken, userId } = await authService.signInUser(
       authUserSignInRequestDto
     );
-    return res.json(accessTokenResponseDto);
+    return res
+      .cookie("access_token", accessToken, {
+        httpOnly: true,
+        secure: process.env.NODE_ENV === "production",
+      })
+      .json({ userId });
   } catch (e) {
     return next(e);
   }

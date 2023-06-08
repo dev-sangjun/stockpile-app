@@ -1,5 +1,8 @@
 import { ChangeEvent, FormEvent, useState } from "react";
-import { createUser } from "../../api/auth.api";
+import { createUser, signInUser } from "../../api/auth.api";
+import { useDispatch } from "react-redux";
+import { AppDispatch } from "../../states/store";
+import { asyncFetchUser } from "../../states/user.reducer";
 
 export interface UserFormData {
   username: string;
@@ -13,10 +16,13 @@ const initialState: UserFormData = {
   password: "",
 };
 
-const useUserForm = (): {
+const useUserForm = (
+  isSignIn: boolean
+): {
   handleInputChange: (e: ChangeEvent<HTMLInputElement>) => void;
   handleSubmit: (e: FormEvent) => Promise<void>;
 } => {
+  const dispatch = useDispatch<AppDispatch>();
   const [formData, setFormData] = useState<UserFormData>(initialState);
   const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.currentTarget;
@@ -28,8 +34,13 @@ const useUserForm = (): {
   };
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
-    const res = await createUser(formData);
-    console.log(res);
+    if (isSignIn) {
+      const userId = await signInUser(formData);
+      dispatch(asyncFetchUser(userId));
+    } else {
+      const res = await createUser(formData);
+      console.log(res);
+    }
   };
   return { handleInputChange, handleSubmit };
 };

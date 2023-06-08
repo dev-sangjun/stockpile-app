@@ -13,7 +13,7 @@ import SignIn from "./pages/SignIn";
 const Layout = () => (
   <div className="flex flex-col bg-slate-200">
     <Navbar navbarItems={navbarItems} />
-    <div className="max-w-7xl w-full mx-auto">
+    <div className="max-w-7xl h-screen w-full mx-auto py-24">
       <Outlet />
     </div>
   </div>

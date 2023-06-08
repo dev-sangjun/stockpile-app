@@ -16,3 +16,21 @@ export const createUser = async (
   );
   return res.data;
 };
+
+export interface SignInUserDto {
+  email: string;
+  password: string;
+}
+
+export const signInUser = async (
+  signInUserDto: SignInUserDto
+): Promise<string> => {
+  const res: AxiosResponse<{ userId: string }> = await axios.post(
+    `${DEV_SERVER_ENDPOINT}/auth/signin`,
+    signInUserDto,
+    { withCredentials: true }
+  );
+  // returns userId on successful sign in
+  const { userId } = res.data;
+  return userId;
+};

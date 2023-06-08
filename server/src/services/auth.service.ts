@@ -36,7 +36,10 @@ const createUser = async (
 
 const signInUser = async (
   authUserSignInRequestDto: AuthUserSignInRequestDto
-): Promise<AccessTokenResponseDto> => {
+): Promise<{
+  accessToken: string;
+  userId: string;
+}> => {
   const { email, password } = authUserSignInRequestDto;
   const user = await DBClient.user.findFirst({
     where: {
@@ -53,12 +56,13 @@ const signInUser = async (
   // generate access token
   const accessToken = jwt.sign(
     {
-      id: user.id,
+      userId: user.id,
     },
     JWT_SECRET_KEY
   );
   return {
     accessToken,
+    userId: user.id,
   };
 };
 

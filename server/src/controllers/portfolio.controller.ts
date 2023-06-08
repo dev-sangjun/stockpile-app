@@ -4,15 +4,18 @@ import {
   CreatePortfolioDto,
   AddInvestmentToPortfolioDto,
 } from "../interfaces/dto/portfolio.dto";
+import { AuthorizedRequest } from "../middlewares/auth.middleware";
 
 const getPortfolios = async (
-  req: Request<undefined, any, any, { userId: string }>,
+  req: Request,
   res: Response,
   next: NextFunction
 ) => {
-  const { userId } = req.query;
+  const { authorizedUserId } = req as AuthorizedRequest;
   try {
-    const portfolios = await portfolioService.getPortfoliosByUserId(userId);
+    const portfolios = await portfolioService.getPortfoliosByUserId(
+      authorizedUserId as string
+    );
     return res.json(portfolios);
   } catch (e) {
     return next(e);
