@@ -15,6 +15,9 @@ const getFetchCompanyUrl = (q: string) =>
 const isStockResponseValid = (stockResponseDto: FinnhubStockResponseDto) =>
   stockResponseDto.c !== 0 && stockResponseDto.pc !== 0;
 
+// Some symbols need to be fetched in lowercase
+const lowerCaseSymbols = ["FXAIX"];
+
 /**
  *
  * @param q stock symbol
@@ -22,7 +25,7 @@ const isStockResponseValid = (stockResponseDto: FinnhubStockResponseDto) =>
  */
 const fetchStock = async (q: string): Promise<FinnhubStockResponseDto> => {
   const stockResponseDto: FinnhubStockResponseDto = await fetch(
-    getFetchStockUrl(q.toLowerCase()),
+    getFetchStockUrl(lowerCaseSymbols.includes(q) ? q.toLowerCase() : q),
     {
       cache: "no-cache",
     }
@@ -48,7 +51,7 @@ const fetchStock = async (q: string): Promise<FinnhubStockResponseDto> => {
  */
 const fetchCompany = async (q: string): Promise<FinnhubCompanyResponseDto> => {
   const companyResponseDto: FinnhubCompanyResponseDto = await fetch(
-    getFetchCompanyUrl(q.toLowerCase()),
+    getFetchCompanyUrl(q),
     {
       cache: "no-cache",
     }

@@ -10,7 +10,7 @@ const app = express();
 const SCHEDULER_PORT = process.env.SCHEDULER_PORT || 8080;
 app.listen(SCHEDULER_PORT, () => {
   // resync stocks every 10 minutes
-  schedule.scheduleJob("*/5 * * * *", resyncStocks);
+  schedule.scheduleJob("* * * * *", resyncStocks);
   // update user net worth every 5 days at 21:00 UTC (17:00 EST)
   schedule.scheduleJob("0 21 * * 1-5", updateUserNetWorth);
 });
