@@ -1,14 +1,14 @@
 import { FC, useMemo } from "react";
 import { Stock } from "../../types/entity.types";
 import FavoritesButton from "../FavoritesButton";
-import { useDispatch } from "react-redux";
-import { AppDispatch } from "../../states/store";
+import { useDispatch, useSelector } from "react-redux";
+import { AppDispatch, RootState } from "../../states/store";
 import { asyncDeleteFromFavoriteStocks } from "../../states/user.reducer";
-import { TEST_USER_ID } from "../../dev/constants";
 import { toUSD } from "../../utils/numeral.utils";
 import { renderGridItems } from "../ListGridItem/renderer";
 import { GridItemProps } from "../ListGridItem";
 import ValueChangeText from "../ValueChangeText";
+import { getUserId } from "../../states/auth.reducer";
 
 interface StockListItemProps {
   stock: Stock;
@@ -17,6 +17,7 @@ interface StockListItemProps {
 
 const StockListItem: FC<StockListItemProps> = ({ stock, quantity }) => {
   const dispatch = useDispatch<AppDispatch>();
+  const userId = useSelector((state: RootState) => getUserId(state));
   const gridItems: GridItemProps[] = useMemo(
     () => [
       {
@@ -31,9 +32,12 @@ const StockListItem: FC<StockListItemProps> = ({ stock, quantity }) => {
     [stock, quantity]
   );
   const handleFavoriteClick = () => {
+    if (!userId) {
+      return;
+    }
     dispatch(
       asyncDeleteFromFavoriteStocks({
-        userId: TEST_USER_ID,
+        userId: userId,
         stockId: stock.id,
       })
     );

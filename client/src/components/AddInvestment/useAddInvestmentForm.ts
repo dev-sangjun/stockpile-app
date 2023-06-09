@@ -2,7 +2,6 @@ import isEmpty from "is-empty";
 import { ChangeEvent, Dispatch, FormEvent, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../../states/store";
-import { TEST_USER_ID } from "../../dev/constants";
 import { getSymbols } from "../../states/stocks.reducer";
 import { addInvestmentToPortfolio } from "../../api/portfolio.api";
 import {
@@ -10,6 +9,7 @@ import {
   getSelectedPortfolio,
   getStocks,
 } from "../../states/user.reducer";
+import { getUserId } from "../../states/auth.reducer";
 
 export interface AddInvestmentFormData {
   keyword: string;
@@ -45,6 +45,7 @@ const useAddInvestmentForm = (): {
   const [formData, setFormData] =
     useState<AddInvestmentFormData>(formDataInitialState);
   const dispatch = useDispatch<AppDispatch>();
+  const userId = useSelector((state: RootState) => getUserId(state));
   const selectedPortfolio = useSelector((state: RootState) =>
     getSelectedPortfolio(state)
   );
@@ -93,7 +94,7 @@ const useAddInvestmentForm = (): {
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
     const { quantity, cost, selectedSymbol } = formData;
-    if (!selectedSymbol || !selectedPortfolio) {
+    if (!userId || !selectedSymbol || !selectedPortfolio) {
       return;
     }
     try {
@@ -101,11 +102,10 @@ const useAddInvestmentForm = (): {
       await addInvestmentToPortfolio({
         quantity,
         cost,
-        userId: TEST_USER_ID,
         stockId: selectedSymbol,
         portfolioId: selectedPortfolio.id,
       });
-      dispatch(asyncFetchUser(TEST_USER_ID));
+      dispatch(asyncFetchUser());
     } catch (e) {
       console.error(e);
     }

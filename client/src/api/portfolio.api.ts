@@ -13,7 +13,6 @@ export const fetchPortfoliosByUserId = async (
 
 export interface AddPortfolioRequestDto {
   name: string;
-  userId: string;
 }
 
 export const addPortfolio = async (
@@ -21,7 +20,8 @@ export const addPortfolio = async (
 ): Promise<Portfolio> => {
   const res: AxiosResponse<Portfolio> = await axios.post(
     `${DEV_SERVER_ENDPOINT}/portfolios`,
-    addPortfolioRequestDto
+    addPortfolioRequestDto,
+    { withCredentials: true }
   );
   return res.data;
 };
@@ -33,7 +33,6 @@ export const addPortfolio = async (
 export interface AddInvestmentToPortfolioDto {
   quantity: number;
   cost: number | undefined;
-  userId: string;
   stockId: string;
 }
 
@@ -47,17 +46,16 @@ export const addInvestmentToPortfolio = async (
     portfolioId: string;
   }
 ): Promise<Investment> => {
-  const { quantity, cost, userId, stockId, portfolioId } =
-    addInvestmentToPortfolioDto;
+  const { quantity, cost, stockId, portfolioId } = addInvestmentToPortfolioDto;
   const body: AddInvestmentToPortfolioDto = {
     quantity,
     cost,
-    userId,
     stockId,
   };
   const res: AxiosResponse<Investment> = await axios.post(
     `${DEV_SERVER_ENDPOINT}/portfolios/${portfolioId}/investments`,
-    body
+    body,
+    { withCredentials: true }
   );
   return res.data;
 };
@@ -67,7 +65,8 @@ export const deleteInvestmentFromPortfolio = async (
 ): Promise<Investment> => {
   const { portfolioId, investmentId } = deleteInvestmentFromPortfolioDto;
   const res: AxiosResponse<Investment> = await axios.delete(
-    `${DEV_SERVER_ENDPOINT}/portfolios/${portfolioId}/investments/${investmentId}`
+    `${DEV_SERVER_ENDPOINT}/portfolios/${portfolioId}/investments/${investmentId}`,
+    { withCredentials: true }
   );
   return res.data;
 };
@@ -76,7 +75,8 @@ export const deletePortfolio = async (
   portfolioId: string
 ): Promise<Portfolio> => {
   const res: AxiosResponse<Portfolio> = await axios.delete(
-    `${DEV_SERVER_ENDPOINT}/portfolios/${portfolioId}`
+    `${DEV_SERVER_ENDPOINT}/portfolios/${portfolioId}`,
+    { withCredentials: true }
   );
   return res.data;
 };

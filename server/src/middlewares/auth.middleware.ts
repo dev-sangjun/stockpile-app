@@ -2,7 +2,7 @@ import { NextFunction, Request, Response } from "express";
 import jwt, { JwtPayload } from "jsonwebtoken";
 
 export interface AuthorizedRequest extends Request {
-  authorizedUserId: string | JwtPayload;
+  authorizedUserId: string;
 }
 
 export const authMiddleware = (

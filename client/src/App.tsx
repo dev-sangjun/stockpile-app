@@ -5,10 +5,9 @@ import "./App.css";
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { AppDispatch } from "./states/store";
-import { TEST_USER_ID } from "./dev/constants";
-import { asyncFetchUser } from "./states/user.reducer";
 import { asyncFetchSymbols } from "./states/stocks.reducer";
 import SignIn from "./pages/SignIn";
+import { asyncFetchUser } from "./states/user.reducer";
 
 const Layout = () => (
   <div className="flex flex-col bg-slate-200">
@@ -40,7 +39,7 @@ function App() {
   useEffect(() => {
     const fetchStates = async () => {
       await dispatch(asyncFetchSymbols());
-      await dispatch(asyncFetchUser(TEST_USER_ID));
+      await dispatch(asyncFetchUser());
     };
     fetchStates();
   }, [dispatch]);

@@ -1,10 +1,10 @@
 import isEmpty from "is-empty";
 import { ChangeEvent, Dispatch, FormEvent, useState } from "react";
-import { useDispatch } from "react-redux";
-import { AppDispatch } from "../../states/store";
-import { TEST_USER_ID } from "../../dev/constants";
+import { useDispatch, useSelector } from "react-redux";
+import { AppDispatch, RootState } from "../../states/store";
 import { addPortfolio } from "../../api/portfolio.api";
 import { asyncFetchUser } from "../../states/user.reducer";
+import { getUserId } from "../../states/auth.reducer";
 
 export interface AddPortfolioFormData {
   name: string;
@@ -24,6 +24,7 @@ const useAddPortfolioForm = (): {
   const [formData, setFormData] =
     useState<AddPortfolioFormData>(formDataInitialState);
   const dispatch = useDispatch<AppDispatch>();
+  const userId = useSelector((state: RootState) => getUserId(state));
   const handleFormChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.currentTarget;
     setFormData({
@@ -37,13 +38,13 @@ const useAddPortfolioForm = (): {
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
     const { name } = formData;
-    if (isEmpty(name)) {
+    if (!userId || isEmpty(name)) {
       return;
     }
     try {
       // add portfolio
-      await addPortfolio({ name, userId: TEST_USER_ID });
-      dispatch(asyncFetchUser(TEST_USER_ID));
+      await addPortfolio({ name });
+      dispatch(asyncFetchUser());
     } catch (e) {
       console.error(e);
     }

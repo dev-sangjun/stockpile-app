@@ -8,7 +8,6 @@ import { GridItemProps } from "../ListGridItem";
 import { renderGridItems } from "../ListGridItem/renderer";
 import { renderCompanyLogo } from "./renderer";
 import { HiTrash } from "react-icons/hi2";
-import { TEST_USER_ID } from "../../dev/constants";
 import { deleteInvestmentFromPortfolio } from "../../api/portfolio.api";
 import {
   asyncAddToFavoriteStocks,
@@ -18,6 +17,7 @@ import {
   getStocks,
 } from "../../states/user.reducer";
 import FavoritesButton from "../FavoritesButton";
+import { getUserId } from "../../states/auth.reducer";
 
 interface InvestmentItemProps {
   investment: Investment;
@@ -28,6 +28,7 @@ const InvestmentListItem: FC<InvestmentItemProps> = ({
   investment,
   isFavorite,
 }) => {
+  const userId = useSelector((state: RootState) => getUserId(state));
   const stocks = useSelector((state: RootState) => getStocks(state));
   const selectedPortfolio = useSelector((state: RootState) =>
     getSelectedPortfolio(state)
@@ -72,26 +73,29 @@ const InvestmentListItem: FC<InvestmentItemProps> = ({
   );
   const logoUrl = stocks?.[investment.stockId]?.company?.logo;
   const handleDeleteInvestment = async () => {
-    if (!selectedPortfolio) {
+    if (!userId || !selectedPortfolio) {
       return;
     }
     await deleteInvestmentFromPortfolio({
       portfolioId: selectedPortfolio.id,
       investmentId: investment.id,
     });
-    dispatch(asyncFetchUser(TEST_USER_ID));
+    dispatch(asyncFetchUser());
   };
   const handleFavoriteClick = () => {
+    if (!userId) {
+      return;
+    }
     isFavorite
       ? dispatch(
           asyncDeleteFromFavoriteStocks({
-            userId: TEST_USER_ID,
+            userId,
             stockId: investment.stockId,
           })
         )
       : dispatch(
           asyncAddToFavoriteStocks({
-            userId: TEST_USER_ID,
+            userId,
             stockId: investment.stockId,
           })
         );

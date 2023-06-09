@@ -13,14 +13,15 @@ import {
   selectPortfolio,
 } from "../../states/user.reducer";
 import { HiTrash } from "react-icons/hi2";
-import { TEST_USER_ID } from "../../dev/constants";
 import { deletePortfolio } from "../../api/portfolio.api";
+import { getUserId } from "../../states/auth.reducer";
 
 interface PortfolioListItemProps {
   portfolio: Portfolio;
 }
 
 const PortfolioListItem: FC<PortfolioListItemProps> = ({ portfolio }) => {
+  const userId = useSelector((state: RootState) => getUserId(state));
   const stocks = useSelector((state: RootState) => getStocks(state));
   const dispatch = useDispatch<AppDispatch>();
   const portfolioDetails = useMemo(() => {
@@ -68,8 +69,11 @@ const PortfolioListItem: FC<PortfolioListItemProps> = ({ portfolio }) => {
     dispatch(selectPortfolio(portfolio));
   };
   const handleDeletePortfolio = async () => {
+    if (!userId) {
+      return;
+    }
     await deletePortfolio(portfolio.id);
-    dispatch(asyncFetchUser(TEST_USER_ID));
+    dispatch(asyncFetchUser());
   };
   return (
     <li

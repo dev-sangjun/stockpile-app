@@ -1,7 +1,6 @@
 import axios, { AxiosResponse } from "axios";
 import { DEV_SERVER_ENDPOINT } from "../dev/constants";
-import { Stocks } from "../states/stocks.reducer";
-import { Stock } from "../types/entity.types";
+import { Stock, Stocks } from "../types/entity.types";
 
 export const fetchStockSymbols = async (): Promise<string[]> => {
   const res: AxiosResponse<string[]> = await axios.get(

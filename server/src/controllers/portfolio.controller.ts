@@ -1,9 +1,6 @@
 import { NextFunction, Request, Response } from "express";
 import { portfolioService } from "../services";
-import {
-  CreatePortfolioDto,
-  AddInvestmentToPortfolioDto,
-} from "../interfaces/dto/portfolio.dto";
+import { AddInvestmentToPortfolioDto } from "../interfaces/dto/portfolio.dto";
 import { AuthorizedRequest } from "../middlewares/auth.middleware";
 
 const getPortfolios = async (
@@ -14,7 +11,7 @@ const getPortfolios = async (
   const { authorizedUserId } = req as AuthorizedRequest;
   try {
     const portfolios = await portfolioService.getPortfoliosByUserId(
-      authorizedUserId as string
+      authorizedUserId
     );
     return res.json(portfolios);
   } catch (e) {
@@ -27,10 +24,12 @@ const createPortfolio = async (
   res: Response,
   next: NextFunction
 ) => {
-  const createPortfolioDto: CreatePortfolioDto = req.body;
+  const { authorizedUserId } = req as AuthorizedRequest;
+  const { name } = req.body;
   try {
     const portfolio = await portfolioService.createPortfolio(
-      createPortfolioDto
+      authorizedUserId,
+      name
     );
     return res.json(portfolio);
   } catch (e) {
@@ -43,10 +42,12 @@ const addInvestmentToPortfolio = async (
   res: Response,
   next: NextFunction
 ) => {
+  const { authorizedUserId } = req as AuthorizedRequest;
   const { portfolioId } = req.params;
   const addInvestmentToPortfolioDto: AddInvestmentToPortfolioDto = req.body;
   try {
     const portfolio = await portfolioService.addInvestmentToPortfolio(
+      authorizedUserId,
       portfolioId,
       addInvestmentToPortfolioDto
     );

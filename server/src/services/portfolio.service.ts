@@ -4,10 +4,7 @@ import {
   DuplicateEntityError,
   InternalServerError,
 } from "../global/errors.global";
-import {
-  CreatePortfolioDto,
-  AddInvestmentToPortfolioDto,
-} from "../interfaces/dto/portfolio.dto";
+import { AddInvestmentToPortfolioDto } from "../interfaces/dto/portfolio.dto";
 import stockService from "./stock.service";
 import userService from "./user.service";
 
@@ -36,13 +33,13 @@ const getPortfoliosByUserId = async (userId: string): Promise<Portfolio[]> => {
 };
 
 const createPortfolio = async (
-  createPortfolioDto: CreatePortfolioDto
+  userId: string,
+  portfolioName: string
 ): Promise<Portfolio> => {
-  const { userId, name } = createPortfolioDto;
   const portfolio = await DBClient.portfolio.findFirst({
     where: {
       userId,
-      name,
+      name: portfolioName,
     },
   });
   if (portfolio) {
@@ -51,17 +48,18 @@ const createPortfolio = async (
   const newPortfolio = await DBClient.portfolio.create({
     data: {
       userId,
-      name,
+      name: portfolioName,
     },
   });
   return newPortfolio;
 };
 
 const addInvestmentToPortfolio = async (
+  userId: string,
   portfolioId: string,
   addInvestmentToPortfolioDto: AddInvestmentToPortfolioDto
 ): Promise<Investment> => {
-  const { quantity, cost, userId, stockId } = addInvestmentToPortfolioDto;
+  const { quantity, cost, stockId } = addInvestmentToPortfolioDto;
   // invoke getStock to check if the stockId is valid
   const stock = await stockService.getStock(stockId);
   // set cost to current price if nullish cost was passed

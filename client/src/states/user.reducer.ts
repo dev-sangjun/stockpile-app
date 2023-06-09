@@ -36,8 +36,8 @@ const initialState: UserState = {
 
 export const asyncFetchUser = createAsyncThunk(
   "user/asyncFetchUser",
-  async (userId: string): Promise<UserState> => {
-    const user = await fetchUser(userId);
+  async (): Promise<UserState> => {
+    const user = await fetchUser();
     const {
       id,
       email,
