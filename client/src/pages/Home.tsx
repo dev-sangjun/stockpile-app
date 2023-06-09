@@ -7,7 +7,7 @@ import GoalProgress from "../components/GoalProgress";
 
 const Home: FC = () => {
   return (
-    <div className="w-full grid grid-cols-4 grid-flow-row-dense gap-4 p-4 pb-12">
+    <div className="w-full grid grid-cols-4 grid-flow-row-dense gap-4 p-4">
       <div className="col-span-4 md:col-span-3 row-span-1">
         <PortfolioValuesCard />
       </div>

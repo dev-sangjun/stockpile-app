@@ -30,7 +30,7 @@ const privateRouter = createBrowserRouter([
     element: (
       <div className="flex flex-col bg-slate-200">
         <Navbar />
-        <div className="max-w-7xl h-screen w-full mx-auto py-24">
+        <div className="max-w-7xl h-screen w-full mx-auto py-16 md:py-24 overflow-y-auto">
           <Outlet />
         </div>
       </div>
