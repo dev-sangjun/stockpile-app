@@ -34,4 +34,12 @@ const signInUser = async (req: Request, res: Response, next: NextFunction) => {
   }
 };
 
-export default { signUpUser, signInUser };
+const signOutUser = async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    return res.clearCookie("access_token").sendStatus(200);
+  } catch (e) {
+    return next(e);
+  }
+};
+
+export default { signUpUser, signInUser, signOutUser };

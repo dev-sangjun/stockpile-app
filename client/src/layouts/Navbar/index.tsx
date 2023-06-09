@@ -2,6 +2,7 @@ import { FC } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { NavbarItem } from "./navbar-items";
 import logo from "../../assets/logo.png";
+import { signOutUser } from "../../api/auth.api";
 
 interface NavbarProps {
   navbarItems: NavbarItem[];
@@ -27,6 +28,9 @@ const Navbar: FC<NavbarProps> = ({ navbarItems }) => {
       </Link>
     ));
   };
+  const handleSignOut = async () => {
+    await signOutUser();
+  };
   return (
     <div className="bg-white absolute w-full">
       <div className="navbar p-0 max-w-7xl mx-auto sticky top-0 z-10">
@@ -43,6 +47,9 @@ const Navbar: FC<NavbarProps> = ({ navbarItems }) => {
           <div className="flex-none">
             <ul className="menu menu-horizontal">{renderNavbarItems()}</ul>
           </div>
+          <button className="btn btn-ghost" onClick={handleSignOut}>
+            Sign out
+          </button>
         </div>
         <div className="btm-nav md:hidden">{renderBottomNavbarItems()}</div>
       </div>

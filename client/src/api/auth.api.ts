@@ -34,3 +34,9 @@ export const signInUser = async (
   const { userId } = res.data;
   return userId;
 };
+
+export const signOutUser = async (): Promise<void> => {
+  await axios.get(`${DEV_SERVER_ENDPOINT}/auth/signout`, {
+    withCredentials: true,
+  });
+};
