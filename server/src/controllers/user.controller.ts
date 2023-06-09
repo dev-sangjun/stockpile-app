@@ -15,8 +15,8 @@ const getUser = async (req: Request, res: Response, next: NextFunction) => {
 
 const getStocks = async (req: Request, res: Response, next: NextFunction) => {
   try {
-    const { userId } = req.params;
-    const stocks = await userService.getStocks(userId);
+    const { authorizedUserId } = req as AuthorizedRequest;
+    const stocks = await userService.getStocks(authorizedUserId);
     return res.json(stocks);
   } catch (e) {
     return next(e);
@@ -28,9 +28,11 @@ const getInvestments = async (
   res: Response,
   next: NextFunction
 ) => {
-  const { userId } = req.params;
+  const { authorizedUserId } = req as AuthorizedRequest;
   try {
-    const investments = await investmentService.getInvestmentsByUserId(userId);
+    const investments = await investmentService.getInvestmentsByUserId(
+      authorizedUserId
+    );
     return res.json(investments);
   } catch (e) {
     return next(e);
@@ -42,19 +44,19 @@ const addToFavorites = async (
   res: Response,
   next: NextFunction
 ) => {
-  const { userId } = req.params;
+  const { authorizedUserId } = req as AuthorizedRequest;
   const { portfolioId, stockId } = req.body;
   try {
     if (portfolioId) {
       const favoritePortfolios = await userService.addToFavoritePortfolios(
-        userId,
+        authorizedUserId,
         portfolioId
       );
       return res.json(favoritePortfolios);
     }
     if (stockId) {
       const favoriteStocks = await userService.addToFavoriteStocks(
-        userId,
+        authorizedUserId,
         stockId
       );
       return res.json(favoriteStocks);
@@ -66,28 +68,28 @@ const addToFavorites = async (
 };
 
 const deleteFromFavorites = async (
-  req: Request<
-    { userId: string },
-    any,
-    any,
-    { portfolioId?: string; stockId?: string }
-  >,
+  req: Request<undefined, any, any, { portfolioId?: string; stockId?: string }>,
   res: Response,
   next: NextFunction
 ) => {
-  const { userId } = req.params;
+  const { authorizedUserId } = req as AuthorizedRequest<
+    undefined,
+    any,
+    any,
+    { portfolioId?: string; stockId?: string }
+  >;
   const { portfolioId, stockId } = req.query;
   try {
     if (portfolioId) {
       const favoritePortfolios = await userService.deleteFromFavoritePortfolios(
-        userId,
+        authorizedUserId,
         portfolioId
       );
       return res.json(favoritePortfolios);
     }
     if (stockId) {
       const favoriteStocks = await userService.deleteFromFavoriteStocks(
-        userId,
+        authorizedUserId,
         stockId
       );
       return res.json(favoriteStocks);

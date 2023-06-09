@@ -1,7 +1,13 @@
 import { NextFunction, Request, Response } from "express";
-import jwt, { JwtPayload } from "jsonwebtoken";
+import jwt from "jsonwebtoken";
+import * as core from "express-serve-static-core";
 
-export interface AuthorizedRequest extends Request {
+export interface AuthorizedRequest<
+  P = core.ParamsDictionary,
+  ResBody = any,
+  ReqBody = any,
+  ReqQuery = core.Query
+> extends Request<P, ResBody, ReqBody, ReqQuery> {
   authorizedUserId: string;
 }
 

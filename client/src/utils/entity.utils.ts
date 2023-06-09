@@ -58,8 +58,61 @@ export const getStocksObject = (stocks: Stock[]): Stocks => {
   return stocksObject;
 };
 
+/**
+ *
+ * @param portfolio Portfolio
+ * @param stocks { stockId: Stock }
+ * @returns portfolio value (sum of all investments in a single portfolio)
+ */
 export const getPortfolioTotalValue = (portfolio: Portfolio, stocks: Stocks) =>
   portfolio.investments.reduce((prev, investment) => {
     const { quantity, stockId } = investment;
     return prev + (stocks?.[stockId]?.c || 0) * quantity;
   }, 0);
+
+export interface PortfolioDetails {
+  totalValue: number;
+  totalCost: number;
+  investmentsCount: number;
+  dayChange: number;
+}
+
+export const getPortfolioDetails = (portfolio: Portfolio, stocks: Stocks) => {
+  let totalValue = 0;
+  let totalCost = 0;
+  let prevTotalValue = 0;
+  portfolio.investments.forEach(({ avgCost, quantity, stockId }) => {
+    totalValue += (stocks?.[stockId]?.c || 0) * quantity;
+    totalCost += avgCost * quantity;
+    prevTotalValue += stocks?.[stockId]?.pc * quantity;
+  });
+  return {
+    totalValue,
+    totalCost,
+    investmentsCount: portfolio.investments.length,
+    dayChange: totalValue - prevTotalValue,
+  };
+};
+
+export interface InvestmentDetails {
+  totalValue: number;
+  totalCost: number;
+  quantity: number;
+  dayChange: number;
+}
+
+export const getInvestmentDetails = (
+  investment: Investment,
+  stocks: Stocks
+): InvestmentDetails => {
+  const totalValue = stocks?.[investment.stockId]?.c * investment.quantity;
+  const totalCost = investment.avgCost * investment.quantity;
+  const dayChange =
+    stocks?.[investment.stockId]?.c - stocks?.[investment.stockId]?.pc;
+  return {
+    totalValue,
+    totalCost,
+    quantity: investment.quantity,
+    dayChange,
+  };
+};

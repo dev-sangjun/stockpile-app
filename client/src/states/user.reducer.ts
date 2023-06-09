@@ -74,26 +74,24 @@ export const asyncSignOut = createAsyncThunk(
 
 export const asyncFetchStocks = createAsyncThunk(
   "user/asyncFetchStocks",
-  async (userId: string) => {
-    const stocks = await fetchStocksByUserId(userId);
+  async () => {
+    const stocks = await fetchStocksByUserId();
     return stocks;
   }
 );
 
 export const asyncAddToFavoriteStocks = createAsyncThunk(
   "user/asyncAddToFavoriteStocks",
-  async (payload: { userId: string; stockId: string }) => {
-    const { userId, stockId } = payload;
-    const favoriteStocks = await addToFavoriteStocks(userId, stockId);
+  async (stockId: string) => {
+    const favoriteStocks = await addToFavoriteStocks(stockId);
     return favoriteStocks;
   }
 );
 
 export const asyncDeleteFromFavoriteStocks = createAsyncThunk(
   "user/asyncDeleteFromFavoriteStocks",
-  async (payload: { userId: string; stockId: string }) => {
-    const { userId, stockId } = payload;
-    const favoriteStocks = await deleteFromFavoriteStocks(userId, stockId);
+  async (stockId: string) => {
+    const favoriteStocks = await deleteFromFavoriteStocks(stockId);
     return favoriteStocks;
   }
 );

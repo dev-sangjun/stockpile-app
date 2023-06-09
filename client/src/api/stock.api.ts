@@ -4,14 +4,16 @@ import { Stock, Stocks } from "../types/entity.types";
 
 export const fetchStockSymbols = async (): Promise<string[]> => {
   const res: AxiosResponse<string[]> = await axios.get(
-    `${DEV_SERVER_ENDPOINT}/stocks/symbols`
+    `${DEV_SERVER_ENDPOINT}/stocks/symbols`,
+    { withCredentials: true }
   );
   return res.data;
 };
 
-export const fetchStocksByUserId = async (userId: string): Promise<Stocks> => {
+export const fetchStocksByUserId = async (): Promise<Stocks> => {
   const res: AxiosResponse<Stock[]> = await axios.get(
-    `${DEV_SERVER_ENDPOINT}/users/${userId}/stocks`
+    `${DEV_SERVER_ENDPOINT}/users/me/stocks`,
+    { withCredentials: true }
   );
   const stocks: Stocks = {};
   res.data.forEach(stock => {

@@ -1,13 +1,11 @@
-import { FC, useMemo } from "react";
+import { FC } from "react";
 import { Stock } from "../../types/entity.types";
 import FavoritesButton from "../FavoritesButton";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../../states/store";
 import { asyncDeleteFromFavoriteStocks } from "../../states/user.reducer";
 import { toUSD } from "../../utils/numeral.utils";
-import { renderGridItems } from "../ListGridItem/renderer";
-import { GridItemProps } from "../ListGridItem";
-import ValueChangeText from "../ValueChangeText";
+import { renderFavoriteStockGridItems } from "../EntityListGridItem/renderer";
 import { getUserId } from "../../states/user.reducer";
 
 interface StockListItemProps {
@@ -18,29 +16,11 @@ interface StockListItemProps {
 const StockListItem: FC<StockListItemProps> = ({ stock, quantity }) => {
   const dispatch = useDispatch<AppDispatch>();
   const userId = useSelector((state: RootState) => getUserId(state));
-  const gridItems: GridItemProps[] = useMemo(
-    () => [
-      {
-        title: "Day Change",
-        text: <ValueChangeText value={stock.c - stock.pc} />,
-      },
-      {
-        title: "# of Shares",
-        text: String(quantity),
-      },
-    ],
-    [stock, quantity]
-  );
   const handleFavoriteClick = () => {
     if (!userId) {
       return;
     }
-    dispatch(
-      asyncDeleteFromFavoriteStocks({
-        userId: userId,
-        stockId: stock.id,
-      })
-    );
+    dispatch(asyncDeleteFromFavoriteStocks(stock.id));
   };
   return (
     <li className="carousel-item card bg-base-100 min-w-[14rem] md:min-w-[32rem] p-4 flex flex-col gap-4 overflow-hidden">
@@ -56,7 +36,9 @@ const StockListItem: FC<StockListItemProps> = ({ stock, quantity }) => {
           <span className="font-bold text-lg">{toUSD(stock.c)}</span>
         </div>
       </div>
-      <div className="grid grid-cols-2 gap-2">{renderGridItems(gridItems)}</div>
+      <div className="grid grid-cols-2 gap-2">
+        {renderFavoriteStockGridItems(stock, quantity)}
+      </div>
     </li>
   );
 };

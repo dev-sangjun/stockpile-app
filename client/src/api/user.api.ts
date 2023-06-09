@@ -6,21 +6,20 @@ export const fetchInvestments = async (
   userId: string
 ): Promise<Investment[]> => {
   const res: AxiosResponse<Investment[]> = await axios.get(
-    `${DEV_SERVER_ENDPOINT}/users/${userId}/investments`
+    `${DEV_SERVER_ENDPOINT}/me/investments`
   );
   return res.data;
 };
 
 export const fetchUser = async (): Promise<User> => {
   const res: AxiosResponse<User> = await axios.get(
-    `${DEV_SERVER_ENDPOINT}/users/me`,
+    `${DEV_SERVER_ENDPOINT}/me`,
     { withCredentials: true }
   );
   return res.data;
 };
 
 const handleFavorites = async (
-  userId: string,
   entityId: string,
   entityType: "Portfolio" | "Stock",
   actionType: "ADD" | "DELETE"
@@ -35,8 +34,9 @@ const handleFavorites = async (
             stockId: entityId,
           };
     const res: AxiosResponse<string[]> = await axios.post(
-      `${DEV_SERVER_ENDPOINT}/users/${userId}/favorites`,
-      body
+      `${DEV_SERVER_ENDPOINT}/favorites`,
+      body,
+      { withCredentials: true }
     );
     return res.data;
   }
@@ -44,21 +44,20 @@ const handleFavorites = async (
     entityType === "Portfolio" ? "portfolioId" : "stockId"
   }=${entityId}`;
   const res: AxiosResponse<string[]> = await axios.delete(
-    `${DEV_SERVER_ENDPOINT}/users/${userId}/favorites?${query}`
+    `${DEV_SERVER_ENDPOINT}/favorites?${query}`,
+    { withCredentials: true }
   );
   return res.data;
 };
 
 export const addToFavoriteStocks = async (
-  userId: string,
   stockId: string
 ): Promise<string[]> => {
-  return handleFavorites(userId, stockId, "Stock", "ADD");
+  return handleFavorites(stockId, "Stock", "ADD");
 };
 
 export const deleteFromFavoriteStocks = async (
-  userId: string,
   stockId: string
 ): Promise<string[]> => {
-  return handleFavorites(userId, stockId, "Stock", "DELETE");
+  return handleFavorites(stockId, "Stock", "DELETE");
 };

@@ -1,13 +1,11 @@
 import { Router } from "express";
 import { userController } from "../controllers";
-import { authMiddleware } from "../middlewares/auth.middleware";
 
 const userRouter = Router();
-userRouter.use(authMiddleware);
-userRouter.get("/me", userController.getUser);
-userRouter.get("/:userId/stocks", userController.getStocks);
-userRouter.get("/:userId/investments", userController.getInvestments);
-userRouter.post("/:userId/favorites", userController.addToFavorites);
-userRouter.delete("/:userId/favorites", userController.deleteFromFavorites);
+userRouter.get("/", userController.getUser);
+userRouter.get("/stocks", userController.getStocks);
+userRouter.get("/investments", userController.getInvestments);
+userRouter.post("/favorites", userController.addToFavorites);
+userRouter.delete("/favorites", userController.deleteFromFavorites);
 
 export default userRouter;
