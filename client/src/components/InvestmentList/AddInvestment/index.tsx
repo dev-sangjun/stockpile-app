@@ -1,7 +1,8 @@
 import { FC } from "react";
 import isEmpty from "is-empty";
-import { useOutsideClick } from "../../hooks";
+import { useOutsideClick } from "../../../hooks";
 import useAddEntityForm from "./useAddInvestmentForm";
+import { HiPlus } from "react-icons/hi2";
 
 const AddInvestment: FC = () => {
   const {
@@ -33,7 +34,7 @@ const AddInvestment: FC = () => {
   return (
     <div className="dropdown dropdown-bottom dropdown-end top-[-1px]">
       <label tabIndex={0} className="btn btn-xs btn-outline">
-        Add Investment
+        <HiPlus />
       </label>
       <div
         tabIndex={0}

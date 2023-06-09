@@ -1,7 +1,7 @@
 import { FC } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../../states/store";
-import AddInvestment from "../AddInvestment";
+import AddInvestment from "./AddInvestment";
 import {
   deselectPortfolio,
   getFavoriteStocks,
@@ -30,9 +30,6 @@ const InvestmentList: FC = () => {
     return (
       selectedPortfolio && (
         <div className="flex items-center gap-2">
-          <button className="btn btn-xs btn-ghost" onClick={handleShowAllClick}>
-            Show All
-          </button>
           <AddInvestment />
         </div>
       )
@@ -41,7 +38,7 @@ const InvestmentList: FC = () => {
   return (
     <div className="flex flex-col gap-4">
       <div className="flex justify-between items-center">
-        <h2 className="text-2xl font-bold">{title}</h2>
+        <h2 className="text-xl font-bold">{title}</h2>
         {getActionButtons()}
       </div>
       <ul className="flex flex-col gap-4">

@@ -2,7 +2,7 @@ import { FC } from "react";
 import PortfolioListItem from "./PortfolioListItem";
 import { useSelector } from "react-redux";
 import { RootState } from "../../states/store";
-import AddPortfolio from "../AddPortfolio";
+import AddPortfolio from "./AddPortfolio";
 import { getPortfolios } from "../../states/user.reducer";
 
 const PortfolioList: FC = () => {
@@ -20,7 +20,7 @@ const PortfolioList: FC = () => {
   return (
     <div className="flex flex-col gap-4">
       <div className="flex justify-between items-center">
-        <h2 className="text-2xl font-bold">Portfolios</h2>
+        <h2 className="text-xl font-bold">Portfolios</h2>
         {getActionButtons()}
       </div>
       <ul className="flex flex-col gap-4">{renderPortfolios()}</ul>

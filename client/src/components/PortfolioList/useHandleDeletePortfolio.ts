@@ -6,8 +6,8 @@ import { asyncFetchUser } from "../../states/user.reducer";
 const useHandleDeletePortfolio = (portfolioId: string) => {
   const dispatch = useDispatch<AppDispatch>();
   return async () => {
-    await deletePortfolio(portfolioId);
-    dispatch(asyncFetchUser());
+    // await deletePortfolio(portfolioId);
+    // dispatch(asyncFetchUser());
   };
 };
 

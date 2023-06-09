@@ -8,7 +8,7 @@ const getPortfolioGridItems = (
   portfolioDetails: PortfolioDetails
 ): GridItemProps[] => [
   {
-    title: "Invested Amount",
+    title: "Invested",
     text: toUSD(portfolioDetails.totalCost),
   },
   {
@@ -24,7 +24,7 @@ const getPortfolioGridItems = (
     text: <ValueChangeText value={portfolioDetails.dayChange} />,
   },
   {
-    title: "# of Investments",
+    title: "Investments",
     text: String(portfolioDetails.investmentsCount),
   },
 ];
@@ -33,7 +33,7 @@ const getInvestmentGridItems = (
   investmentDetails: InvestmentDetails
 ): GridItemProps[] => [
   {
-    title: "Invested Amount",
+    title: "Invested",
     text: toUSD(investmentDetails.totalCost),
   },
   {
@@ -49,7 +49,7 @@ const getInvestmentGridItems = (
     text: <ValueChangeText value={investmentDetails.dayChange} />,
   },
   {
-    title: "# of Shares",
+    title: "Shares",
     text: String(investmentDetails.quantity),
   },
 ];

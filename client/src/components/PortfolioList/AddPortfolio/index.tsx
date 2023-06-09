@@ -1,7 +1,8 @@
 import { FC } from "react";
 import isEmpty from "is-empty";
-import { useOutsideClick } from "../../hooks";
+import { useOutsideClick } from "../../../hooks";
 import useAddPortfolioForm from "./useAddPortfolioForm";
+import { HiPlus } from "react-icons/hi2";
 
 const AddPortfolio: FC = () => {
   const { formData, resetFormData, handleFormChange, handleSubmit } =
@@ -10,7 +11,7 @@ const AddPortfolio: FC = () => {
   return (
     <div className="dropdown dropdown-bottom dropdown-end top-[-1px]">
       <label tabIndex={0} className="btn btn-xs btn-outline">
-        Add Portfolio
+        <HiPlus />
       </label>
       <div
         tabIndex={0}

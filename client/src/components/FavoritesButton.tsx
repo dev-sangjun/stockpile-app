@@ -9,7 +9,7 @@ interface FavoritesButtonProps {
 const FavoritesButton: FC<FavoritesButtonProps> = ({ isFavorite, onClick }) => {
   return (
     <button
-      className="btn btn-link px-0 h-8 min-h-8 text-xl text-red-500"
+      className="btn btn-sm btn-ghost text-red-500 text-lg"
       onClick={onClick}
     >
       {isFavorite ? <HiHeart /> : <HiOutlineHeart />}

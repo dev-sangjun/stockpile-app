@@ -4,7 +4,7 @@ import { Portfolio } from "../../types/entity.types";
 import { AppDispatch, RootState } from "../../states/store";
 import { useDispatch } from "react-redux";
 import { getStocks, selectPortfolio } from "../../states/user.reducer";
-import { HiTrash } from "react-icons/hi2";
+import { HiCheck, HiEye, HiPencilSquare, HiTrash } from "react-icons/hi2";
 import { getPortfolioDetails } from "../../utils/entity.utils";
 import useHandleDeletePortfolio from "./useHandleDeletePortfolio";
 import EntityListItem from "../EntityListItem";
@@ -25,9 +25,23 @@ const PortfolioListItem: FC<PortfolioListItemProps> = ({ portfolio }) => {
   };
   const handleDeletePortfolio = useHandleDeletePortfolio(portfolio.id);
   const actionButtons = (
-    <button className="btn btn-xs btn-ghost" onClick={handleDeletePortfolio}>
-      <HiTrash />
-    </button>
+    <>
+      <button className="btn btn-sm btn-ghost text-base">
+        <HiPencilSquare />
+      </button>
+      <button
+        className="btn btn-sm btn-ghost text-base"
+        onClick={handleDeletePortfolio}
+      >
+        <HiTrash />
+      </button>
+      <button
+        className="btn btn-sm btn-ghost text-base"
+        onClick={handlePortfolioClick}
+      >
+        <HiEye />
+      </button>
+    </>
   );
   return (
     <EntityListItem

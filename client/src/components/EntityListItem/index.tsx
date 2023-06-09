@@ -62,25 +62,16 @@ const EntityListItem: FC<EntityListItemProps> = ({
     return 0;
   };
   return (
-    <li
-      className={`card bg-base-100 p-4 flex flex-col gap-4 ${
-        className ? className : ""
-      } ${onClick ? "hover:cursor-pointer" : ""}`}
-      onClick={onClick}
-    >
-      <div className="flex items-center h-30 gap-2">
-        <div className="flex flex-1 items-center gap-2">
-          {/* {logoUrl && renderCompanyLogo(logoUrl)} */}
-          <h3 className="text-lg font-bold">{title}</h3>
-          {actionButtons}
-        </div>
-        <div className="flex flex-col">
-          <span className="text-xs font-bold text-slate-400">{valueLabel}</span>
-          <span className="font-bold text-lg">{toUSD(getValue())}</span>
-        </div>
+    <div className="collapse collapse-plus bg-base-100">
+      <input type="checkbox" />
+      <div className="collapse-title">
+        <h3 className="text-md font-bold">{title}</h3>
       </div>
-      <div className="grid grid-cols-2 gap-2">{getEntityGridItems()}</div>
-    </li>
+      <div className="collapse-content flex flex-col gap-2">
+        <div className="grid grid-cols-2 gap-2">{getEntityGridItems()}</div>
+        <div className="flex justify-around">{actionButtons}</div>
+      </div>
+    </div>
   );
 };
 

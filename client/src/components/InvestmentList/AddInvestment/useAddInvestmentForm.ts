@@ -1,15 +1,15 @@
 import isEmpty from "is-empty";
 import { ChangeEvent, Dispatch, FormEvent, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { AppDispatch, RootState } from "../../states/store";
-import { getSymbols } from "../../states/stocks.reducer";
-import { addInvestmentToPortfolio } from "../../api/portfolio.api";
+import { AppDispatch, RootState } from "../../../states/store";
+import { getSymbols } from "../../../states/stocks.reducer";
+import { addInvestmentToPortfolio } from "../../../api/portfolio.api";
 import {
   asyncFetchUser,
   getSelectedPortfolio,
   getStocks,
-} from "../../states/user.reducer";
-import { getUserId } from "../../states/user.reducer";
+} from "../../../states/user.reducer";
+import { getUserId } from "../../../states/user.reducer";
 
 export interface AddInvestmentFormData {
   keyword: string;

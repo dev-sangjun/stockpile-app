@@ -2,7 +2,7 @@ import { FC, useMemo } from "react";
 import { Investment } from "../../types/entity.types";
 import { useDispatch } from "react-redux";
 import { AppDispatch } from "../../states/store";
-import { HiTrash } from "react-icons/hi2";
+import { HiPencilSquare, HiTrash } from "react-icons/hi2";
 import {
   asyncAddToFavoriteStocks,
   asyncDeleteFromFavoriteStocks,
@@ -41,9 +41,12 @@ const InvestmentListItem: FC<InvestmentItemProps> = ({
   const actionButtons = (
     <>
       <FavoritesButton isFavorite={isFavorite} onClick={handleFavoriteClick} />
+      <button className="btn btn-sm btn-ghost text-base">
+        <HiPencilSquare />
+      </button>
       {selectedPortfolio && (
         <button
-          className="btn btn-xs btn-ghost"
+          className="btn btn-sm btn-ghost text-base"
           onClick={handleDeleteInvestment}
         >
           <HiTrash />

@@ -14,7 +14,7 @@
     "axios": "^1.4.0",
     "chart.js": "^4.3.0",
     "chartjs-plugin-datalabels": "^2.2.0",
-    "daisyui": "^3.0.1",
+    "daisyui": "^3.0.22",
     "is-empty": "^1.2.0",
     "numeral": "^2.0.6",
     "react": "^18.2.0",
