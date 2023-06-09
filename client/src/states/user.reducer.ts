@@ -13,6 +13,7 @@ import {
 } from "../types/entity.types";
 import { getInvestmentsObject, getStocksObject } from "../utils/entity.utils";
 import { fetchStocksByUserId } from "../api/stock.api";
+import { signOutUser } from "../api/auth.api";
 
 interface UserState {
   userInfo: UserInfo | null;
@@ -61,6 +62,13 @@ export const asyncFetchUser = createAsyncThunk(
       investments: getInvestmentsObject(investments),
       stocks: getStocksObject(stocks),
     };
+  }
+);
+
+export const asyncSignOut = createAsyncThunk(
+  "user/asyncSignOut",
+  async (): Promise<void> => {
+    await signOutUser();
   }
 );
 
@@ -130,6 +138,22 @@ export const userSlice = createSlice({
         }
       }
     });
+    builder.addCase(asyncSignOut.fulfilled, state => {
+      const {
+        userInfo,
+        favoritePortfolios,
+        favoriteStocks,
+        portfolios,
+        investments,
+        stocks,
+      } = initialState;
+      state.userInfo = userInfo;
+      state.portfolios = portfolios;
+      state.favoritePortfolios = favoritePortfolios;
+      state.favoriteStocks = favoriteStocks;
+      state.investments = investments;
+      state.stocks = stocks;
+    });
     builder.addCase(asyncFetchStocks.fulfilled, (state, action) => {
       state.stocks = action.payload;
     });
@@ -159,5 +183,6 @@ export const getSelectedPortfolio = (state: RootState) =>
 export const getInvestments = (state: RootState) =>
   state.userReducer.investments;
 export const getStocks = (state: RootState) => state.userReducer.stocks;
+export const getUserId = (state: RootState) => state.userReducer.userInfo?.id;
 
 export default userSlice.reducer;

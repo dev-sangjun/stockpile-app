@@ -17,7 +17,7 @@ import {
   getStocks,
 } from "../../states/user.reducer";
 import FavoritesButton from "../FavoritesButton";
-import { getUserId } from "../../states/auth.reducer";
+import { getUserId } from "../../states/user.reducer";
 
 interface InvestmentItemProps {
   investment: Investment;

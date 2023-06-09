@@ -9,7 +9,7 @@ import {
   getSelectedPortfolio,
   getStocks,
 } from "../../states/user.reducer";
-import { getUserId } from "../../states/auth.reducer";
+import { getUserId } from "../../states/user.reducer";
 
 export interface AddInvestmentFormData {
   keyword: string;

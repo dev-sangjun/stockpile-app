@@ -8,7 +8,7 @@ import { toUSD } from "../../utils/numeral.utils";
 import { renderGridItems } from "../ListGridItem/renderer";
 import { GridItemProps } from "../ListGridItem";
 import ValueChangeText from "../ValueChangeText";
-import { getUserId } from "../../states/auth.reducer";
+import { getUserId } from "../../states/user.reducer";
 
 interface StockListItemProps {
   stock: Stock;

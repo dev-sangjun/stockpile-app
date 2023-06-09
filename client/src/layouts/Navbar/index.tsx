@@ -1,41 +1,10 @@
 import { FC } from "react";
-import { Link, useLocation } from "react-router-dom";
-import { NavbarItem } from "./navbar-items";
+import { Link } from "react-router-dom";
 import logo from "../../assets/logo.png";
-import { signOutUser } from "../../api/auth.api";
-import { useDispatch } from "react-redux";
-import { AppDispatch } from "../../states/store";
-import { updateUserId } from "../../states/auth.reducer";
+import NavbarItems from "./NavbarItems";
+import BottomNavbarItems from "./BottomNavbarItems";
 
-interface NavbarProps {
-  navbarItems: NavbarItem[];
-}
-
-const Navbar: FC<NavbarProps> = ({ navbarItems }) => {
-  const location = useLocation();
-  const dispatch = useDispatch<AppDispatch>();
-  const renderNavbarItems = () =>
-    navbarItems.map(({ label, path }) => (
-      <Link key={label} className="p-4 font-bold" to={path}>
-        {label}
-      </Link>
-    ));
-  const renderBottomNavbarItems = () => {
-    const isNavbarItemActive = (path: string) => path === location.pathname;
-    return navbarItems.map(({ label, path, icon }) => (
-      <Link
-        key={label}
-        className={`${isNavbarItemActive(path) ? "active" : ""}`}
-        to={path}
-      >
-        {icon}
-      </Link>
-    ));
-  };
-  const handleSignOut = async () => {
-    await signOutUser();
-    dispatch(updateUserId(""));
-  };
+const Navbar: FC = () => {
   return (
     <div className="bg-white absolute w-full">
       <div className="navbar p-0 max-w-7xl mx-auto sticky top-0 z-10">
@@ -50,13 +19,12 @@ const Navbar: FC<NavbarProps> = ({ navbarItems }) => {
         </div>
         <div className="hidden md:flex">
           <div className="flex-none">
-            <ul className="menu menu-horizontal">{renderNavbarItems()}</ul>
+            <NavbarItems />
           </div>
-          <button className="btn btn-ghost" onClick={handleSignOut}>
-            Sign out
-          </button>
         </div>
-        <div className="btm-nav md:hidden">{renderBottomNavbarItems()}</div>
+        <div className="btm-nav md:hidden">
+          <BottomNavbarItems />
+        </div>
       </div>
     </div>
   );

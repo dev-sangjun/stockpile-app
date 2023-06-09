@@ -14,7 +14,7 @@ import {
 } from "../../states/user.reducer";
 import { HiTrash } from "react-icons/hi2";
 import { deletePortfolio } from "../../api/portfolio.api";
-import { getUserId } from "../../states/auth.reducer";
+import { getUserId } from "../../states/user.reducer";
 
 interface PortfolioListItemProps {
   portfolio: Portfolio;

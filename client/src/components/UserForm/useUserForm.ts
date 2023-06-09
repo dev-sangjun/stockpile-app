@@ -3,7 +3,6 @@ import { createUser, signInUser } from "../../api/auth.api";
 import { useDispatch } from "react-redux";
 import { AppDispatch } from "../../states/store";
 import { asyncFetchUser } from "../../states/user.reducer";
-import { updateUserId } from "../../states/auth.reducer";
 
 export interface UserFormData {
   username: string;
@@ -36,8 +35,7 @@ const useUserForm = (
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
     if (isSignIn) {
-      const userId = await signInUser(formData);
-      dispatch(updateUserId(userId));
+      await signInUser(formData);
       dispatch(asyncFetchUser());
     } else {
       const res = await createUser(formData);
