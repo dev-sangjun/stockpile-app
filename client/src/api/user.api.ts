@@ -2,9 +2,7 @@ import axios, { AxiosResponse } from "axios";
 import { DEV_SERVER_ENDPOINT } from "../dev/constants";
 import { Investment, User } from "../types/entity.types";
 
-export const fetchInvestments = async (
-  userId: string
-): Promise<Investment[]> => {
+export const fetchInvestments = async (): Promise<Investment[]> => {
   const res: AxiosResponse<Investment[]> = await axios.get(
     `${DEV_SERVER_ENDPOINT}/me/investments`
   );
@@ -34,7 +32,7 @@ const handleFavorites = async (
             stockId: entityId,
           };
     const res: AxiosResponse<string[]> = await axios.post(
-      `${DEV_SERVER_ENDPOINT}/favorites`,
+      `${DEV_SERVER_ENDPOINT}/me/favorites`,
       body,
       { withCredentials: true }
     );
@@ -44,7 +42,7 @@ const handleFavorites = async (
     entityType === "Portfolio" ? "portfolioId" : "stockId"
   }=${entityId}`;
   const res: AxiosResponse<string[]> = await axios.delete(
-    `${DEV_SERVER_ENDPOINT}/favorites?${query}`,
+    `${DEV_SERVER_ENDPOINT}/me/favorites?${query}`,
     { withCredentials: true }
   );
   return res.data;

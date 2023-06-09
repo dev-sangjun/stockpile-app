@@ -10,8 +10,7 @@ const FavoriteStocks: FC = () => {
     getFavoriteStocks(state)
   );
   const stocks = useSelector((state: RootState) => getStocks(state));
-  const filterFavoriteStocks = () => {
-    // create Stock[] from stockIds in favoriteStocks
+  const filteredFavoriteStocks = () => {
     const filteredFavoriteStocks: Stock[] = [];
     favoriteStocks.forEach(stockId => {
       const stock = stocks[stockId];
@@ -21,7 +20,7 @@ const FavoriteStocks: FC = () => {
   };
   return (
     <div className="flex flex-col gap-4 h-full">
-      {<FavoriteStockList stocks={filterFavoriteStocks()} />}
+      {<FavoriteStockList stocks={filteredFavoriteStocks()} />}
     </div>
   );
 };

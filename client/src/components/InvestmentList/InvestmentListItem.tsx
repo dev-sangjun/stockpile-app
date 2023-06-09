@@ -1,10 +1,7 @@
 import { FC, useMemo } from "react";
 import { Investment } from "../../types/entity.types";
-import { toUSD } from "../../utils/numeral.utils";
 import { useDispatch } from "react-redux";
 import { AppDispatch } from "../../states/store";
-import { renderInvestmentGridItems } from "../EntityListGridItem/renderer";
-import { renderCompanyLogo } from "./renderer";
 import { HiTrash } from "react-icons/hi2";
 import {
   asyncAddToFavoriteStocks,
@@ -14,6 +11,7 @@ import FavoritesButton from "../FavoritesButton";
 import { getInvestmentDetails } from "../../utils/entity.utils";
 import useHandleDeleteInvestment from "./useHandleDeleteInvestment";
 import useUserState from "./useUserInfo";
+import EntityListItem from "../EntityListItem";
 
 interface InvestmentItemProps {
   investment: Investment;
@@ -40,38 +38,28 @@ const InvestmentListItem: FC<InvestmentItemProps> = ({
       ? dispatch(asyncDeleteFromFavoriteStocks(investment.stockId))
       : dispatch(asyncAddToFavoriteStocks(investment.stockId));
   };
+  const actionButtons = (
+    <>
+      <FavoritesButton isFavorite={isFavorite} onClick={handleFavoriteClick} />
+      {selectedPortfolio && (
+        <button
+          className="btn btn-xs btn-ghost"
+          onClick={handleDeleteInvestment}
+        >
+          <HiTrash />
+        </button>
+      )}
+    </>
+  );
   return (
-    <li className="card bg-base-100 shadow-xl p-4 flex flex-col gap-4">
-      <div className="flex items-center h-30 gap-2">
-        <div className="flex flex-1 items-center gap-2">
-          {renderCompanyLogo(logoUrl)}
-          <h3 className="text-lg font-bold">{investment.stockId}</h3>
-          <FavoritesButton
-            isFavorite={isFavorite}
-            onClick={handleFavoriteClick}
-          />
-          {selectedPortfolio && (
-            <button
-              className="btn btn-xs btn-ghost"
-              onClick={handleDeleteInvestment}
-            >
-              <HiTrash />
-            </button>
-          )}
-        </div>
-        <div className="flex flex-col">
-          <span className="text-xs font-bold text-slate-400">
-            Current Price
-          </span>
-          <span className="font-bold text-lg">
-            {toUSD(stocks?.[investment.stockId]?.c || 0)}
-          </span>
-        </div>
-      </div>
-      <div className="grid grid-cols-2 gap-2">
-        {renderInvestmentGridItems(investmentDetails)}
-      </div>
-    </li>
+    <EntityListItem
+      entityType="Investment"
+      logoUrl={logoUrl}
+      title={investment.stockId}
+      actionButtons={actionButtons}
+      valueLabel="Current Price"
+      entityDetails={investmentDetails}
+    />
   );
 };
 

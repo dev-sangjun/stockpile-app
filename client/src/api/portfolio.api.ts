@@ -2,22 +2,14 @@ import axios, { AxiosResponse } from "axios";
 import { DEV_SERVER_ENDPOINT } from "../dev/constants";
 import { Investment, Portfolio } from "../types/entity.types";
 
-export const fetchPortfoliosByUserId = async (
-  userId: string
-): Promise<Portfolio[]> => {
-  const res = await axios.get(
-    `${DEV_SERVER_ENDPOINT}/portfolios?userId=${userId}`
-  );
+export const fetchPortfolios = async (): Promise<Portfolio[]> => {
+  const res = await axios.get(`${DEV_SERVER_ENDPOINT}/portfolios`);
   return res.data;
 };
 
-export interface AddPortfolioRequestDto {
+export const addPortfolio = async (addPortfolioRequestDto: {
   name: string;
-}
-
-export const addPortfolio = async (
-  addPortfolioRequestDto: AddPortfolioRequestDto
-): Promise<Portfolio> => {
+}): Promise<Portfolio> => {
   const res: AxiosResponse<Portfolio> = await axios.post(
     `${DEV_SERVER_ENDPOINT}/portfolios`,
     addPortfolioRequestDto,
@@ -34,11 +26,6 @@ export interface AddInvestmentToPortfolioDto {
   quantity: number;
   cost: number | undefined;
   stockId: string;
-}
-
-export interface DeleteInvestmentFromPortfolioDto {
-  portfolioId: string;
-  investmentId: string;
 }
 
 export const addInvestmentToPortfolio = async (
@@ -59,6 +46,11 @@ export const addInvestmentToPortfolio = async (
   );
   return res.data;
 };
+
+export interface DeleteInvestmentFromPortfolioDto {
+  portfolioId: string;
+  investmentId: string;
+}
 
 export const deleteInvestmentFromPortfolio = async (
   deleteInvestmentFromPortfolioDto: DeleteInvestmentFromPortfolioDto
