@@ -12,7 +12,7 @@ const GoalProgress: FC = () => {
       const { quantity, stockId } = investment;
       return prev + (stocks?.[stockId]?.c || 0) * quantity;
     }, 0);
-  const goal = 100000; // TODO: replace with user's goal
+  const goal = 1000000; // TODO: replace with user's goal
   const percentage = (getTotalNetWorth() / goal) * 100;
   return (
     <div className="flex flex-col h-full gap-4">

@@ -22,7 +22,7 @@ const isStockResponseValid = (stockResponseDto: FinnhubStockResponseDto) =>
  */
 const fetchStock = async (q: string): Promise<FinnhubStockResponseDto> => {
   const stockResponseDto: FinnhubStockResponseDto = await fetch(
-    getFetchStockUrl(q),
+    getFetchStockUrl(q.toLowerCase()),
     {
       cache: "no-cache",
     }
@@ -48,7 +48,7 @@ const fetchStock = async (q: string): Promise<FinnhubStockResponseDto> => {
  */
 const fetchCompany = async (q: string): Promise<FinnhubCompanyResponseDto> => {
   const companyResponseDto: FinnhubCompanyResponseDto = await fetch(
-    getFetchCompanyUrl(q),
+    getFetchCompanyUrl(q.toLowerCase()),
     {
       cache: "no-cache",
     }

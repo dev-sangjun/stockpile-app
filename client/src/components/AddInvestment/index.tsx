@@ -63,7 +63,8 @@ const AddInvestment: FC = () => {
             type="number"
             name="quantity"
             placeholder="Qty"
-            min={1}
+            min={0}
+            step="0.01"
             className="input input-sm input-bordered w-full max-w-xs"
             onChange={handleFormChange}
             value={formData.quantity}
@@ -76,6 +77,7 @@ const AddInvestment: FC = () => {
             name="cost"
             placeholder="Current Price"
             min={0}
+            step="0.01"
             className="input input-sm input-bordered w-full max-w-xs"
             onChange={handleFormChange}
             value={formData.cost || ""}

@@ -49,11 +49,17 @@ const EntityListItem: FC<EntityListItemProps> = ({
     return null;
   };
   const getValue = () => {
+    if (entityType === "Portfolio") {
+      return (entityDetails as PortfolioDetails).totalValue;
+    }
+    if (entityType === "Investment") {
+      return (entityDetails as InvestmentDetails).curPrice;
+    }
     if (entityType === "FavoriteStock") {
       const { stock } = entityDetails as FavoriteStockDetails;
       return stock.c;
     }
-    return (entityDetails as PortfolioDetails | InvestmentDetails).totalCost;
+    return 0;
   };
   return (
     <li
@@ -64,7 +70,7 @@ const EntityListItem: FC<EntityListItemProps> = ({
     >
       <div className="flex items-center h-30 gap-2">
         <div className="flex flex-1 items-center gap-2">
-          {logoUrl && renderCompanyLogo(logoUrl)}
+          {/* {logoUrl && renderCompanyLogo(logoUrl)} */}
           <h3 className="text-lg font-bold">{title}</h3>
           {actionButtons}
         </div>

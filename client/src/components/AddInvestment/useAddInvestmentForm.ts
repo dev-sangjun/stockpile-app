@@ -65,8 +65,8 @@ const useAddInvestmentForm = (): {
         filteredSymbols: getFilteredSymbols(value, symbols),
       });
     } else if (name === "quantity") {
-      const quantity = parseInt(value);
-      if (isNaN(quantity) || quantity < 1) {
+      const quantity = parseFloat(value);
+      if (isNaN(quantity) || quantity < 0) {
         return;
       }
       setFormData({ ...formData, quantity });

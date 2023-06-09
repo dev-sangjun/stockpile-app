@@ -95,6 +95,7 @@ export const getPortfolioDetails = (portfolio: Portfolio, stocks: Stocks) => {
 };
 
 export interface InvestmentDetails {
+  curPrice: number;
   totalValue: number;
   totalCost: number;
   quantity: number;
@@ -105,11 +106,12 @@ export const getInvestmentDetails = (
   investment: Investment,
   stocks: Stocks
 ): InvestmentDetails => {
-  const totalValue = stocks?.[investment.stockId]?.c * investment.quantity;
+  const curPrice = stocks?.[investment.stockId]?.c;
+  const totalValue = curPrice * investment.quantity;
   const totalCost = investment.avgCost * investment.quantity;
-  const dayChange =
-    stocks?.[investment.stockId]?.c - stocks?.[investment.stockId]?.pc;
+  const dayChange = curPrice - stocks?.[investment.stockId]?.pc;
   return {
+    curPrice,
     totalValue,
     totalCost,
     quantity: investment.quantity,
