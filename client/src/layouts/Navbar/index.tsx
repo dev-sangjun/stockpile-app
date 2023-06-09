@@ -3,6 +3,9 @@ import { Link, useLocation } from "react-router-dom";
 import { NavbarItem } from "./navbar-items";
 import logo from "../../assets/logo.png";
 import { signOutUser } from "../../api/auth.api";
+import { useDispatch } from "react-redux";
+import { AppDispatch } from "../../states/store";
+import { updateUserId } from "../../states/auth.reducer";
 
 interface NavbarProps {
   navbarItems: NavbarItem[];
@@ -10,6 +13,7 @@ interface NavbarProps {
 
 const Navbar: FC<NavbarProps> = ({ navbarItems }) => {
   const location = useLocation();
+  const dispatch = useDispatch<AppDispatch>();
   const renderNavbarItems = () =>
     navbarItems.map(({ label, path }) => (
       <Link key={label} className="p-4 font-bold" to={path}>
@@ -30,6 +34,7 @@ const Navbar: FC<NavbarProps> = ({ navbarItems }) => {
   };
   const handleSignOut = async () => {
     await signOutUser();
+    dispatch(updateUserId(""));
   };
   return (
     <div className="bg-white absolute w-full">
