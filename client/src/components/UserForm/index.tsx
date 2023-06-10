@@ -16,10 +16,11 @@ import {
 } from "../../utils/error.utils";
 
 const UserForm: FC = () => {
-  const [isSignIn, setIsSignIn] = useState(true);
+  const [isSignIn, setIsSignIn] = useState(false);
   const [alertErrorMessages, setAlertErrorMessages] = useState<string[]>([]);
   const dispatch = useDispatch<AppDispatch>();
-  const { registerers, handleSubmit, errors } = useFormWrapper(isSignIn);
+  const { registerers, handleSubmit, errors, clearErrors } =
+    useFormWrapper(isSignIn);
   const onSubmit = handleSubmit(async data => {
     if (isSignIn) {
       try {
@@ -44,8 +45,9 @@ const UserForm: FC = () => {
     getUserFormTexts(isSignIn);
   useEffect(() => {
     // reset states upon change form mode
+    clearErrors();
     setAlertErrorMessages([]);
-  }, [isSignIn]);
+  }, [isSignIn, clearErrors]);
   return (
     <div className="card flex flex-col gap-4 bg-base-100 p-12 w-full max-w-lg">
       <div className="flex flex-col gap-2">

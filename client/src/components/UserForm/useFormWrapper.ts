@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 
 interface FormValues {
@@ -11,8 +12,14 @@ const useFormWrapper = (isSignIn: boolean) => {
     register,
     handleSubmit,
     formState: { errors },
+    clearErrors,
   } = useForm<FormValues>();
-  const registerers = {
+  useEffect(() => {
+    setRegisterers(prev => ({
+      ...prev,
+    }));
+  }, [isSignIn]);
+  const [registerers, setRegisterers] = useState({
     username: isSignIn
       ? {}
       : register("username", {
@@ -30,8 +37,8 @@ const useFormWrapper = (isSignIn: boolean) => {
         message: "Password has to be at least 6 characters",
       },
     }),
-  };
-  return { registerers, handleSubmit, errors };
+  });
+  return { registerers, handleSubmit, errors, clearErrors };
 };
 
 export default useFormWrapper;
