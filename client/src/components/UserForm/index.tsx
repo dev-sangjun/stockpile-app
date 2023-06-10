@@ -3,6 +3,7 @@ import { getUserFormTexts } from "./user-form.utils";
 import {
   renderAlertErrorMessages,
   renderFieldErrorMessages,
+  renderSuccessMessage,
 } from "./renderers";
 import useFormWrapper from "./useFormWrapper";
 import { createUser, signInUser } from "../../api/auth.api";
@@ -14,10 +15,13 @@ import {
   getPrismaErrorAlertMessages,
   isPrismaError,
 } from "../../utils/error.utils";
+import useToast from "../../hooks/useToast";
 
 const UserForm: FC = () => {
-  const [isSignIn, setIsSignIn] = useState(false);
+  const [isSignIn, setIsSignIn] = useState(true);
+  const [isSignUpSuccessful, setIsSignUpSuccessful] = useState(false);
   const [alertErrorMessages, setAlertErrorMessages] = useState<string[]>([]);
+  const { isVisible } = useToast(isSignUpSuccessful);
   const dispatch = useDispatch<AppDispatch>();
   const { registerers, handleSubmit, errors, clearErrors } =
     useFormWrapper(isSignIn);
@@ -38,6 +42,7 @@ const UserForm: FC = () => {
         return;
       }
       // handle successful sign up
+      setIsSignUpSuccessful(true);
       setIsSignIn(true);
     }
   });
@@ -55,6 +60,7 @@ const UserForm: FC = () => {
         <span className="">{greetings}</span>
       </div>
       {renderAlertErrorMessages(alertErrorMessages)}
+      {renderSuccessMessage("Signed up successfully", isVisible)}
       <form className="flex flex-col w-full" onSubmit={onSubmit}>
         {!isSignIn && (
           <>

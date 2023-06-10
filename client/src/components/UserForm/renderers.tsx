@@ -31,6 +31,16 @@ export const renderAlertErrorMessages = (errorAlerts: string[]) => {
   );
 };
 
+export const renderSuccessMessage = (message: string, show: boolean) => {
+  return show ? (
+    <div className="toast toast-top toast-center">
+      <div className="alert alert-success">
+        <span>{message}</span>
+      </div>
+    </div>
+  ) : null;
+};
+
 export const renderFieldErrorMessages = (field: FieldError | undefined) => {
   return (
     field && (
