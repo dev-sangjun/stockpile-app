@@ -12,6 +12,7 @@ import { getInvestmentDetails } from "../../utils/entity.utils";
 import useHandleDeleteInvestment from "./useHandleDeleteInvestment";
 import useUserState from "./useUserInfo";
 import EntityListItem from "../EntityListItem";
+import { openDeleteEntityModal } from "../../states/modal.reducer";
 
 interface InvestmentItemProps {
   investment: Investment;
@@ -29,10 +30,14 @@ const InvestmentListItem: FC<InvestmentItemProps> = ({
     [investment, stocks]
   );
   const logoUrl = stocks?.[investment.stockId]?.company?.logo;
-  const handleDeleteInvestment = useHandleDeleteInvestment(
-    selectedPortfolio?.id,
-    investment.id
-  );
+  const handleDeleteInvestment = () => {
+    dispatch(
+      openDeleteEntityModal({
+        entity: investment,
+        entityType: "Investment",
+      })
+    );
+  };
   const handleFavoriteClick = () => {
     isFavorite
       ? dispatch(asyncDeleteFromFavoriteStocks(investment.stockId))

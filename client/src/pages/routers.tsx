@@ -2,6 +2,7 @@ import { Navigate, Outlet, createBrowserRouter } from "react-router-dom";
 import Navbar from "../components/Navbar";
 import navbarItems from "../components/Navbar/navbar-items";
 import SignIn from "./SignIn";
+import Modal from "../components/Modal";
 
 const publicRouter = createBrowserRouter([
   {
@@ -33,6 +34,7 @@ const privateRouter = createBrowserRouter([
         <div className="max-w-7xl h-screen w-full mx-auto py-16 md:py-16 overflow-y-auto">
           <Outlet />
         </div>
+        <Modal />
       </div>
     ),
     children: [
