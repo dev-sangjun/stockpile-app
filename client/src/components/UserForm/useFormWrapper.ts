@@ -1,10 +1,16 @@
 import { useEffect, useState } from "react";
-import { useForm } from "react-hook-form";
+import { UseFormRegisterReturn, useForm } from "react-hook-form";
 
 interface FormValues {
   username: string;
   email: string;
   password: string;
+}
+
+interface Registerers {
+  username?: UseFormRegisterReturn<"username">;
+  email: UseFormRegisterReturn<"email">;
+  password: UseFormRegisterReturn<"password">;
 }
 
 const useFormWrapper = (isSignIn: boolean) => {
@@ -15,20 +21,26 @@ const useFormWrapper = (isSignIn: boolean) => {
     clearErrors,
   } = useForm<FormValues>();
   useEffect(() => {
-    setRegisterers(prev => ({
-      ...prev,
-    }));
-  }, [isSignIn]);
-  const [registerers, setRegisterers] = useState({
-    username: isSignIn
-      ? {}
-      : register("username", {
+    if (isSignIn) {
+      setRegisterers(prev => ({
+        email: prev.email,
+        password: prev.password,
+      }));
+    } else {
+      setRegisterers(prev => ({
+        ...prev,
+        username: register("username", {
           required: "Username is required.",
           minLength: {
             value: 6,
             message: "Username has to be at least 6 characters",
           },
         }),
+      }));
+    }
+  }, [register, isSignIn]);
+  const [registerers, setRegisterers] = useState<Registerers>({
+    username: undefined,
     email: register("email", { required: "Email is required." }),
     password: register("password", {
       required: "Password is required.",

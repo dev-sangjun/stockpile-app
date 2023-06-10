@@ -82,6 +82,7 @@ const UserForm: FC = () => {
           className="input input-bordered w-full"
           type="text"
           placeholder="Email"
+          autoComplete={isSignIn ? "on" : "off"}
           {...registerers.email}
         />
         {renderFieldErrorMessages(errors.email)}
@@ -92,6 +93,7 @@ const UserForm: FC = () => {
           className="input input-bordered w-full"
           type="password"
           placeholder="Password"
+          autoComplete={isSignIn ? "on" : "off"}
           {...registerers.password}
         />
         {renderFieldErrorMessages(errors.password)}
