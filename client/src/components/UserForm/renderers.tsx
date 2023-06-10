@@ -31,7 +31,7 @@ export const renderAlertErrorMessages = (errorAlerts: string[]) => {
   );
 };
 
-export const renderSuccessMessage = (message: string, show: boolean) => {
+export const renderSuccessToast = (message: string, show: boolean) => {
   return show ? (
     <div className="toast toast-top toast-center">
       <div className="alert alert-success">

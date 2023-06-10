@@ -3,7 +3,7 @@ import { getUserFormTexts } from "./user-form.utils";
 import {
   renderAlertErrorMessages,
   renderFieldErrorMessages,
-  renderSuccessMessage,
+  renderSuccessToast,
 } from "./renderers";
 import useFormWrapper from "./useFormWrapper";
 import { createUser, signInUser } from "../../api/auth.api";
@@ -60,7 +60,6 @@ const UserForm: FC = () => {
         <span className="">{greetings}</span>
       </div>
       {renderAlertErrorMessages(alertErrorMessages)}
-      {renderSuccessMessage("Signed up successfully", isVisible)}
       <form className="flex flex-col w-full" onSubmit={onSubmit}>
         {!isSignIn && (
           <>
@@ -109,6 +108,7 @@ const UserForm: FC = () => {
           {transitionButton}
         </button>
       </div>
+      {renderSuccessToast("Signed up successfully", isVisible)}
     </div>
   );
 };
