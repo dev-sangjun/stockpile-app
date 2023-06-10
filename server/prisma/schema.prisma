@@ -12,8 +12,8 @@ datasource db {
 
 model User {
   id                 String   @id @default(uuid())
-  email              String   @unique
   username           String   @unique
+  email              String   @unique
   password           String
   favoritePortfolios String[] // portfolioIds
   favoriteStocks     String[] // stockIds

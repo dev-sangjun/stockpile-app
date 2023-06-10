@@ -1,6 +1,7 @@
 import axios, { AxiosResponse } from "axios";
 import { User } from "../types/entity.types";
 import { DEV_SERVER_ENDPOINT } from "../dev/constants";
+import { PrismaError } from "../utils/error.utils";
 
 export interface CreateUserDto {
   username: string;
@@ -9,8 +10,8 @@ export interface CreateUserDto {
 }
 export const createUser = async (
   createUserDto: CreateUserDto
-): Promise<User> => {
-  const res: AxiosResponse<User> = await axios.post(
+): Promise<User | PrismaError> => {
+  const res: AxiosResponse<User | PrismaError> = await axios.post(
     `${DEV_SERVER_ENDPOINT}/auth/signup`,
     createUserDto
   );

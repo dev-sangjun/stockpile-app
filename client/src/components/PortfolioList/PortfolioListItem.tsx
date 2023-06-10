@@ -4,7 +4,7 @@ import { Portfolio } from "../../types/entity.types";
 import { AppDispatch, RootState } from "../../states/store";
 import { useDispatch } from "react-redux";
 import { getStocks, selectPortfolio } from "../../states/user.reducer";
-import { HiCheck, HiEye, HiPencilSquare, HiTrash } from "react-icons/hi2";
+import { HiEye, HiPencilSquare, HiTrash } from "react-icons/hi2";
 import { getPortfolioDetails } from "../../utils/entity.utils";
 import EntityListItem from "../EntityListItem";
 import { openDeleteEntityModal } from "../../states/modal.reducer";

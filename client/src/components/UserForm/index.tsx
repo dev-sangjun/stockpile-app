@@ -1,21 +1,59 @@
-import { FC, useState } from "react";
-import useUserForm from "./useUserForm";
+import { FC, useEffect, useState } from "react";
+import { getUserFormTexts } from "./user-form.utils";
+import {
+  renderAlertErrorMessages,
+  renderFieldErrorMessages,
+} from "./renderers";
+import useFormWrapper from "./useFormWrapper";
+import { createUser, signInUser } from "../../api/auth.api";
+import { useDispatch } from "react-redux";
+import { AppDispatch } from "../../states/store";
+import { asyncFetchUser } from "../../states/user.reducer";
+import {
+  PrismaError,
+  getPrismaErrorAlertMessages,
+  isPrismaError,
+} from "../../utils/error.utils";
 
 const UserForm: FC = () => {
   const [isSignIn, setIsSignIn] = useState(true);
-  const { handleInputChange, handleSubmit } = useUserForm(isSignIn);
-  const formActionText = isSignIn ? "Sign in" : "Sign up";
+  const [alertErrorMessages, setAlertErrorMessages] = useState<string[]>([]);
+  const dispatch = useDispatch<AppDispatch>();
+  const { registerers, handleSubmit, errors } = useFormWrapper(isSignIn);
+  const onSubmit = handleSubmit(async data => {
+    if (isSignIn) {
+      try {
+        await signInUser(data);
+        dispatch(asyncFetchUser());
+      } catch (e) {
+        setAlertErrorMessages(["Sign in failed."]);
+      }
+    } else {
+      const res = await createUser(data);
+      if (isPrismaError(res)) {
+        const err = res as PrismaError;
+        const alertMessages = getPrismaErrorAlertMessages(err);
+        setAlertErrorMessages(alertMessages);
+        return;
+      }
+      // handle successful sign up
+      setIsSignIn(true);
+    }
+  });
+  const { title, greetings, action, transition, transitionButton } =
+    getUserFormTexts(isSignIn);
+  useEffect(() => {
+    // reset states upon change form mode
+    setAlertErrorMessages([]);
+  }, [isSignIn]);
   return (
     <div className="card flex flex-col gap-4 bg-base-100 p-12 w-full max-w-lg">
       <div className="flex flex-col gap-2">
-        <h2 className="text-2xl font-bold">{formActionText}</h2>
-        <span className="">
-          {isSignIn
-            ? "Welcome back! Let's verify your identity."
-            : "Welcome! Please enter your details to sign up."}
-        </span>
+        <h2 className="text-2xl font-bold">{title}</h2>
+        <span className="">{greetings}</span>
       </div>
-      <form className="flex flex-col w-full" onSubmit={handleSubmit}>
+      {renderAlertErrorMessages(alertErrorMessages)}
+      <form className="flex flex-col w-full" onSubmit={onSubmit}>
         {!isSignIn && (
           <>
             <label className="label">
@@ -24,10 +62,10 @@ const UserForm: FC = () => {
             <input
               className="input input-bordered w-full"
               type="text"
-              name="username"
               placeholder="Username"
-              onChange={handleInputChange}
+              {...registerers.username}
             />
+            {renderFieldErrorMessages(errors.username)}
           </>
         )}
         <label className="label">
@@ -35,34 +73,32 @@ const UserForm: FC = () => {
         </label>
         <input
           className="input input-bordered w-full"
-          type="email"
-          name="email"
+          type="text"
           placeholder="Email"
-          onChange={handleInputChange}
+          {...registerers.email}
         />
+        {renderFieldErrorMessages(errors.email)}
         <label className="label">
           <span className="label-text">Password</span>
         </label>
         <input
           className="input input-bordered w-full"
           type="password"
-          name="password"
           placeholder="Password"
-          onChange={handleInputChange}
+          {...registerers.password}
         />
+        {renderFieldErrorMessages(errors.password)}
         <button className="btn btn-primary normal-case text-base-100 mt-4">
-          {formActionText}
+          {action}
         </button>
       </form>
       <div className="flex justify-center items-center w-full">
-        <span>
-          {isSignIn ? "Don't have an account?" : "Already have an account?"}{" "}
-        </span>
+        <span>{transition}</span>
         <button
           className="btn btn-link normal-case no-underline hover:no-underline"
           onClick={() => setIsSignIn(prev => !prev)}
         >
-          {isSignIn ? "Sign up" : "Sign in"}
+          {transitionButton}
         </button>
       </div>
     </div>

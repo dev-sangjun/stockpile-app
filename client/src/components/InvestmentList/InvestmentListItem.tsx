@@ -9,7 +9,6 @@ import {
 } from "../../states/user.reducer";
 import FavoritesButton from "../FavoritesButton";
 import { getInvestmentDetails } from "../../utils/entity.utils";
-import useHandleDeleteInvestment from "./useHandleDeleteInvestment";
 import useUserState from "./useUserInfo";
 import EntityListItem from "../EntityListItem";
 import { openDeleteEntityModal } from "../../states/modal.reducer";
