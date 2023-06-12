@@ -1,8 +1,9 @@
 import { FC } from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import navbarItems from "./navbar-items";
 
 const BottomNavbarItems: FC = () => {
+  const location = useLocation();
   const isNavbarItemActive = (path: string) => path === location.pathname;
   const renderBottomNavbarItems = () =>
     navbarItems.map(({ label, path, icon }) => (

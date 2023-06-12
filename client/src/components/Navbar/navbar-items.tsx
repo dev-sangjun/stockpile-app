@@ -1,9 +1,5 @@
-import {
-  HiOutlineHome,
-  HiOutlineChartBar,
-  HiOutlineCalculator,
-} from "react-icons/hi2";
-import { Calculators, Home, Portfolios } from "../../pages";
+import { HiOutlineHome, HiOutlineChartBar } from "react-icons/hi2";
+import { Home, Portfolios } from "../../pages";
 
 export type NavbarItem = {
   label: string;
@@ -24,12 +20,6 @@ const navbarItems: NavbarItem[] = [
     path: "/portfolios",
     icon: <HiOutlineChartBar />,
     element: <Portfolios />,
-  },
-  {
-    label: "Calculators",
-    path: "/calculators",
-    icon: <HiOutlineCalculator />,
-    element: <Calculators />,
   },
 ];
 
