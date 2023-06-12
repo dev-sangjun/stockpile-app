@@ -1,19 +1,25 @@
-import { FC } from "react";
+import { FC, useRef } from "react";
 import isEmpty from "is-empty";
 import { useOutsideClick } from "../../../hooks";
 import useAddEntityForm from "./useAddInvestmentForm";
 import { HiPlus } from "react-icons/hi2";
 
 const AddInvestment: FC = () => {
+  const submitButtonRef = useRef<HTMLButtonElement>(null);
+  const closeDropdown = () => {
+    // blurs submit button & closes dropdown
+    if (submitButtonRef.current) {
+      submitButtonRef.current.blur();
+    }
+  };
   const {
     formData,
     setFormData,
     resetFormData,
     handleFormChange,
     handleSubmit,
-  } = useAddEntityForm();
+  } = useAddEntityForm(closeDropdown);
   const formRef = useOutsideClick<HTMLFormElement>(resetFormData);
-
   const handleSymbolClick = (symbol: string) => {
     setFormData({
       ...formData,
@@ -86,6 +92,7 @@ const AddInvestment: FC = () => {
           <button
             className="btn btn-sm btn-primary"
             disabled={isEmpty(formData.selectedSymbol)}
+            ref={submitButtonRef}
           >
             Submit
           </button>

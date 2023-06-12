@@ -3,6 +3,7 @@ import Navbar from "../components/Navbar";
 import navbarItems from "../components/Navbar/navbar-items";
 import SignIn from "./SignIn";
 import Modal from "../components/Modal";
+import { Toaster } from "react-hot-toast";
 
 const publicRouter = createBrowserRouter([
   {
@@ -11,6 +12,7 @@ const publicRouter = createBrowserRouter([
         <div className="max-w-7xl h-screen w-full mx-auto py-24">
           <Outlet />
         </div>
+        <Toaster />
       </div>
     ),
     children: [
@@ -34,6 +36,7 @@ const privateRouter = createBrowserRouter([
         <div className="max-w-7xl h-screen w-full mx-auto py-16 md:py-16 overflow-y-auto">
           <Outlet />
         </div>
+        <Toaster />
         <Modal />
       </div>
     ),

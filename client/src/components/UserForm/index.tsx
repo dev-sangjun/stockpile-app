@@ -3,7 +3,6 @@ import { getUserFormTexts } from "./user-form.utils";
 import {
   renderAlertErrorMessages,
   renderFieldErrorMessages,
-  renderSuccessToast,
 } from "./renderers";
 import useFormWrapper from "./useFormWrapper";
 import { createUser, signInUser } from "../../api/auth.api";
@@ -15,13 +14,11 @@ import {
   getPrismaErrorAlertMessages,
   isPrismaError,
 } from "../../utils/error.utils";
-import useToast from "../../hooks/useToast";
+import { notify } from "../../utils/toast.utils";
 
 const UserForm: FC = () => {
   const [isSignIn, setIsSignIn] = useState(true);
-  const [isSignUpSuccessful, setIsSignUpSuccessful] = useState(false);
   const [alertErrorMessages, setAlertErrorMessages] = useState<string[]>([]);
-  const { isVisible } = useToast(isSignUpSuccessful);
   const dispatch = useDispatch<AppDispatch>();
   const { registerers, handleSubmit, errors, clearErrors } =
     useFormWrapper(isSignIn);
@@ -42,7 +39,7 @@ const UserForm: FC = () => {
         return;
       }
       // handle successful sign up
-      setIsSignUpSuccessful(true);
+      notify("Successfully signed up!");
       setIsSignIn(true);
     }
   });
@@ -110,7 +107,6 @@ const UserForm: FC = () => {
           {transitionButton}
         </button>
       </div>
-      {renderSuccessToast("Signed up successfully", isVisible)}
     </div>
   );
 };

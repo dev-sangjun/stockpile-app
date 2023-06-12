@@ -8,6 +8,7 @@ import {
   deletePortfolio,
 } from "../../api/portfolio.api";
 import { asyncFetchUser } from "../../states/user.reducer";
+import { notify } from "../../utils/toast.utils";
 
 interface DeleteEntityModalProps {
   entity: Portfolio | Investment;
@@ -34,12 +35,14 @@ const DeleteEntityModal: FC<DeleteEntityModalProps> = ({
     e.preventDefault();
     if (entityType === "Portfolio") {
       await deletePortfolio(entity.id);
+      notify(`Successfully deleted ${(entity as Portfolio).name}`);
     } else {
-      const { id, portfolioId } = entity as Investment;
+      const { id, portfolioId, stockId } = entity as Investment;
       await deleteInvestmentFromPortfolio({
         portfolioId,
         investmentId: id,
       });
+      notify(`Successfully deleted ${stockId}`);
     }
     await dispatch(asyncFetchUser());
     dispatch(closeModal());

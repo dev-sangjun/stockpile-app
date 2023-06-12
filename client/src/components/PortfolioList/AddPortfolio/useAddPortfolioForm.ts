@@ -5,6 +5,7 @@ import { AppDispatch, RootState } from "../../../states/store";
 import { addPortfolio } from "../../../api/portfolio.api";
 import { asyncFetchUser } from "../../../states/user.reducer";
 import { getUserId } from "../../../states/user.reducer";
+import { notify } from "../../../utils/toast.utils";
 
 export interface AddPortfolioFormData {
   name: string;
@@ -14,7 +15,9 @@ const formDataInitialState: AddPortfolioFormData = {
   name: "",
 };
 
-const useAddPortfolioForm = (): {
+const useAddPortfolioForm = (
+  submitCallback?: () => void
+): {
   formData: AddPortfolioFormData;
   setFormData: Dispatch<React.SetStateAction<AddPortfolioFormData>>;
   resetFormData: () => void;
@@ -45,6 +48,10 @@ const useAddPortfolioForm = (): {
       // add portfolio
       await addPortfolio({ name });
       dispatch(asyncFetchUser());
+      notify(`Successfully added ${name}`);
+      if (submitCallback) {
+        submitCallback();
+      }
     } catch (e) {
       console.error(e);
     }

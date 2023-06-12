@@ -10,6 +10,7 @@ import {
   getStocks,
 } from "../../../states/user.reducer";
 import { getUserId } from "../../../states/user.reducer";
+import { notify } from "../../../utils/toast.utils";
 
 export interface AddInvestmentFormData {
   keyword: string;
@@ -35,7 +36,9 @@ const getFilteredSymbols = (q: string, symbols: string[]) => {
   return filteredSymbols.slice(0, 5);
 };
 
-const useAddInvestmentForm = (): {
+const useAddInvestmentForm = (
+  submitCallback?: () => void
+): {
   formData: AddInvestmentFormData;
   setFormData: Dispatch<React.SetStateAction<AddInvestmentFormData>>;
   resetFormData: () => void;
@@ -98,7 +101,7 @@ const useAddInvestmentForm = (): {
       return;
     }
     try {
-      // add investment -> fetch stocks owned by the user -> fetch portfolios
+      // add investment -> refetch user
       await addInvestmentToPortfolio({
         quantity,
         cost,
@@ -106,6 +109,10 @@ const useAddInvestmentForm = (): {
         portfolioId: selectedPortfolio.id,
       });
       dispatch(asyncFetchUser());
+      notify(`Successfully added ${selectedSymbol}`);
+      if (submitCallback) {
+        submitCallback();
+      }
     } catch (e) {
       console.error(e);
     }
