@@ -9,6 +9,7 @@ import {
   getSelectedPortfolio,
 } from "../../states/user.reducer";
 import { renderInvestmentListItems } from "./renderer";
+import { HiArrowLeft, HiArrowSmallLeft } from "react-icons/hi2";
 
 const InvestmentList: FC = () => {
   const dispatch = useDispatch<AppDispatch>();
@@ -26,7 +27,6 @@ const InvestmentList: FC = () => {
     selectedPortfolio?.investments ?? Object.values(allInvestments);
   const title = selectedPortfolio?.name || "All Investments";
   const getActionButtons = () => {
-    const handleShowAllClick = () => dispatch(deselectPortfolio());
     return (
       selectedPortfolio && (
         <div className="flex items-center gap-2">
@@ -35,10 +35,19 @@ const InvestmentList: FC = () => {
       )
     );
   };
+  const handleBackButton = () => dispatch(deselectPortfolio());
   return (
     <div className="flex flex-col gap-4">
       <div className="flex justify-between items-center">
-        <h2 className="text-xl font-bold">{title}</h2>
+        <div className="flex items-center gap-2">
+          {selectedPortfolio && (
+            <HiArrowLeft
+              className="hover:cursor-pointer"
+              onClick={handleBackButton}
+            />
+          )}
+          <h2 className="text-xl font-bold">{title}</h2>
+        </div>
         {getActionButtons()}
       </div>
       <ul className="flex flex-col gap-4">
