@@ -8,6 +8,7 @@ const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
 const authMiddleware = (req, res, next) => {
     var _a;
     const token = (_a = req.cookies) === null || _a === void 0 ? void 0 : _a.access_token;
+    console.log(req);
     if (!token)
         return res.sendStatus(401); // not authorized
     try {
