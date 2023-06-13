@@ -18,11 +18,7 @@ const FavoriteStocks: FC = () => {
     });
     return filteredFavoriteStocks;
   };
-  return (
-    <div className="flex flex-col gap-4 h-full">
-      {<FavoriteStockList stocks={filteredFavoriteStocks()} />}
-    </div>
-  );
+  return <FavoriteStockList stocks={filteredFavoriteStocks()} />;
 };
 
 export default FavoriteStocks;

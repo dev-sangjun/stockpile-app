@@ -9,7 +9,7 @@ import {
   getSelectedPortfolio,
 } from "../../states/user.reducer";
 import { renderInvestmentListItems } from "./renderer";
-import { HiArrowLeft, HiArrowSmallLeft } from "react-icons/hi2";
+import { HiArrowLeft } from "react-icons/hi2";
 
 const InvestmentList: FC = () => {
   const dispatch = useDispatch<AppDispatch>();

@@ -61,7 +61,9 @@ const EntityListItem: FC<EntityListItemProps> = ({
     return 0;
   };
   return (
-    <div className="collapse collapse-plus bg-base-100">
+    <div
+      className={`collapse collapse-plus bg-base-100 min-w-[16rem] md:max-w-[18rem] ${className}`}
+    >
       <input type="checkbox" />
       <div className="collapse-title">
         <h3 className="text-md font-bold">{title}</h3>
