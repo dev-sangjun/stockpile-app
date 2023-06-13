@@ -32,7 +32,7 @@
   },
   "scripts": {
     "build": "npx tsc -p .",
-    "start": "npm install && node dist/src/server.js",
+    "start": "npm install --production && node dist/src/server.js",
     "dev": "nodemon --watch \"src/**/*.ts\" --exec \"ts-node\" src/server.ts",
     "scheduler": "nodemon --watch \"src/schedulers/**/*.ts\" --exec \"ts-node\" src/schedulers/main.ts"
   }
