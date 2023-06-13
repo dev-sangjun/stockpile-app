@@ -26,7 +26,6 @@ const signInUser = async (req: Request, res: Response, next: NextFunction) => {
     return res
       .cookie("access_token", accessToken, {
         httpOnly: true,
-        secure: process.env.NODE_ENV === "production",
       })
       .json({ userId });
   } catch (e) {

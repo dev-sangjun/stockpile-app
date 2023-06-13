@@ -27,7 +27,6 @@ const signInUser = (req, res, next) => __awaiter(void 0, void 0, void 0, functio
         return res
             .cookie("access_token", accessToken, {
             httpOnly: true,
-            secure: process.env.NODE_ENV === "production",
         })
             .json({ userId });
     }
