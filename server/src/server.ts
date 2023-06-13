@@ -4,7 +4,6 @@ import cors from "cors";
 import rootRouter from "./routes";
 import { errorHandler } from "./utils/errorHandler";
 import cookieParser from "cookie-parser";
-import morgan from "morgan";
 
 dotenv.config();
 
@@ -16,7 +15,6 @@ const corsOptions = {
   origin: whitelist,
 };
 app.use(cors(corsOptions));
-app.use(morgan("dev"));
 app.use(express.json());
 app.use(cookieParser());
 app.use("/api", rootRouter);
