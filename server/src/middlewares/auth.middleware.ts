@@ -17,7 +17,6 @@ export const authMiddleware = (
   next: NextFunction
 ) => {
   const token = req.cookies?.access_token;
-  console.log(req);
   if (!token) return res.sendStatus(401); // not authorized
   try {
     const JWT_SECRET_KEY = process.env.JWT_SECRET_KEY!;
