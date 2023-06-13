@@ -23,8 +23,8 @@ app.use(express_1.default.json());
 app.use((0, cookie_parser_1.default)());
 app.use("/api", routes_1.default);
 app.use(errorHandler_1.errorHandler);
-app.use(express_1.default.static(path_1.default.join(__dirname, "server/dist")));
+app.use(express_1.default.static(path_1.default.join(__dirname, "../")));
 app.get("/*", (req, res) => {
-    res.sendFile(path_1.default.join(__dirname, "server/dist", "index.html"));
+    res.sendFile(path_1.default.join(__dirname, "../", "index.html"));
 });
 app.listen(PORT, () => console.log(`Server running at ${PORT}...`));
