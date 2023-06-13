@@ -7,7 +7,7 @@ import BottomNavbarItems from "./BottomNavbarItems";
 const Navbar: FC = () => {
   return (
     <div className="bg-white absolute w-full z-10">
-      <div className="navbar p-0 max-w-7xl mx-auto">
+      <div className="navbar p-0 max-w-7xl mx-auto pr-4">
         <div className="flex-1 top-0">
           <Link
             className="btn btn-ghost normal-case text-xl mx-auto md:mx-0 flex gap-2"
