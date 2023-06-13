@@ -25,6 +25,6 @@ app.use("/api", routes_1.default);
 app.use(errorHandler_1.errorHandler);
 app.use(express_1.default.static(path_1.default.join(__dirname, "../dist/client")));
 app.get("/*", (req, res) => {
-    res.sendFile(path_1.default.join(__dirname, "../dist/client", "index.html"));
+    res.sendFile(path_1.default.join(__dirname, "../client", "index.html"));
 });
 app.listen(PORT, () => console.log(`Server running at ${PORT}...`));
