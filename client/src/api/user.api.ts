@@ -59,3 +59,38 @@ export const deleteFromFavoriteStocks = async (
 ): Promise<string[]> => {
   return handleFavorites(stockId, "Stock", "DELETE");
 };
+
+const updateUser = async (
+  field: "password" | "goal-amount",
+  value: string | number
+): Promise<{
+  success: boolean;
+  message?: string;
+}> => {
+  const body = {
+    [field]: value,
+  };
+  const res: AxiosResponse<{ success: boolean; message?: string }> =
+    await axios.patch(`${DEV_SERVER_ENDPOINT}/me?field=${field}`, body, {
+      withCredentials: true,
+    });
+  return res.data;
+};
+
+export const updatePassword = async (
+  password: string
+): Promise<{
+  success: boolean;
+  message?: string;
+}> => {
+  return updateUser("password", password);
+};
+
+export const updateGoalAmount = async (
+  goalAmount: number
+): Promise<{
+  success: boolean;
+  message?: string;
+}> => {
+  return updateUser("goal-amount", goalAmount);
+};

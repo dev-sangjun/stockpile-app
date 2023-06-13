@@ -1,9 +1,6 @@
 import { FC, useEffect, useState } from "react";
 import { getUserFormTexts } from "./user-form.utils";
-import {
-  renderAlertErrorMessages,
-  renderFieldErrorMessages,
-} from "./renderers";
+import { renderAlertErrorMessages } from "./renderers";
 import useFormWrapper from "./useFormWrapper";
 import { createUser, signInUser } from "../../api/auth.api";
 import { useDispatch } from "react-redux";
@@ -15,6 +12,7 @@ import {
   isPrismaError,
 } from "../../utils/error.utils";
 import { notify } from "../../utils/toast.utils";
+import { renderFieldErrorMessages } from "../../utils/renderers.utils";
 
 const UserForm: FC = () => {
   const [isSignIn, setIsSignIn] = useState(true);

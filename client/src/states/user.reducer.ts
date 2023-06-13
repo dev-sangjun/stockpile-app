@@ -19,6 +19,7 @@ interface UserState {
   userInfo: UserInfo | null;
   favoritePortfolios: string[];
   favoriteStocks: string[];
+  goalAmount: number;
   portfolios: Portfolio[];
   selectedPortfolio?: Portfolio | null;
   investments: Investments;
@@ -29,6 +30,7 @@ const initialState: UserState = {
   userInfo: null,
   favoritePortfolios: [],
   favoriteStocks: [],
+  goalAmount: 0,
   portfolios: [],
   selectedPortfolio: null,
   investments: {},
@@ -45,6 +47,7 @@ export const asyncFetchUser = createAsyncThunk(
       username,
       favoritePortfolios,
       favoriteStocks,
+      goalAmount,
       portfolios,
       investments,
       stocks,
@@ -58,6 +61,7 @@ export const asyncFetchUser = createAsyncThunk(
       userInfo,
       favoritePortfolios,
       favoriteStocks,
+      goalAmount,
       portfolios,
       investments: getInvestmentsObject(investments),
       stocks: getStocksObject(stocks),
@@ -106,6 +110,9 @@ export const userSlice = createSlice({
     deselectPortfolio: state => {
       state.selectedPortfolio = null;
     },
+    updateGoalAmount: (state, action: PayloadAction<number>) => {
+      state.goalAmount = action.payload;
+    },
   },
   extraReducers: builder => {
     builder.addCase(asyncFetchUser.fulfilled, (state, action) => {
@@ -113,6 +120,7 @@ export const userSlice = createSlice({
         userInfo,
         favoritePortfolios,
         favoriteStocks,
+        goalAmount,
         portfolios,
         investments,
         stocks,
@@ -121,6 +129,7 @@ export const userSlice = createSlice({
       state.portfolios = portfolios;
       state.favoritePortfolios = favoritePortfolios;
       state.favoriteStocks = favoriteStocks;
+      state.goalAmount = goalAmount;
       state.investments = investments;
       state.stocks = stocks;
 
@@ -167,7 +176,8 @@ export const userSlice = createSlice({
   },
 });
 
-export const { selectPortfolio, deselectPortfolio } = userSlice.actions;
+export const { selectPortfolio, deselectPortfolio, updateGoalAmount } =
+  userSlice.actions;
 
 export const getUser = (state: RootState) => state.userReducer;
 export const getUserInfo = (state: RootState) => state.userReducer.userInfo;
@@ -175,6 +185,7 @@ export const getFavoritePortfolios = (state: RootState) =>
   state.userReducer.favoritePortfolios;
 export const getFavoriteStocks = (state: RootState) =>
   state.userReducer.favoriteStocks;
+export const getGoalAmount = (state: RootState) => state.userReducer.goalAmount;
 export const getPortfolios = (state: RootState) => state.userReducer.portfolios;
 export const getSelectedPortfolio = (state: RootState) =>
   state.userReducer.selectedPortfolio;

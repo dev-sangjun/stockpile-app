@@ -17,6 +17,7 @@ model User {
   password           String
   favoritePortfolios String[] // portfolioIds
   favoriteStocks     String[] // stockIds
+  goalAmount         Float    @default(100000)
 
   portfolios  Portfolio[]
   investments Investment[]

@@ -5,9 +5,13 @@ import useAddPortfolioForm from "./useAddPortfolioForm";
 import { HiPlus } from "react-icons/hi2";
 
 const AddPortfolio: FC = () => {
+  const inputRef = useRef<HTMLInputElement>(null);
   const submitButtonRef = useRef<HTMLButtonElement>(null);
   const closeDropdown = () => {
-    // blurs submit button & closes dropdown
+    // blurs & closes dropdown
+    if (inputRef.current) {
+      inputRef.current.blur();
+    }
     if (submitButtonRef.current) {
       submitButtonRef.current.blur();
     }
@@ -39,6 +43,7 @@ const AddPortfolio: FC = () => {
             className="input input-sm input-bordered w-full max-w-xs"
             onChange={handleFormChange}
             value={formData.name}
+            ref={inputRef}
           />
           <button
             className="btn btn-sm btn-primary"

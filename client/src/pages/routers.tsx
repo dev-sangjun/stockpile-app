@@ -4,6 +4,7 @@ import navbarItems from "../components/Navbar/navbar-items";
 import SignIn from "./SignIn";
 import Modal from "../components/Modal";
 import { Toaster } from "react-hot-toast";
+import Settings from "./Settings";
 
 const publicRouter = createBrowserRouter([
   {
@@ -45,6 +46,10 @@ const privateRouter = createBrowserRouter([
         path,
         element,
       })),
+      {
+        path: "/settings",
+        element: <Settings />,
+      },
       {
         path: "/signin",
         element: <Navigate replace to="/" />,

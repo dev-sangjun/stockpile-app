@@ -4,6 +4,7 @@ export interface User {
   username: string;
   favoritePortfolios: string[];
   favoriteStocks: string[];
+  goalAmount: number;
 
   portfolios: Portfolio[];
   investments: Investment[];

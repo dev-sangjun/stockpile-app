@@ -1,9 +1,3 @@
-import { FieldError } from "react-hook-form";
-
-const getErrorMessage = (field: FieldError | undefined) => {
-  return field?.message as string;
-};
-
 export const renderAlertErrorMessages = (errorAlerts: string[]) => {
   return (
     errorAlerts.length > 0 && (
@@ -27,14 +21,6 @@ export const renderAlertErrorMessages = (errorAlerts: string[]) => {
           ))}
         </ul>
       </div>
-    )
-  );
-};
-
-export const renderFieldErrorMessages = (field: FieldError | undefined) => {
-  return (
-    field && (
-      <p className="text-error text-xs mt-1 ml-1">{getErrorMessage(field)}</p>
     )
   );
 };

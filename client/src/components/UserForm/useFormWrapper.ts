@@ -32,8 +32,8 @@ const useFormWrapper = (isSignIn: boolean) => {
         username: register("username", {
           required: "Username is required.",
           minLength: {
-            value: 6,
-            message: "Username has to be at least 6 characters",
+            value: 4,
+            message: "Username has to be at least 4 characters",
           },
         }),
       }));

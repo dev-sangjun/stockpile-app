@@ -49,11 +49,8 @@ const modalSlice = createSlice({
   },
 });
 
-export const openEditEntityModal = modalSlice.actions.openEditEntityModal;
-
-export const openDeleteEntityModal = modalSlice.actions.openDeleteEntityModal;
-
-export const closeModal = modalSlice.actions.closeModal;
+export const { openEditEntityModal, openDeleteEntityModal, closeModal } =
+  modalSlice.actions;
 
 export const getModal = (state: RootState) => state.modalReducer;
 

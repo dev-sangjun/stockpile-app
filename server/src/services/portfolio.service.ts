@@ -121,15 +121,6 @@ const deletePortfolio = async (portfolioId: string): Promise<void> => {
   if (!portfolio) {
     throw new InternalServerError();
   }
-  // update user's favorite portfolio
-  const user = await DBClient.user.findUnique({
-    where: {
-      id: portfolio.userId,
-    },
-    select: {
-      favoritePortfolios: true,
-    },
-  });
 };
 
 export default {

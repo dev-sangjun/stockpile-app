@@ -100,10 +100,38 @@ const deleteFromFavorites = async (
   }
 };
 
+const updatePassword = async (
+  req: Request<undefined, any, any, { field: string }>,
+  res: Response,
+  next: NextFunction
+) => {
+  const { authorizedUserId } = req as AuthorizedRequest<
+    undefined,
+    any,
+    any,
+    { field: string }
+  >;
+  const { field } = req.query;
+  const { password } = req.body;
+  try {
+    if (field === "password" && password) {
+      const result = await userService.updatePassword(
+        authorizedUserId,
+        password
+      );
+      return res.json(result);
+    }
+    throw new BadRequestError();
+  } catch (e) {
+    return next(e);
+  }
+};
+
 export default {
   getUser,
   getStocks,
   getInvestments,
   addToFavorites,
   deleteFromFavorites,
+  updatePassword,
 };

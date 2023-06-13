@@ -1,4 +1,5 @@
 import { Investment, Portfolio, Stock, User } from "@prisma/client";
+import bcrypt from "bcryptjs";
 import DBClient from "../../prisma/DBClient";
 import { EntityNotFoundError } from "../global/errors.global";
 import stockService from "./stock.service";
@@ -10,6 +11,7 @@ interface PublicUser {
   username: string;
   favoritePortfolios: string[];
   favoriteStocks: string[];
+  goalAmount: number;
 
   portfolios: Portfolio[];
   investments: Investment[];
@@ -23,6 +25,7 @@ const getPublicUser = async (id: string): Promise<PublicUser> => {
     username,
     favoritePortfolios,
     favoriteStocks,
+    goalAmount,
     portfolios,
     investments,
     stocks,
@@ -36,6 +39,7 @@ const getPublicUser = async (id: string): Promise<PublicUser> => {
     stocks,
     favoritePortfolios,
     favoriteStocks,
+    goalAmount,
   };
 };
 
@@ -326,35 +330,43 @@ const deleteStockWithNoReferenceFromUser = async (
   }
 };
 
+const updatePassword = async (
+  id: string,
+  newPassword: string
+): Promise<{
+  success: boolean;
+  message?: string;
+}> => {
+  const user = await getUser(id, []);
+  if (bcrypt.compareSync(newPassword, user.password)) {
+    // old & new passwords are equal
+    return {
+      success: false,
+      message: "Please provide a new password.",
+    };
+  }
+  const salt = await bcrypt.genSalt();
+  const hashedPassword = await bcrypt.hash(newPassword, salt);
+  const updatedUser = await DBClient.user.update({
+    data: {
+      password: hashedPassword,
+    },
+    where: {
+      id,
+    },
+  });
+  if (!updatedUser) {
+    throw new InternalServerError();
+  }
+  return {
+    success: true,
+    message: "Successfully updated the password.",
+  };
+};
+
 export interface StockPrice {
   [key: string]: number; // key: stock symbol, value: price
 }
-
-/**
- *
- * @param id userId
- * @param stockPrice { [stockId]: price (number)}
- */
-
-// const updateNetWorth = async (id: string, stockPrice: StockPrice) => {
-//   const user = await getUser(id, ["investments"]);
-//   const getCurrenNetWorth = () => {
-//     const netWorth = user.investments.reduce((prev, investment) => {
-//       return prev + stockPrice[investment.stockId] * investment.quantity;
-//     }, 0);
-//     return netWorth;
-//   };
-//   await DBClient.user.update({
-//     data: {
-//       netWorths: {
-//         push: [getCurrenNetWorth()],
-//       },
-//     },
-//     where: {
-//       id,
-//     },
-//   });
-// };
 
 export default {
   getPublicUser,
@@ -368,4 +380,5 @@ export default {
   addToFavoriteStocks,
   deleteFromFavoriteStocks,
   deleteStockWithNoReferenceFromUser,
+  updatePassword,
 };

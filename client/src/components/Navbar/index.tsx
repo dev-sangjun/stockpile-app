@@ -10,7 +10,7 @@ const Navbar: FC = () => {
       <div className="navbar p-0 max-w-7xl mx-auto pr-4">
         <div className="flex-1 top-0">
           <Link
-            className="btn btn-ghost normal-case text-xl mx-auto md:mx-0 flex gap-2"
+            className="btn btn-link btn-ghost normal-case no-underline text-black text-xl mx-auto md:mx-0 flex gap-2 hover:no-underline"
             to="/"
           >
             <img src={logo} alt="logo" className="w-12" />

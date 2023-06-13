@@ -1,6 +1,10 @@
 import { FC } from "react";
 import { useSelector } from "react-redux";
-import { getInvestments, getStocks } from "../states/user.reducer";
+import {
+  getGoalAmount,
+  getInvestments,
+  getStocks,
+} from "../states/user.reducer";
 import { RootState } from "../states/store";
 import { toUSD } from "../utils/numeral.utils";
 
@@ -12,8 +16,9 @@ const GoalProgress: FC = () => {
       const { quantity, stockId } = investment;
       return prev + (stocks?.[stockId]?.c || 0) * quantity;
     }, 0);
-  const goal = 1000000; // TODO: replace with user's goal
-  const percentage = (getTotalNetWorth() / goal) * 100;
+  const goalAmount = useSelector((state: RootState) => getGoalAmount(state));
+  const percentage = (getTotalNetWorth() / goalAmount) * 100;
+  console.log(goalAmount);
   return (
     <div className="flex flex-col h-full gap-4">
       <h3 className="text-lg font-bold">Goal Progress</h3>
@@ -32,7 +37,7 @@ const GoalProgress: FC = () => {
       </div>
       <div className="flex justify-between font-bold">
         <h4>Goal</h4>
-        <span>{toUSD(goal)}</span>
+        <span>{toUSD(goalAmount)}</span>
       </div>
     </div>
   );
