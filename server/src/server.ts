@@ -4,6 +4,7 @@ import cors from "cors";
 import rootRouter from "./routes";
 import { errorHandler } from "./utils/errorHandler";
 import cookieParser from "cookie-parser";
+import path from "path";
 
 dotenv.config();
 
@@ -19,4 +20,8 @@ app.use(express.json());
 app.use(cookieParser());
 app.use("/api", rootRouter);
 app.use(errorHandler);
+app.use(express.static(path.join(__dirname, "../dist/client")));
+app.get("/*", (req, res) => {
+  res.sendFile(path.join(__dirname, "../dist/client", "index.html"));
+});
 app.listen(PORT, () => console.log(`Server running at ${PORT}...`));

@@ -1,13 +1,14 @@
 import axios, { AxiosResponse } from "axios";
 import { User } from "../types/entity.types";
-import { DEV_SERVER_ENDPOINT } from "../dev/constants";
 import { PrismaError } from "../utils/error.utils";
+import { DEV_SERVER_ENDPOINT } from "./constants";
 
 export interface CreateUserDto {
   username: string;
   email: string;
   password: string;
 }
+
 export const createUser = async (
   createUserDto: CreateUserDto
 ): Promise<User | PrismaError> => {

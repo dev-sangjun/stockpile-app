@@ -1,6 +1,6 @@
 import axios, { AxiosResponse } from "axios";
-import { DEV_SERVER_ENDPOINT } from "../dev/constants";
 import { Investment, User } from "../types/entity.types";
+import { DEV_SERVER_ENDPOINT } from "./constants";
 
 const fetchInvestments = async (): Promise<Investment[]> => {
   const res: AxiosResponse<Investment[]> = await axios.get(
@@ -12,7 +12,9 @@ const fetchInvestments = async (): Promise<Investment[]> => {
 const fetchUser = async (): Promise<User> => {
   const res: AxiosResponse<User> = await axios.get(
     `${DEV_SERVER_ENDPOINT}/me`,
-    { withCredentials: true }
+    {
+      withCredentials: true,
+    }
   );
   return res.data;
 };

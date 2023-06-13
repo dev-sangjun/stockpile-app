@@ -1,10 +1,10 @@
 import axios, { AxiosResponse } from "axios";
-import { DEV_SERVER_ENDPOINT } from "../dev/constants";
 import { Stock, Stocks } from "../types/entity.types";
+import { SERVER_ENDPOINT } from "./constants";
 
 export const fetchStockSymbols = async (): Promise<string[]> => {
   const res: AxiosResponse<string[]> = await axios.get(
-    `${DEV_SERVER_ENDPOINT}/stocks/symbols`,
+    `${SERVER_ENDPOINT}/stocks/symbols`,
     { withCredentials: true }
   );
   return res.data;
@@ -12,7 +12,7 @@ export const fetchStockSymbols = async (): Promise<string[]> => {
 
 export const fetchStocksByUserId = async (): Promise<Stocks> => {
   const res: AxiosResponse<Stock[]> = await axios.get(
-    `${DEV_SERVER_ENDPOINT}/users/me/stocks`,
+    `${SERVER_ENDPOINT}/users/me/stocks`,
     { withCredentials: true }
   );
   const stocks: Stocks = {};
