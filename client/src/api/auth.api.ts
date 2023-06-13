@@ -1,7 +1,7 @@
 import axios, { AxiosResponse } from "axios";
 import { User } from "../types/entity.types";
 import { PrismaError } from "../utils/error.utils";
-import { DEV_SERVER_ENDPOINT } from "./constants";
+import { SERVER_ENDPOINT } from "./constants";
 
 export interface CreateUserDto {
   username: string;
@@ -13,7 +13,7 @@ export const createUser = async (
   createUserDto: CreateUserDto
 ): Promise<User | PrismaError> => {
   const res: AxiosResponse<User | PrismaError> = await axios.post(
-    `${DEV_SERVER_ENDPOINT}/auth/signup`,
+    `${SERVER_ENDPOINT}/auth/signup`,
     createUserDto
   );
   return res.data;
@@ -28,7 +28,7 @@ export const signInUser = async (
   signInUserDto: SignInUserDto
 ): Promise<string> => {
   const res: AxiosResponse<{ userId: string }> = await axios.post(
-    `${DEV_SERVER_ENDPOINT}/auth/signin`,
+    `${SERVER_ENDPOINT}/auth/signin`,
     signInUserDto,
     { withCredentials: true }
   );
@@ -38,7 +38,7 @@ export const signInUser = async (
 };
 
 export const signOutUser = async (): Promise<void> => {
-  await axios.get(`${DEV_SERVER_ENDPOINT}/auth/signout`, {
+  await axios.get(`${SERVER_ENDPOINT}/auth/signout`, {
     withCredentials: true,
   });
 };

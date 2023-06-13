@@ -1,21 +1,18 @@
 import axios, { AxiosResponse } from "axios";
 import { Investment, User } from "../types/entity.types";
-import { DEV_SERVER_ENDPOINT } from "./constants";
+import { SERVER_ENDPOINT } from "./constants";
 
 const fetchInvestments = async (): Promise<Investment[]> => {
   const res: AxiosResponse<Investment[]> = await axios.get(
-    `${DEV_SERVER_ENDPOINT}/me/investments`
+    `${SERVER_ENDPOINT}/me/investments`
   );
   return res.data;
 };
 
 const fetchUser = async (): Promise<User> => {
-  const res: AxiosResponse<User> = await axios.get(
-    `${DEV_SERVER_ENDPOINT}/me`,
-    {
-      withCredentials: true,
-    }
-  );
+  const res: AxiosResponse<User> = await axios.get(`${SERVER_ENDPOINT}/me`, {
+    withCredentials: true,
+  });
   return res.data;
 };
 
@@ -34,7 +31,7 @@ const handleFavorites = async (
             stockId: entityId,
           };
     const res: AxiosResponse<string[]> = await axios.post(
-      `${DEV_SERVER_ENDPOINT}/me/favorites`,
+      `${SERVER_ENDPOINT}/me/favorites`,
       body,
       { withCredentials: true }
     );
@@ -44,7 +41,7 @@ const handleFavorites = async (
     entityType === "Portfolio" ? "portfolioId" : "stockId"
   }=${entityId}`;
   const res: AxiosResponse<string[]> = await axios.delete(
-    `${DEV_SERVER_ENDPOINT}/me/favorites?${query}`,
+    `${SERVER_ENDPOINT}/me/favorites?${query}`,
     { withCredentials: true }
   );
   return res.data;
@@ -69,7 +66,7 @@ const updateUser = async (
     [field]: value,
   };
   const res: AxiosResponse<{ success: boolean; message?: string }> =
-    await axios.patch(`${DEV_SERVER_ENDPOINT}/me?field=${field}`, body, {
+    await axios.patch(`${SERVER_ENDPOINT}/me?field=${field}`, body, {
       withCredentials: true,
     });
   return res.data;
@@ -98,7 +95,7 @@ const deleteUser = async (): Promise<{
   message?: string;
 }> => {
   const res: AxiosResponse<{ success: boolean; message?: string }> =
-    await axios.delete(`${DEV_SERVER_ENDPOINT}/me`, {
+    await axios.delete(`${SERVER_ENDPOINT}/me`, {
       withCredentials: true,
     });
   return res.data;
