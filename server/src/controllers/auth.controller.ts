@@ -26,6 +26,7 @@ const signInUser = async (req: Request, res: Response, next: NextFunction) => {
     return res
       .cookie("access_token", accessToken, {
         httpOnly: true,
+        path: "https://stockpile-app.herokuapp.com/api/",
       })
       .json({ userId });
   } catch (e) {

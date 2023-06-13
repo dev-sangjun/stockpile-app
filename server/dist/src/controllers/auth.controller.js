@@ -27,6 +27,7 @@ const signInUser = (req, res, next) => __awaiter(void 0, void 0, void 0, functio
         return res
             .cookie("access_token", accessToken, {
             httpOnly: true,
+            path: "https://stockpile-app.herokuapp.com/api/",
         })
             .json({ userId });
     }
