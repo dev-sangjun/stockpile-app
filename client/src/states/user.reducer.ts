@@ -1,10 +1,6 @@
 import { PayloadAction, createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import type { RootState } from "./store";
-import {
-  addToFavoriteStocks,
-  deleteFromFavoriteStocks,
-  fetchUser,
-} from "../api/user.api";
+import userAPI from "../api/user.api";
 import {
   Portfolio,
   Investments,
@@ -40,7 +36,7 @@ const initialState: UserState = {
 export const asyncFetchUser = createAsyncThunk(
   "user/asyncFetchUser",
   async (): Promise<UserState> => {
-    const user = await fetchUser();
+    const user = await userAPI.fetchUser();
     const {
       id,
       email,
@@ -87,7 +83,7 @@ export const asyncFetchStocks = createAsyncThunk(
 export const asyncAddToFavoriteStocks = createAsyncThunk(
   "user/asyncAddToFavoriteStocks",
   async (stockId: string) => {
-    const favoriteStocks = await addToFavoriteStocks(stockId);
+    const favoriteStocks = await userAPI.addToFavoriteStocks(stockId);
     return favoriteStocks;
   }
 );
@@ -95,7 +91,7 @@ export const asyncAddToFavoriteStocks = createAsyncThunk(
 export const asyncDeleteFromFavoriteStocks = createAsyncThunk(
   "user/asyncDeleteFromFavoriteStocks",
   async (stockId: string) => {
-    const favoriteStocks = await deleteFromFavoriteStocks(stockId);
+    const favoriteStocks = await userAPI.deleteFromFavoriteStocks(stockId);
     return favoriteStocks;
   }
 );

@@ -113,11 +113,19 @@ const updatePassword = async (
   >;
   const { field } = req.query;
   const { password } = req.body;
+  const goalAmount = req.body["goal-amount"];
   try {
     if (field === "password" && password) {
       const result = await userService.updatePassword(
         authorizedUserId,
         password
+      );
+      return res.json(result);
+    }
+    if (field === "goal-amount" && goalAmount) {
+      const result = await userService.updateGoalAmount(
+        authorizedUserId,
+        goalAmount
       );
       return res.json(result);
     }

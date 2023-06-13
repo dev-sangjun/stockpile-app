@@ -2,14 +2,14 @@ import axios, { AxiosResponse } from "axios";
 import { DEV_SERVER_ENDPOINT } from "../dev/constants";
 import { Investment, User } from "../types/entity.types";
 
-export const fetchInvestments = async (): Promise<Investment[]> => {
+const fetchInvestments = async (): Promise<Investment[]> => {
   const res: AxiosResponse<Investment[]> = await axios.get(
     `${DEV_SERVER_ENDPOINT}/me/investments`
   );
   return res.data;
 };
 
-export const fetchUser = async (): Promise<User> => {
+const fetchUser = async (): Promise<User> => {
   const res: AxiosResponse<User> = await axios.get(
     `${DEV_SERVER_ENDPOINT}/me`,
     { withCredentials: true }
@@ -48,15 +48,11 @@ const handleFavorites = async (
   return res.data;
 };
 
-export const addToFavoriteStocks = async (
-  stockId: string
-): Promise<string[]> => {
+const addToFavoriteStocks = async (stockId: string): Promise<string[]> => {
   return handleFavorites(stockId, "Stock", "ADD");
 };
 
-export const deleteFromFavoriteStocks = async (
-  stockId: string
-): Promise<string[]> => {
+const deleteFromFavoriteStocks = async (stockId: string): Promise<string[]> => {
   return handleFavorites(stockId, "Stock", "DELETE");
 };
 
@@ -77,7 +73,7 @@ const updateUser = async (
   return res.data;
 };
 
-export const updatePassword = async (
+const updatePassword = async (
   password: string
 ): Promise<{
   success: boolean;
@@ -86,11 +82,20 @@ export const updatePassword = async (
   return updateUser("password", password);
 };
 
-export const updateGoalAmount = async (
+const updateGoalAmount = async (
   goalAmount: number
 ): Promise<{
   success: boolean;
   message?: string;
 }> => {
   return updateUser("goal-amount", goalAmount);
+};
+
+export default {
+  fetchInvestments,
+  fetchUser,
+  addToFavoriteStocks,
+  deleteFromFavoriteStocks,
+  updatePassword,
+  updateGoalAmount,
 };

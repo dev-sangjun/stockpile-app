@@ -4,7 +4,7 @@ import {
   rendeerrorMessage,
   renderFieldErrorMessages,
 } from "../../utils/renderers.utils";
-import { updatePassword } from "../../api/user.api";
+import userAPI from "../../api/user.api";
 
 interface FormValues {
   password: string;
@@ -20,7 +20,7 @@ const UpdatePassword: FC = () => {
   const [serverMessage, setServerMessage] = useState("");
   const onSubmit = handleSubmit(async data => {
     try {
-      const res = await updatePassword(data.password);
+      const res = await userAPI.updatePassword(data.password);
       if (res.success) {
         setIsPasswordUpdated(true);
         setServerMessage("");

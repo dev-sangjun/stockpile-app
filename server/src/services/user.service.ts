@@ -364,6 +364,41 @@ const updatePassword = async (
   };
 };
 
+const updateGoalAmount = async (
+  id: string,
+  newGoalAmount: number
+): Promise<{
+  success: boolean;
+  message?: string;
+}> => {
+  const user = await getUser(id, []);
+  if (newGoalAmount === user.goalAmount) {
+    // old & new goal amounts are equal
+    return {
+      success: false,
+      message: "Please provide a new goal amount.",
+    };
+  }
+  const updatedUser = await DBClient.user.update({
+    data: {
+      goalAmount:
+        typeof newGoalAmount === "string"
+          ? parseFloat(newGoalAmount)
+          : newGoalAmount,
+    },
+    where: {
+      id,
+    },
+  });
+  if (!updatedUser) {
+    throw new InternalServerError();
+  }
+  return {
+    success: true,
+    message: "Successfully updated the goal amount.",
+  };
+};
+
 export interface StockPrice {
   [key: string]: number; // key: stock symbol, value: price
 }
@@ -381,4 +416,5 @@ export default {
   deleteFromFavoriteStocks,
   deleteStockWithNoReferenceFromUser,
   updatePassword,
+  updateGoalAmount,
 };

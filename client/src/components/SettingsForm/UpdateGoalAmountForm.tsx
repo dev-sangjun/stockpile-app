@@ -4,16 +4,17 @@ import {
   rendeerrorMessage,
   renderFieldErrorMessages,
 } from "../../utils/renderers.utils";
-import { updateGoalAmount } from "../../api/user.api";
-import { useSelector } from "react-redux";
-import { RootState } from "../../states/store";
-import { getGoalAmount } from "../../states/user.reducer";
+import { useDispatch, useSelector } from "react-redux";
+import { AppDispatch, RootState } from "../../states/store";
+import { getGoalAmount, updateGoalAmount } from "../../states/user.reducer";
+import userAPI from "../../api/user.api";
 
 interface FormValues {
   goalAmount: number;
 }
 
 const UpdateGoalAmountForm: FC = () => {
+  const dispatch = useDispatch<AppDispatch>();
   const {
     register,
     handleSubmit,
@@ -24,10 +25,11 @@ const UpdateGoalAmountForm: FC = () => {
   const goalAmount = useSelector((state: RootState) => getGoalAmount(state));
   const onSubmit = handleSubmit(async data => {
     try {
-      const res = await updateGoalAmount(data.goalAmount);
+      const res = await userAPI.updateGoalAmount(data.goalAmount);
       if (res.success) {
         setIsGoalAmountUpdated(true);
         setServerMessage("");
+        dispatch(updateGoalAmount(data.goalAmount));
       } else {
         setServerMessage(res.message || "Something went wrong!");
       }
