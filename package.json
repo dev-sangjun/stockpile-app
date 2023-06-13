@@ -1,0 +1,11 @@
+{
+  "name": "stockpile",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "https://github.com/dev-sangjun/stockpile-app.git",
+  "author": "dev-sangjun <33212292+dev-sangjun@users.noreply.github.com>",
+  "license": "MIT",
+  "scripts": {
+    "start": "cd server && npm start"
+  }
+}

@@ -1,0 +1,11 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+const express_1 = require("express");
+const controllers_1 = require("../controllers");
+const portfolioRouter = (0, express_1.Router)();
+portfolioRouter.get("/", controllers_1.portfolioController.getPortfolios);
+portfolioRouter.post("/", controllers_1.portfolioController.createPortfolio);
+portfolioRouter.post("/:portfolioId/investments", controllers_1.portfolioController.addInvestmentToPortfolio);
+portfolioRouter.delete("/:portfolioId/investments/:investmentId", controllers_1.portfolioController.deleteInvestment);
+portfolioRouter.delete("/:portfolioId/", controllers_1.portfolioController.deletePortfolio);
+exports.default = portfolioRouter;
