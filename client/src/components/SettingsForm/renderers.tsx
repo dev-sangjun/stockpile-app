@@ -1,6 +1,7 @@
 import { ReactNode } from "react";
 import UpdatePasswordForm from "./UpdatePasswordForm";
 import UpdateGoalAmountForm from "./UpdateGoalAmountForm";
+import DeleteUserForm from "./DeleteUserForm";
 
 interface SettingItem {
   title: string;
@@ -15,6 +16,10 @@ const settingItems: SettingItem[] = [
   {
     title: "Update goal amount",
     content: <UpdateGoalAmountForm />,
+  },
+  {
+    title: "Delete account",
+    content: <DeleteUserForm />,
   },
 ];
 

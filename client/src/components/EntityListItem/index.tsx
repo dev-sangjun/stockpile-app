@@ -1,5 +1,5 @@
 import { FC, ReactNode } from "react";
-import { renderCompanyLogo } from "../InvestmentList/renderer";
+// import { renderCompanyLogo } from "../InvestmentList/renderer";
 import { InvestmentDetails, PortfolioDetails } from "../../utils/entity.utils";
 import {
   renderFavoriteStockGridItems,
@@ -27,12 +27,12 @@ interface EntityListItemProps {
 const EntityListItem: FC<EntityListItemProps> = ({
   className,
   entityType,
-  logoUrl,
+  // logoUrl,
   title,
   actionButtons,
-  valueLabel,
+  // valueLabel,
   entityDetails,
-  onClick,
+  // onClick,
 }) => {
   const getEntityGridItems = () => {
     if (entityType === "Portfolio") {
@@ -47,19 +47,19 @@ const EntityListItem: FC<EntityListItemProps> = ({
     }
     return null;
   };
-  const getValue = () => {
-    if (entityType === "Portfolio") {
-      return (entityDetails as PortfolioDetails).totalValue;
-    }
-    if (entityType === "Investment") {
-      return (entityDetails as InvestmentDetails).curPrice;
-    }
-    if (entityType === "FavoriteStock") {
-      const { stock } = entityDetails as FavoriteStockDetails;
-      return stock.c;
-    }
-    return 0;
-  };
+  // const getValue = () => {
+  //   if (entityType === "Portfolio") {
+  //     return (entityDetails as PortfolioDetails).totalValue;
+  //   }
+  //   if (entityType === "Investment") {
+  //     return (entityDetails as InvestmentDetails).curPrice;
+  //   }
+  //   if (entityType === "FavoriteStock") {
+  //     const { stock } = entityDetails as FavoriteStockDetails;
+  //     return stock.c;
+  //   }
+  //   return 0;
+  // };
   return (
     <div
       className={`collapse collapse-plus bg-base-100 min-w-[16rem] md:max-w-[18rem] ${className}`}

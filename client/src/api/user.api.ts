@@ -91,6 +91,17 @@ const updateGoalAmount = async (
   return updateUser("goal-amount", goalAmount);
 };
 
+const deleteUser = async (): Promise<{
+  success: boolean;
+  message?: string;
+}> => {
+  const res: AxiosResponse<{ success: boolean; message?: string }> =
+    await axios.delete(`${DEV_SERVER_ENDPOINT}/me`, {
+      withCredentials: true,
+    });
+  return res.data;
+};
+
 export default {
   fetchInvestments,
   fetchUser,
@@ -98,4 +109,5 @@ export default {
   deleteFromFavoriteStocks,
   updatePassword,
   updateGoalAmount,
+  deleteUser,
 };

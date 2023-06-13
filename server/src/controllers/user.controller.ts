@@ -135,6 +135,16 @@ const updatePassword = async (
   }
 };
 
+const deleteUser = async (req: Request, res: Response, next: NextFunction) => {
+  const { authorizedUserId } = req as AuthorizedRequest;
+  try {
+    const result = await userService.deleteUser(authorizedUserId);
+    return res.json(result);
+  } catch (e) {
+    return next(e);
+  }
+};
+
 export default {
   getUser,
   getStocks,
@@ -142,4 +152,5 @@ export default {
   addToFavorites,
   deleteFromFavorites,
   updatePassword,
+  deleteUser,
 };

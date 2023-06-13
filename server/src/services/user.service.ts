@@ -399,6 +399,29 @@ const updateGoalAmount = async (
   };
 };
 
+const deleteUser = async (
+  id: string
+): Promise<{
+  success: boolean;
+  message?: string;
+}> => {
+  const user = await DBClient.user.delete({
+    where: {
+      id,
+    },
+  });
+  if (!user) {
+    return {
+      success: false,
+      message: "Something went wrong!",
+    };
+  }
+  return {
+    success: true,
+    message: "Successfully deleted the account.",
+  };
+};
+
 export interface StockPrice {
   [key: string]: number; // key: stock symbol, value: price
 }
@@ -417,4 +440,5 @@ export default {
   deleteStockWithNoReferenceFromUser,
   updatePassword,
   updateGoalAmount,
+  deleteUser,
 };

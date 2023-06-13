@@ -10,7 +10,7 @@ dotenv.config();
 
 const PORT = process.env.PORT || 5000;
 const app = express();
-const whitelist = ["http://localhost:5173"];
+const whitelist = [process.env.ALLOWED_ORIGIN || "http://localhost:5173"];
 const corsOptions = {
   credentials: true, // This is important.
   origin: whitelist,
