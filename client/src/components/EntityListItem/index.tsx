@@ -7,6 +7,7 @@ import {
   renderPortfolioGridItems,
 } from "../EntityListGridItem/renderer";
 import { Stock } from "../../types/entity.types";
+import { toUSD } from "../../utils/numeral.utils";
 
 interface FavoriteStockDetails {
   stock: Stock;
@@ -30,7 +31,7 @@ const EntityListItem: FC<EntityListItemProps> = ({
   // logoUrl,
   title,
   actionButtons,
-  // valueLabel,
+  valueLabel,
   entityDetails,
   // onClick,
 }) => {
@@ -47,26 +48,30 @@ const EntityListItem: FC<EntityListItemProps> = ({
     }
     return null;
   };
-  // const getValue = () => {
-  //   if (entityType === "Portfolio") {
-  //     return (entityDetails as PortfolioDetails).totalValue;
-  //   }
-  //   if (entityType === "Investment") {
-  //     return (entityDetails as InvestmentDetails).curPrice;
-  //   }
-  //   if (entityType === "FavoriteStock") {
-  //     const { stock } = entityDetails as FavoriteStockDetails;
-  //     return stock.c;
-  //   }
-  //   return 0;
-  // };
+  const getValue = () => {
+    if (entityType === "Portfolio") {
+      return (entityDetails as PortfolioDetails).totalValue;
+    }
+    if (entityType === "Investment") {
+      return (entityDetails as InvestmentDetails).curPrice;
+    }
+    if (entityType === "FavoriteStock") {
+      const { stock } = entityDetails as FavoriteStockDetails;
+      return stock.c;
+    }
+    return 0;
+  };
   return (
     <div
       className={`collapse collapse-plus bg-base-100 min-w-[16rem] md:max-w-[18rem] ${className}`}
     >
       <input type="checkbox" />
-      <div className="collapse-title">
-        <h3 className="text-md font-bold">{title}</h3>
+      <div className="collapse-title flex justify-between">
+        <h3 className="text-md font-bold mt-1">{title}</h3>
+        <div className="flex flex-col items-end">
+          <span className="text-xs text-slate-500">{valueLabel}</span>
+          <span className="text-xs font-bold">{toUSD(getValue())}</span>
+        </div>
       </div>
       <div className="collapse-content flex flex-col gap-2">
         <div className="grid grid-cols-2 gap-2">{getEntityGridItems()}</div>
