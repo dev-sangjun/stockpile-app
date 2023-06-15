@@ -5,12 +5,14 @@ import SignIn from "./SignIn";
 import Modal from "../components/Modal";
 import { Toaster } from "react-hot-toast";
 import Settings from "./Settings";
+import ThemeToggle from "../components/ThemeToggle";
 
 const publicRouter = createBrowserRouter([
   {
     element: (
       <div className="flex flex-col bg-slate-200">
         <div className="max-w-7xl h-screen w-full mx-auto py-24">
+          <ThemeToggle />
           <Outlet />
         </div>
         <Toaster />

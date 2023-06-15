@@ -8,6 +8,7 @@ import {
   HiOutlineArrowRightOnRectangle,
   HiOutlineCog8Tooth,
 } from "react-icons/hi2";
+import ThemeToggle from "../ThemeToggle";
 
 const NavbarItems: FC = () => {
   const dispatch = useDispatch<AppDispatch>();
@@ -46,6 +47,7 @@ const NavbarItems: FC = () => {
           </li>
         </ul>
       </div>
+      <ThemeToggle />
     </div>
   );
 };
