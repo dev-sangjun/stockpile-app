@@ -1,2 +1,1 @@
-export const SERVER_ENDPOINT = "/api";
-export const DEV_SERVER_ENDPOINT = "http://localhost:5000/api";
+export const SERVER_ENDPOINT = import.meta.env.VITE_SERVER_ENDPOINT || "/api";
