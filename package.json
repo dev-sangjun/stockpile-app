@@ -9,7 +9,7 @@
     "start": "cd server && npm start",
     "build-client": "cd client && npm run build",
     "build-server": "cd server && npm run build",
-    "build": "npm run build-client && npm run build-server",
+    "build-all": "npm run build-client && npm run build-server",
     "deploy": "git add * && git commit -m \"deploy to heroku\" && git push -u origin main",
     "dev-client": "cd client && npm run dev",
     "dev-server": "cd server && npm run dev",
