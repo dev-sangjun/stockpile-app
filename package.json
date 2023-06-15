@@ -6,6 +6,10 @@
   "author": "dev-sangjun <33212292+dev-sangjun@users.noreply.github.com>",
   "license": "MIT",
   "scripts": {
-    "start": "cd server && npm start"
+    "start": "cd server && npm start",
+    "build-client": "cd client && npm run build",
+    "build-server": "cd server && npm run build",
+    "build": "npm run build-client && npm run build-server",
+    "deploy": "git add * && git commit -m \"deploy to heroku\" && git push -u origin main"
   }
 }
