@@ -45,16 +45,18 @@ const InvestmentListItem: FC<InvestmentItemProps> = ({
   const actionButtons = (
     <>
       <FavoritesButton isFavorite={isFavorite} onClick={handleFavoriteClick} />
-      <button className="btn btn-sm btn-ghost text-base">
-        <HiPencilSquare />
-      </button>
       {selectedPortfolio && (
-        <button
-          className="btn btn-sm btn-ghost text-base"
-          onClick={handleDeleteInvestment}
-        >
-          <HiTrash />
-        </button>
+        <>
+          <button className="btn btn-sm btn-ghost text-base">
+            <HiPencilSquare />
+          </button>
+          <button
+            className="btn btn-sm btn-ghost text-base"
+            onClick={handleDeleteInvestment}
+          >
+            <HiTrash />
+          </button>
+        </>
       )}
     </>
   );
