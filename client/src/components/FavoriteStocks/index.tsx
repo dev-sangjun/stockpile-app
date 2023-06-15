@@ -16,10 +16,13 @@ const FavoriteStocks: FC = () => {
     const filteredFavoriteStocks: Stock[] = [];
     favoriteStocks.forEach(stockId => {
       const stock = stocks[stockId];
-      filteredFavoriteStocks.push(stock);
+      if (stock) {
+        filteredFavoriteStocks.push(stock);
+      }
     });
     return filteredFavoriteStocks;
   };
+  console.log(filteredFavoriteStocks());
   if (isEmpty(filteredFavoriteStocks())) {
     return <Fallback message="Please add your favorite investments" />;
   }

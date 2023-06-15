@@ -49,7 +49,7 @@ const fetchStock = (q) => __awaiter(void 0, void 0, void 0, function* () {
  * @returns company data
  */
 const fetchCompany = (q) => __awaiter(void 0, void 0, void 0, function* () {
-    const companyResponseDto = yield fetch(getFetchCompanyUrl(q), {
+    const companyResponseDto = yield fetch(getFetchCompanyUrl(lowerCaseSymbols.includes(q) ? q.toLowerCase() : q), {
         cache: "no-cache",
     }).then(res => res.json());
     if ((0, is_empty_1.default)(companyResponseDto)) {

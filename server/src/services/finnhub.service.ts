@@ -51,7 +51,7 @@ const fetchStock = async (q: string): Promise<FinnhubStockResponseDto> => {
  */
 const fetchCompany = async (q: string): Promise<FinnhubCompanyResponseDto> => {
   const companyResponseDto: FinnhubCompanyResponseDto = await fetch(
-    getFetchCompanyUrl(q),
+    getFetchCompanyUrl(lowerCaseSymbols.includes(q) ? q.toLowerCase() : q),
     {
       cache: "no-cache",
     }
