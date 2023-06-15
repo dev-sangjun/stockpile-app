@@ -63,7 +63,7 @@ const EntityListItem: FC<EntityListItemProps> = ({
   };
   return (
     <div
-      className={`collapse collapse-plus bg-base-100 min-w-[16rem] md:max-w-[18rem] ${className}`}
+      className={`collapse collapse-plus bg-base-100 min-w-[14rem] md:max-w-[20rem] ${className}`}
     >
       <input type="checkbox" />
       <div className="collapse-title flex justify-between">
