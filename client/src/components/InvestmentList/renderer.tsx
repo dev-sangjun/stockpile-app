@@ -1,11 +1,16 @@
 import { HiBuildingOffice2 } from "react-icons/hi2";
+import isEmpty from "is-empty";
 import { Investment } from "../../types/entity.types";
 import InvestmentListItem from "./InvestmentListItem";
+import Fallback from "../Fallback";
 
 export const renderInvestmentListItems = (
   investments: Investment[],
   favoriteStocks: string[]
 ) => {
+  if (isEmpty(investments)) {
+    return <Fallback message="Please add your investment." />;
+  }
   const isFavorite = (investmentId: string) =>
     favoriteStocks.includes(investmentId);
   return investments.map(investment => (

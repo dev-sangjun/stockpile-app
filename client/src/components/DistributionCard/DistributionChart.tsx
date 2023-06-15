@@ -57,7 +57,9 @@ const constructChartConfig = (
           formatter: (value: number) => {
             // handle overflowing labels
             // display labels only if the value's greater than 20% of the total value
-            return value / totalInvestmentValue > 0.2 ? toUSD(value) : null;
+            return value / totalInvestmentValue > 0.2
+              ? toUSD(value, false)
+              : null;
           },
         },
       },

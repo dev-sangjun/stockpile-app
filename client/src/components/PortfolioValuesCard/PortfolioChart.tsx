@@ -77,7 +77,7 @@ const constructChartConfig = (
             size: 16,
           },
           formatter: (value: number) => {
-            return value / maxPortfolioValue > 0.2 ? toUSD(value) : null;
+            return value / maxPortfolioValue > 0.2 ? toUSD(value, false) : null;
           },
         },
       },
