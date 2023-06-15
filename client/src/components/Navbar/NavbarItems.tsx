@@ -33,7 +33,7 @@ const NavbarItems: FC = () => {
           className="menu dropdown-content p-2 shadow-lg bg-base-100 rounded-box mt-12"
         >
           <li>
-            <Link to="/settings">
+            <Link to="/settings" onClick={e => e.currentTarget.blur()}>
               <HiOutlineCog8Tooth />
               Settings
             </Link>
