@@ -33,11 +33,11 @@ const GoalProgress: FC = () => {
       </div>
       <div className="flex justify-between font-bold">
         <h4>Current</h4>
-        <span>{toUSD(getTotalNetWorth())}</span>
+        <span>{toUSD(getTotalNetWorth(), false)}</span>
       </div>
       <div className="flex justify-between font-bold">
         <h4>Goal</h4>
-        <span>{toUSD(goalAmount)}</span>
+        <span>{toUSD(goalAmount, false)}</span>
       </div>
     </div>
   );
