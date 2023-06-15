@@ -74,7 +74,7 @@ const AddInvestment: FC = () => {
             step="0.01"
             className="input input-sm input-bordered w-full max-w-xs"
             onChange={handleFormChange}
-            value={formData.quantity}
+            value={formData.quantity || ""}
           />
           <label className="label p-0">
             <span className="label-text">Cost</span>
@@ -91,7 +91,9 @@ const AddInvestment: FC = () => {
           />
           <button
             className="btn btn-sm btn-primary"
-            disabled={isEmpty(formData.selectedSymbol)}
+            disabled={
+              isEmpty(formData.selectedSymbol) || isEmpty(formData.quantity)
+            }
             ref={submitButtonRef}
           >
             Submit

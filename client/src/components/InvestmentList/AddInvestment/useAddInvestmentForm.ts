@@ -14,7 +14,7 @@ import { notify } from "../../../utils/toast.utils";
 
 export interface AddInvestmentFormData {
   keyword: string;
-  quantity: number;
+  quantity: number | undefined;
   cost: number | undefined;
   filteredSymbols: string[];
   selectedSymbol: string;
@@ -22,7 +22,7 @@ export interface AddInvestmentFormData {
 
 const formDataInitialState: AddInvestmentFormData = {
   keyword: "",
-  quantity: 1,
+  quantity: undefined,
   cost: undefined,
   filteredSymbols: [],
   selectedSymbol: "",
@@ -69,9 +69,6 @@ const useAddInvestmentForm = (
       });
     } else if (name === "quantity") {
       const quantity = parseFloat(value);
-      if (isNaN(quantity) || quantity < 0) {
-        return;
-      }
       setFormData({ ...formData, quantity });
     } else if (name === "cost") {
       const cost = parseFloat(value);
@@ -97,7 +94,7 @@ const useAddInvestmentForm = (
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
     const { quantity, cost, selectedSymbol } = formData;
-    if (!userId || !selectedSymbol || !selectedPortfolio) {
+    if (!userId || !selectedSymbol || !selectedPortfolio || !quantity) {
       return;
     }
     try {

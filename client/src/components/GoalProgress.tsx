@@ -18,7 +18,6 @@ const GoalProgress: FC = () => {
     }, 0);
   const goalAmount = useSelector((state: RootState) => getGoalAmount(state));
   const percentage = (getTotalNetWorth() / goalAmount) * 100;
-  console.log(goalAmount);
   return (
     <div className="flex flex-col h-full gap-4">
       <h3 className="text-lg font-bold">Goal Progress</h3>
