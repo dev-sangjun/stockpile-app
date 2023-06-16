@@ -1,12 +1,12 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 import { RootState } from "./store";
-import { Investment, Portfolio } from "../types/entity.types";
+import { EntityType, Investment, Portfolio } from "../types/entity.types";
 
 interface ModalState {
   isOpen: boolean;
-  type?: "EDIT_ENTITY" | "DELETE_ENTITY";
+  type?: "UPDATE_ENTITY" | "DELETE_ENTITY";
   payload?: Portfolio | Investment;
-  payloadType?: "Portfolio" | "Investment";
+  payloadType?: EntityType;
 }
 
 const initialState: ModalState = {
@@ -17,7 +17,7 @@ const modalSlice = createSlice({
   name: "modal",
   initialState,
   reducers: {
-    openEditEntityModal: (
+    openUpdateEntityModal: (
       state,
       action: PayloadAction<{
         entity: Portfolio | Investment;
@@ -25,7 +25,7 @@ const modalSlice = createSlice({
       }>
     ) => {
       state.isOpen = true;
-      state.type = "EDIT_ENTITY";
+      state.type = "UPDATE_ENTITY";
       state.payload = action.payload.entity;
       state.payloadType = action.payload.entityType;
     },
@@ -49,7 +49,7 @@ const modalSlice = createSlice({
   },
 });
 
-export const { openEditEntityModal, openDeleteEntityModal, closeModal } =
+export const { openUpdateEntityModal, openDeleteEntityModal, closeModal } =
   modalSlice.actions;
 
 export const getModal = (state: RootState) => state.modalReducer;

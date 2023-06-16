@@ -59,3 +59,5 @@ export interface Company {
   logo: string;
   name: string;
 }
+
+export type EntityType = "Portfolio" | "Investment";

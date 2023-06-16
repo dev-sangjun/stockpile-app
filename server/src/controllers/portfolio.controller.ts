@@ -1,6 +1,9 @@
 import { NextFunction, Request, Response } from "express";
 import { portfolioService } from "../services";
-import { AddInvestmentToPortfolioDto } from "../interfaces/dto/portfolio.dto";
+import {
+  AddInvestmentToPortfolioDto,
+  UpdatePortfolioDto,
+} from "../interfaces/dto/portfolio.dto";
 import { AuthorizedRequest } from "../middlewares/auth.middleware";
 
 const getPortfolios = async (
@@ -85,10 +88,29 @@ const deletePortfolio = async (
   }
 };
 
+const updatePortfolio = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  const { portfolioId } = req.params;
+  const updatePortfolioDto: UpdatePortfolioDto = req.body;
+  try {
+    const portfolio = await portfolioService.updatePortfolio(
+      portfolioId,
+      updatePortfolioDto
+    );
+    return res.json(portfolio);
+  } catch (e) {
+    return next(e);
+  }
+};
+
 export default {
   getPortfolios,
   createPortfolio,
   addInvestmentToPortfolio,
   deleteInvestment,
   deletePortfolio,
+  updatePortfolio,
 };

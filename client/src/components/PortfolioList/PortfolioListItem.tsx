@@ -7,7 +7,10 @@ import { getStocks, selectPortfolio } from "../../states/user.reducer";
 import { HiEye, HiPencilSquare, HiTrash } from "react-icons/hi2";
 import { getPortfolioDetails } from "../../utils/entity.utils";
 import EntityListItem from "../EntityListItem";
-import { openDeleteEntityModal } from "../../states/modal.reducer";
+import {
+  openDeleteEntityModal,
+  openUpdateEntityModal,
+} from "../../states/modal.reducer";
 
 interface PortfolioListItemProps {
   portfolio: Portfolio;
@@ -23,6 +26,14 @@ const PortfolioListItem: FC<PortfolioListItemProps> = ({ portfolio }) => {
   const handlePortfolioClick = () => {
     dispatch(selectPortfolio(portfolio));
   };
+  const handleEditInvestment = () => {
+    dispatch(
+      openUpdateEntityModal({
+        entity: portfolio,
+        entityType: "Portfolio",
+      })
+    );
+  };
   const handleDeletePortfolio = () => {
     dispatch(
       openDeleteEntityModal({
@@ -33,7 +44,10 @@ const PortfolioListItem: FC<PortfolioListItemProps> = ({ portfolio }) => {
   };
   const actionButtons = (
     <>
-      <button className="btn btn-sm btn-ghost text-base">
+      <button
+        className="btn btn-sm btn-ghost text-base"
+        onClick={handleEditInvestment}
+      >
         <HiPencilSquare />
       </button>
       <button

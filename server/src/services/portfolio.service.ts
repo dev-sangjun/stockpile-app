@@ -4,7 +4,10 @@ import {
   DuplicateEntityError,
   InternalServerError,
 } from "../global/errors.global";
-import { AddInvestmentToPortfolioDto } from "../interfaces/dto/portfolio.dto";
+import {
+  AddInvestmentToPortfolioDto,
+  UpdatePortfolioDto,
+} from "../interfaces/dto/portfolio.dto";
 import stockService from "./stock.service";
 import userService from "./user.service";
 
@@ -123,10 +126,28 @@ const deletePortfolio = async (portfolioId: string): Promise<void> => {
   }
 };
 
+const updatePortfolio = async (
+  portfolioId: string,
+  data: UpdatePortfolioDto
+): Promise<void> => {
+  const portfolio = await DBClient.portfolio.update({
+    data: {
+      ...data,
+    },
+    where: {
+      id: portfolioId,
+    },
+  });
+  if (!portfolio) {
+    throw new InternalServerError();
+  }
+};
+
 export default {
   getPortfoliosByUserId,
   createPortfolio,
   addInvestmentToPortfolio,
   deleteInvestment,
   deletePortfolio,
+  updatePortfolio,
 };

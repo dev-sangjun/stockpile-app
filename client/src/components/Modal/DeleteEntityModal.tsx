@@ -2,7 +2,7 @@ import { FC, FormEvent, useEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../../states/store";
 import { closeModal, getModal } from "../../states/modal.reducer";
-import { Investment, Portfolio } from "../../types/entity.types";
+import { EntityType, Investment, Portfolio } from "../../types/entity.types";
 import {
   deleteInvestmentFromPortfolio,
   deletePortfolio,
@@ -12,7 +12,7 @@ import { notify } from "../../utils/toast.utils";
 
 interface DeleteEntityModalProps {
   entity: Portfolio | Investment;
-  entityType: "Portfolio" | "Investment";
+  entityType: EntityType;
 }
 
 const DeleteEntityModal: FC<DeleteEntityModalProps> = ({

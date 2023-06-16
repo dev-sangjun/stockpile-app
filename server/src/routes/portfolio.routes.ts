@@ -12,6 +12,7 @@ portfolioRouter.delete(
   "/:portfolioId/investments/:investmentId",
   portfolioController.deleteInvestment
 );
-portfolioRouter.delete("/:portfolioId/", portfolioController.deletePortfolio);
+portfolioRouter.delete("/:portfolioId", portfolioController.deletePortfolio);
+portfolioRouter.patch("/:portfolioId", portfolioController.updatePortfolio);
 
 export default portfolioRouter;

@@ -11,7 +11,10 @@ import FavoritesButton from "../FavoritesButton";
 import { getInvestmentDetails } from "../../utils/entity.utils";
 import useUserState from "./useUserInfo";
 import EntityListItem from "../EntityListItem";
-import { openDeleteEntityModal } from "../../states/modal.reducer";
+import {
+  openDeleteEntityModal,
+  openUpdateEntityModal,
+} from "../../states/modal.reducer";
 
 interface InvestmentItemProps {
   investment: Investment;
@@ -29,6 +32,14 @@ const InvestmentListItem: FC<InvestmentItemProps> = ({
     [investment, stocks]
   );
   const logoUrl = stocks?.[investment.stockId]?.company?.logo;
+  const handleEditInvestment = () => {
+    dispatch(
+      openUpdateEntityModal({
+        entity: investment,
+        entityType: "Investment",
+      })
+    );
+  };
   const handleDeleteInvestment = () => {
     dispatch(
       openDeleteEntityModal({
@@ -47,7 +58,10 @@ const InvestmentListItem: FC<InvestmentItemProps> = ({
       <FavoritesButton isFavorite={isFavorite} onClick={handleFavoriteClick} />
       {selectedPortfolio && (
         <>
-          <button className="btn btn-sm btn-ghost text-base">
+          <button
+            className="btn btn-sm btn-ghost text-base"
+            onClick={handleEditInvestment}
+          >
             <HiPencilSquare />
           </button>
           <button

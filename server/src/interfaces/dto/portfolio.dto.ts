@@ -7,3 +7,7 @@ export interface AddInvestmentToPortfolioDto {
   cost: number | undefined;
   stockId: string;
 }
+
+export interface UpdatePortfolioDto {
+  name: string;
+}
