@@ -14,11 +14,10 @@ const useAddInvestmentForm = (isUpdate = false) => {
   const {
     register,
     handleSubmit,
-    getValues,
+    watch,
     formState: { errors, isValid },
     reset,
   } = useForm<FormValues>();
-  console.log(errors);
   const registerers: Registerers = {
     quantity: register("quantity", {
       required: isUpdate ? false : "Quantity is required.",
@@ -36,7 +35,7 @@ const useAddInvestmentForm = (isUpdate = false) => {
       },
     }),
   };
-  return { registerers, handleSubmit, getValues, errors, reset, isValid };
+  return { registerers, handleSubmit, watch, errors, reset, isValid };
 };
 
 export default useAddInvestmentForm;

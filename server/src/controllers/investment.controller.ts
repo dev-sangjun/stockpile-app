@@ -1,6 +1,7 @@
 import { NextFunction, Request, Response } from "express";
 import { investmentService } from "../services";
 import { BadRequestError } from "../global/errors.global";
+import { UpdateInvestmentDto } from "../interfaces/dto/investment.dto";
 
 const getInvestments = async (
   req: Request<undefined, any, any, { userId?: string; portfolioId?: string }>,
@@ -27,6 +28,25 @@ const getInvestments = async (
   }
 };
 
+const updateInvestment = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  const { investmentId } = req.params;
+  try {
+    const result = await investmentService.updateInvestment(
+      investmentId,
+      req.body as UpdateInvestmentDto
+    );
+    console.log(result);
+    return res.json(result);
+  } catch (e) {
+    return next(e);
+  }
+};
+
 export default {
   getInvestments,
+  updateInvestment,
 };

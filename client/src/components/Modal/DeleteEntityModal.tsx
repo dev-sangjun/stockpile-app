@@ -34,14 +34,20 @@ const DeleteEntityModal: FC<DeleteEntityModalProps> = ({
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
     if (entityType === "Portfolio") {
-      await deletePortfolio(entity.id);
+      const res = await deletePortfolio(entity.id);
+      if (!res.success) {
+        throw new Error("Something went wrong!");
+      }
       notify(`Successfully deleted ${(entity as Portfolio).name}`);
     } else {
       const { id, portfolioId, stockId } = entity as Investment;
-      await deleteInvestmentFromPortfolio({
+      const res = await deleteInvestmentFromPortfolio({
         portfolioId,
         investmentId: id,
       });
+      if (!res.success) {
+        throw new Error("Something went wrong!");
+      }
       notify(`Successfully deleted ${stockId}`);
     }
     await dispatch(asyncFetchUser());

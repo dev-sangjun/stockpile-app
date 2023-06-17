@@ -81,8 +81,8 @@ const deletePortfolio = async (
 ) => {
   const { portfolioId } = req.params;
   try {
-    const investment = await portfolioService.deletePortfolio(portfolioId);
-    return res.json(investment);
+    const result = await portfolioService.deletePortfolio(portfolioId);
+    return res.json(result);
   } catch (e) {
     return next(e);
   }
@@ -96,8 +96,8 @@ const updatePortfolio = async (
   const { portfolioId } = req.params;
   const { name } = req.body as UpdatePortfolioDto;
   try {
-    const portfolio = await portfolioService.updatePortfolio(portfolioId, name);
-    return res.json(portfolio);
+    const result = await portfolioService.updatePortfolio(portfolioId, name);
+    return res.json(result);
   } catch (e) {
     return next(e);
   }

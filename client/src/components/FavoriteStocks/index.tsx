@@ -22,7 +22,6 @@ const FavoriteStocks: FC = () => {
     });
     return filteredFavoriteStocks;
   };
-  console.log(filteredFavoriteStocks());
   if (isEmpty(filteredFavoriteStocks())) {
     return <Fallback message="Please add your favorite investments" />;
   }

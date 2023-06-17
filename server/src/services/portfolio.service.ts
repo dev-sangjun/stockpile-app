@@ -10,6 +10,7 @@ import {
 } from "../interfaces/dto/portfolio.dto";
 import stockService from "./stock.service";
 import userService from "./user.service";
+import { OperationResponseDto } from "../interfaces/dto/common.dto";
 
 const getAvgCost = (
   prevInvestment: Investment,
@@ -100,7 +101,9 @@ const addInvestmentToPortfolio = async (
   return updatedInvestment;
 };
 
-const deleteInvestment = async (investmentId: string): Promise<void> => {
+const deleteInvestment = async (
+  investmentId: string
+): Promise<OperationResponseDto> => {
   const investment = await DBClient.investment.delete({
     where: {
       id: investmentId,
@@ -113,9 +116,14 @@ const deleteInvestment = async (investmentId: string): Promise<void> => {
     investment.userId,
     investment.stockId
   );
+  return {
+    success: true,
+  };
 };
 
-const deletePortfolio = async (portfolioId: string): Promise<void> => {
+const deletePortfolio = async (
+  portfolioId: string
+): Promise<OperationResponseDto> => {
   const portfolio = await DBClient.portfolio.delete({
     where: {
       id: portfolioId,
@@ -124,12 +132,15 @@ const deletePortfolio = async (portfolioId: string): Promise<void> => {
   if (!portfolio) {
     throw new InternalServerError();
   }
+  return {
+    success: true,
+  };
 };
 
 const updatePortfolio = async (
   portfolioId: string,
   name: string
-): Promise<void> => {
+): Promise<OperationResponseDto> => {
   const portfolio = await DBClient.portfolio.update({
     data: {
       name,
@@ -141,6 +152,9 @@ const updatePortfolio = async (
   if (!portfolio) {
     throw new InternalServerError();
   }
+  return {
+    success: true,
+  };
 };
 
 export default {

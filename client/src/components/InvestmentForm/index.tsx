@@ -15,6 +15,7 @@ import {
 import { notify } from "../../utils/toast.utils";
 import { Investment } from "../../types/entity.types";
 import { closeModal } from "../../states/modal.reducer";
+import { updateInvestment } from "../../api/investment.api";
 
 interface SymbolState {
   keyword: string;
@@ -44,8 +45,9 @@ const InvestmentForm: FC<InvestmentFormProps> = ({
   const selectedPortfolio = useSelector((state: RootState) =>
     getSelectedPortfolio(state)
   );
-  const { registerers, handleSubmit, errors, reset, isValid } =
+  const { registerers, handleSubmit, watch, errors, reset, isValid } =
     useInvestmentForm(actionType === "UPDATE");
+  const watchFields = watch();
   const isUpdateAction = actionType === "UPDATE" && !!investment;
   const initialSymbolState: SymbolState = {
     keyword: isUpdateAction ? investment.stockId : "",
@@ -102,7 +104,7 @@ const InvestmentForm: FC<InvestmentFormProps> = ({
     }));
   };
   const renderActionButtons = () =>
-    isModal ? (
+    isUpdateAction && isModal ? (
       <div className="modal-action mt-0">
         <button
           className="btn btn-ghost btn-sm normal-case"
@@ -111,7 +113,11 @@ const InvestmentForm: FC<InvestmentFormProps> = ({
         >
           Cancel
         </button>
-        <button className="btn btn-primary btn-sm normal-case" type="submit">
+        <button
+          className="btn btn-primary btn-sm normal-case"
+          type="submit"
+          disabled={isNaN(watchFields.quantity) && isNaN(watchFields.cost)}
+        >
           Confirm
         </button>
       </div>
@@ -134,9 +140,9 @@ const InvestmentForm: FC<InvestmentFormProps> = ({
       // return if both quantity and cost were left blank
       return;
     }
+    const { quantity, cost } = data;
     try {
       if (actionType === "ADD") {
-        const { quantity, cost } = data;
         // add investment -> refetch user
         await addInvestmentToPortfolio({
           quantity,
@@ -144,11 +150,23 @@ const InvestmentForm: FC<InvestmentFormProps> = ({
           stockId: symbolState.selectedSymbol,
           portfolioId: selectedPortfolio.id,
         });
-        dispatch(asyncFetchUser());
-        notify(`Successfully added ${symbolState.selectedSymbol}`);
-        if (submitCallback) {
-          submitCallback();
+      } else if (isUpdateAction) {
+        const res = await updateInvestment(investment.id, {
+          quantity,
+          avgCost: cost,
+        });
+        if (!res?.success) {
+          throw new Error("Something went wrong!");
         }
+      }
+      await dispatch(asyncFetchUser());
+      notify(
+        `Successfully ${isUpdateAction ? "updated" : "added"} ${
+          isUpdateAction ? investment.stockId : symbolState.selectedSymbol
+        }`
+      );
+      if (submitCallback) {
+        submitCallback();
       }
       dispatch(closeModal());
     } catch (e) {
@@ -176,7 +194,9 @@ const InvestmentForm: FC<InvestmentFormProps> = ({
       <input
         className="input input-sm input-bordered w-full"
         type="number"
-        placeholder={isUpdateAction ? `${investment.quantity}` : "Quantity"}
+        placeholder={
+          isUpdateAction ? `Quantity: ${investment.quantity}` : "Quantity"
+        }
         step="0.01"
         {...registerers.quantity}
       />
@@ -184,7 +204,11 @@ const InvestmentForm: FC<InvestmentFormProps> = ({
       <input
         className="input input-sm input-bordered w-full"
         type="number"
-        placeholder={isUpdateAction ? `${investment.avgCost}` : "Current price"}
+        placeholder={
+          isUpdateAction
+            ? `Average cost: ${investment.avgCost}`
+            : "Current price"
+        }
         step="0.01"
         {...registerers.cost}
       />

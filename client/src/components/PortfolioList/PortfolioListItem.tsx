@@ -26,7 +26,7 @@ const PortfolioListItem: FC<PortfolioListItemProps> = ({ portfolio }) => {
   const handlePortfolioClick = () => {
     dispatch(selectPortfolio(portfolio));
   };
-  const handleEditInvestment = () => {
+  const handleUpdatePortfolio = () => {
     dispatch(
       openUpdateEntityModal({
         entity: portfolio,
@@ -46,7 +46,7 @@ const PortfolioListItem: FC<PortfolioListItemProps> = ({ portfolio }) => {
     <>
       <button
         className="btn btn-sm btn-ghost text-base"
-        onClick={handleEditInvestment}
+        onClick={handleUpdatePortfolio}
       >
         <HiPencilSquare />
       </button>

@@ -32,7 +32,7 @@ const InvestmentListItem: FC<InvestmentItemProps> = ({
     [investment, stocks]
   );
   const logoUrl = stocks?.[investment.stockId]?.company?.logo;
-  const handleEditInvestment = () => {
+  const handleUpdateInvestment = () => {
     dispatch(
       openUpdateEntityModal({
         entity: investment,
@@ -60,7 +60,7 @@ const InvestmentListItem: FC<InvestmentItemProps> = ({
         <>
           <button
             className="btn btn-sm btn-ghost text-base"
-            onClick={handleEditInvestment}
+            onClick={handleUpdateInvestment}
           >
             <HiPencilSquare />
           </button>

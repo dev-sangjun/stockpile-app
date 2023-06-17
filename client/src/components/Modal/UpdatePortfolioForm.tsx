@@ -24,7 +24,9 @@ const UpdatePortfolioForm: FC<UpdatePortfolioFormProps> = ({ portfolio }) => {
     }
     try {
       const res = await updatePortfolio(portfolio.id, newPortfolioName);
-      console.log(res);
+      if (!res.success) {
+        throw new Error("Something went wrong!");
+      }
       notify("Successfully updated portfolio");
       await dispatch(asyncFetchUser());
       dispatch(closeModal());

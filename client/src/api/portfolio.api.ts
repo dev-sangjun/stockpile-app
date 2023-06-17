@@ -1,6 +1,11 @@
 import axios, { AxiosResponse } from "axios";
 import { Investment, Portfolio } from "../types/entity.types";
 import { SERVER_ENDPOINT } from "./constants";
+import {
+  AddInvestmentToPortfolioDto,
+  DeleteInvestmentFromPortfolioDto,
+  OperationResponseDto,
+} from "./common.dto";
 
 export const fetchPortfolios = async (): Promise<Portfolio[]> => {
   const res = await axios.get(`${SERVER_ENDPOINT}/portfolios`);
@@ -22,12 +27,6 @@ export const addPortfolio = async (addPortfolioRequestDto: {
  * Investment ops
  */
 
-export interface AddInvestmentToPortfolioDto {
-  quantity: number;
-  cost: number | undefined;
-  stockId: string;
-}
-
 export const addInvestmentToPortfolio = async (
   addInvestmentToPortfolioDto: AddInvestmentToPortfolioDto & {
     portfolioId: string;
@@ -47,16 +46,11 @@ export const addInvestmentToPortfolio = async (
   return res.data;
 };
 
-export interface DeleteInvestmentFromPortfolioDto {
-  portfolioId: string;
-  investmentId: string;
-}
-
 export const deleteInvestmentFromPortfolio = async (
   deleteInvestmentFromPortfolioDto: DeleteInvestmentFromPortfolioDto
-): Promise<Investment> => {
+): Promise<OperationResponseDto> => {
   const { portfolioId, investmentId } = deleteInvestmentFromPortfolioDto;
-  const res: AxiosResponse<Investment> = await axios.delete(
+  const res: AxiosResponse<OperationResponseDto> = await axios.delete(
     `${SERVER_ENDPOINT}/portfolios/${portfolioId}/investments/${investmentId}`,
     { withCredentials: true }
   );
@@ -65,8 +59,8 @@ export const deleteInvestmentFromPortfolio = async (
 
 export const deletePortfolio = async (
   portfolioId: string
-): Promise<Portfolio> => {
-  const res: AxiosResponse<Portfolio> = await axios.delete(
+): Promise<OperationResponseDto> => {
+  const res: AxiosResponse<OperationResponseDto> = await axios.delete(
     `${SERVER_ENDPOINT}/portfolios/${portfolioId}`,
     { withCredentials: true }
   );
@@ -76,8 +70,8 @@ export const deletePortfolio = async (
 export const updatePortfolio = async (
   portfolioId: string,
   name: string
-): Promise<Portfolio> => {
-  const res: AxiosResponse<Portfolio> = await axios.patch(
+): Promise<OperationResponseDto> => {
+  const res: AxiosResponse<OperationResponseDto> = await axios.patch(
     `${SERVER_ENDPOINT}/portfolios/${portfolioId}`,
     { name },
     { withCredentials: true }
