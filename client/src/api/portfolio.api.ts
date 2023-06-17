@@ -72,3 +72,15 @@ export const deletePortfolio = async (
   );
   return res.data;
 };
+
+export const updatePortfolio = async (
+  portfolioId: string,
+  name: string
+): Promise<Portfolio> => {
+  const res: AxiosResponse<Portfolio> = await axios.patch(
+    `${SERVER_ENDPOINT}/portfolios/${portfolioId}`,
+    { name },
+    { withCredentials: true }
+  );
+  return res.data;
+};

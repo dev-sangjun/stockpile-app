@@ -1,7 +1,6 @@
 import { FC } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../../states/store";
-import AddInvestment from "./AddInvestment";
 import {
   deselectPortfolio,
   getFavoriteStocks,
@@ -10,6 +9,7 @@ import {
 } from "../../states/user.reducer";
 import { renderInvestmentListItems } from "./renderer";
 import { HiArrowLeft } from "react-icons/hi2";
+import AddInvestmentDropdown from "./AddInvestmentDropdown";
 
 const InvestmentList: FC = () => {
   const dispatch = useDispatch<AppDispatch>();
@@ -30,7 +30,7 @@ const InvestmentList: FC = () => {
     return (
       selectedPortfolio && (
         <div className="flex items-center gap-2">
-          <AddInvestment />
+          <AddInvestmentDropdown />
         </div>
       )
     );

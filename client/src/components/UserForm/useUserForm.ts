@@ -13,7 +13,7 @@ interface Registerers {
   password: UseFormRegisterReturn<"password">;
 }
 
-const useFormWrapper = (isSignIn: boolean) => {
+const useUserForm = (isSignIn: boolean) => {
   const {
     register,
     handleSubmit,
@@ -53,4 +53,4 @@ const useFormWrapper = (isSignIn: boolean) => {
   return { registerers, handleSubmit, errors, clearErrors };
 };
 
-export default useFormWrapper;
+export default useUserForm;

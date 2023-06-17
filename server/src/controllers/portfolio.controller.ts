@@ -94,12 +94,9 @@ const updatePortfolio = async (
   next: NextFunction
 ) => {
   const { portfolioId } = req.params;
-  const updatePortfolioDto: UpdatePortfolioDto = req.body;
+  const { name } = req.body as UpdatePortfolioDto;
   try {
-    const portfolio = await portfolioService.updatePortfolio(
-      portfolioId,
-      updatePortfolioDto
-    );
+    const portfolio = await portfolioService.updatePortfolio(portfolioId, name);
     return res.json(portfolio);
   } catch (e) {
     return next(e);

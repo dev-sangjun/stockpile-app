@@ -128,11 +128,11 @@ const deletePortfolio = async (portfolioId: string): Promise<void> => {
 
 const updatePortfolio = async (
   portfolioId: string,
-  data: UpdatePortfolioDto
+  name: string
 ): Promise<void> => {
   const portfolio = await DBClient.portfolio.update({
     data: {
-      ...data,
+      name,
     },
     where: {
       id: portfolioId,

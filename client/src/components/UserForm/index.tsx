@@ -1,7 +1,7 @@
 import { FC, useEffect, useState } from "react";
 import { getUserFormTexts } from "./user-form.utils";
 import { renderAlertErrorMessages } from "./renderers";
-import useFormWrapper from "./useFormWrapper";
+import useUserForm from "./useUserForm";
 import { createUser, signInUser } from "../../api/auth.api";
 import { useDispatch } from "react-redux";
 import { AppDispatch } from "../../states/store";
@@ -19,7 +19,7 @@ const UserForm: FC = () => {
   const [alertErrorMessages, setAlertErrorMessages] = useState<string[]>([]);
   const dispatch = useDispatch<AppDispatch>();
   const { registerers, handleSubmit, errors, clearErrors } =
-    useFormWrapper(isSignIn);
+    useUserForm(isSignIn);
   const onSubmit = handleSubmit(async data => {
     if (isSignIn) {
       try {
