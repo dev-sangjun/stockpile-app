@@ -9,9 +9,9 @@ import Fallback from "../Fallback";
 const DistributionCard: FC = () => {
   const investments = useSelector((state: RootState) => getInvestments(state));
   return (
-    <div className="card flex flex-col bg-base-100 gap-2">
+    <div className="flex flex-col bg-base-100 gap-2">
       <h3 className="text-lg font-bold">Stock Distribution</h3>
-      <div className="flex-1">
+      <div className="flex-1 md:max-w-[12rem]">
         {isEmpty(investments) ? (
           <Fallback message="No investment to display 🥲" />
         ) : (

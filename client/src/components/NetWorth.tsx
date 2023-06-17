@@ -12,7 +12,7 @@ const NetWorth: FC = () => {
     <div className="flex flex-col h-full">
       <h3 className="text-lg font-bold">Net Worth</h3>
       <div className="flex-1 flex flex-row items-center">
-        <span className="text-xl font-bold">
+        <span className="text-2xl font-bold text-primary">
           {toUSD(getTotalNetWorth(Object.values(investments), stocks))}
         </span>
       </div>

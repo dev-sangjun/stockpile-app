@@ -17,6 +17,7 @@
     "chartjs-plugin-datalabels": "^2.2.0",
     "daisyui": "^3.0.22",
     "is-empty": "^1.2.0",
+    "moment": "^2.29.4",
     "numeral": "^2.0.6",
     "react": "^18.2.0",
     "react-chartjs-2": "^5.2.0",
@@ -30,6 +31,7 @@
   "devDependencies": {
     "@types/axios": "^0.14.0",
     "@types/is-empty": "^1.2.1",
+    "@types/moment": "^2.13.0",
     "@types/numeral": "^2.0.2",
     "@types/react": "^18.0.37",
     "@types/react-chartjs-2": "^2.5.7",

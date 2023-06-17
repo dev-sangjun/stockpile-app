@@ -5,14 +5,12 @@ import SignIn from "./SignIn";
 import Modal from "../components/Modal";
 import { Toaster } from "react-hot-toast";
 import Settings from "./Settings";
-import ThemeToggle from "../components/ThemeToggle";
 
 const publicRouter = createBrowserRouter([
   {
     element: (
       <div className="flex flex-col bg-slate-200">
         <div className="max-w-7xl h-screen w-full mx-auto py-24">
-          <ThemeToggle />
           <Outlet />
         </div>
         <Toaster />
@@ -34,9 +32,9 @@ const publicRouter = createBrowserRouter([
 const privateRouter = createBrowserRouter([
   {
     element: (
-      <div className="flex flex-col bg-slate-200">
+      <div className="flex flex-col bg-base-100">
         <Navbar />
-        <div className="max-w-7xl h-screen w-full mx-auto py-16 md:py-16 overflow-y-auto">
+        <div className="max-w-7xl h-screen w-full mx-auto py-16 md:py-8 md:pl-64 overflow-y-auto">
           <Outlet />
         </div>
         <Toaster />
