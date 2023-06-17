@@ -184,7 +184,9 @@ const InvestmentForm: FC<InvestmentFormProps> = ({
         type="text"
         name="keyword"
         placeholder="Seach..."
-        className="input input-sm input-bordered w-full"
+        className={`input input-sm input-bordered w-full ${
+          isUpdateAction ? "cursor-default select-none" : ""
+        }`}
         contentEditable={!isUpdateAction}
         readOnly={isUpdateAction}
         onChange={handleKeywordChange}

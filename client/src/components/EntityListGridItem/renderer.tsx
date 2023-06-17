@@ -1,6 +1,11 @@
 import GridItem, { GridItemProps } from ".";
-import { Stock } from "../../types/entity.types";
-import { InvestmentDetails, PortfolioDetails } from "../../utils/entity.utils";
+import { Investment, Stock, Stocks } from "../../types/entity.types";
+import {
+  InvestmentDetails,
+  PortfolioDetails,
+  getTotalInvestedAmount,
+  getTotalNetWorth,
+} from "../../utils/entity.utils";
 import { toUSD } from "../../utils/numeral.utils";
 import ValueChangeText from "../ValueChangeText";
 
@@ -68,6 +73,40 @@ const getFavoriteStockGridItems = (
   },
 ];
 
+const getPortfolioOverviewGridItems = (
+  investments: Investment[],
+  stocks: Stocks
+): GridItemProps[] => {
+  const totalNetWorth = getTotalNetWorth(investments, stocks);
+  const totalInvestedAmount = getTotalInvestedAmount(investments);
+  const gainLoss = totalNetWorth - totalInvestedAmount;
+  const investmentCount = investments.length;
+  return [
+    {
+      className: "col-span-2",
+      title: "Total Value",
+      text: toUSD(totalNetWorth),
+    },
+    {
+      className: "col-span-2",
+      title: "Total Invested",
+      text: toUSD(totalInvestedAmount),
+    },
+    {
+      title: "Total Gain/Loss ($)",
+      text: <ValueChangeText value={gainLoss} />,
+    },
+    {
+      title: "Total Gain/Loss (%)",
+      text: <ValueChangeText value={gainLoss / totalInvestedAmount} />,
+    },
+    {
+      title: "Total investments",
+      text: String(investmentCount),
+    },
+  ];
+};
+
 const renderGridItems = (gridItems: GridItemProps[]) =>
   gridItems.map(gridItem => <GridItem key={gridItem.title} {...gridItem} />);
 
@@ -80,3 +119,8 @@ export const renderInvestmentGridItems = (
 
 export const renderFavoriteStockGridItems = (stock: Stock, quantity: number) =>
   renderGridItems(getFavoriteStockGridItems(stock, quantity));
+
+export const renderPortfolioOverviewGridItems = (
+  investments: Investment[],
+  stocks: Stocks
+) => renderGridItems(getPortfolioOverviewGridItems(investments, stocks));

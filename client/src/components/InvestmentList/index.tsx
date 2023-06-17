@@ -4,7 +4,6 @@ import { AppDispatch, RootState } from "../../states/store";
 import {
   deselectPortfolio,
   getFavoriteStocks,
-  getInvestments,
   getSelectedPortfolio,
 } from "../../states/user.reducer";
 import { renderInvestmentListItems } from "./renderer";
@@ -13,19 +12,12 @@ import AddInvestmentDropdown from "./AddInvestmentDropdown";
 
 const InvestmentList: FC = () => {
   const dispatch = useDispatch<AppDispatch>();
-  const allInvestments = useSelector((state: RootState) =>
-    getInvestments(state)
-  );
   const selectedPortfolio = useSelector((state: RootState) =>
     getSelectedPortfolio(state)
   );
   const favoriteStocks = useSelector((state: RootState) =>
     getFavoriteStocks(state)
   );
-  // show all investments if no portfolio is selected
-  const investments =
-    selectedPortfolio?.investments ?? Object.values(allInvestments);
-  const title = selectedPortfolio?.name || "All Investments";
   const getActionButtons = () => {
     return (
       selectedPortfolio && (
@@ -46,12 +38,15 @@ const InvestmentList: FC = () => {
               onClick={handleBackButton}
             />
           )}
-          <h2 className="text-xl font-bold">{title}</h2>
+          <h2 className="text-xl font-bold">{selectedPortfolio?.name}</h2>
         </div>
         {getActionButtons()}
       </div>
       <ul className="flex flex-col gap-4">
-        {renderInvestmentListItems(investments, favoriteStocks)}
+        {renderInvestmentListItems(
+          selectedPortfolio?.investments || [],
+          favoriteStocks
+        )}
       </ul>
     </div>
   );

@@ -118,3 +118,17 @@ export const getInvestmentDetails = (
     dayChange,
   };
 };
+
+export const getTotalInvestedAmount = (investments: Investment[]) => {
+  const total = investments.reduce((prev, investment) => {
+    const investedAmount = investment.avgCost * investment.quantity;
+    return prev + investedAmount;
+  }, 0);
+  return total;
+};
+
+export const getTotalNetWorth = (investments: Investment[], stocks: Stocks) =>
+  investments.reduce((prev, investment) => {
+    const { quantity, stockId } = investment;
+    return prev + (stocks?.[stockId]?.c || 0) * quantity;
+  }, 0);

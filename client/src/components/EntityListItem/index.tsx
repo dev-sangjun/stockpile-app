@@ -40,6 +40,7 @@ const EntityListItem: FC<EntityListItemProps> = ({
       return renderPortfolioGridItems(entityDetails as PortfolioDetails);
     }
     if (entityType === "Investment") {
+      console.log(entityDetails);
       return renderInvestmentGridItems(entityDetails as InvestmentDetails);
     }
     if (entityType === "FavoriteStock") {

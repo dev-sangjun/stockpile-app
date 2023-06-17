@@ -4,11 +4,15 @@ import PortfolioListItem from "./PortfolioListItem";
 import { useSelector } from "react-redux";
 import { RootState } from "../../states/store";
 import AddPortfolio from "./AddPortfolio";
-import { getPortfolios } from "../../states/user.reducer";
+import { getPortfolios, getSelectedPortfolio } from "../../states/user.reducer";
 import Fallback from "../Fallback";
+import InvestmentList from "../InvestmentList";
 
 const PortfolioList: FC = () => {
   const portfolios = useSelector((state: RootState) => getPortfolios(state));
+  const selectedPortfolio = useSelector((state: RootState) =>
+    getSelectedPortfolio(state)
+  );
   const renderPortfolios = () => {
     if (isEmpty(portfolios)) {
       return <Fallback message="Please add your portfolio." />;
@@ -22,6 +26,9 @@ const PortfolioList: FC = () => {
       <AddPortfolio />
     </div>
   );
+  if (selectedPortfolio) {
+    return <InvestmentList />;
+  }
   return (
     <div className="flex flex-col gap-4">
       <div className="flex justify-between items-center">
