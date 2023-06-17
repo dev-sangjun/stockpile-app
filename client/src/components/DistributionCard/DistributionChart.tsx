@@ -7,7 +7,6 @@ import { RootState } from "../../states/store";
 import { getStocks } from "../../states/user.reducer";
 import { Datasets } from "../../types/datasets.types";
 import { CHART_BACKGROUND_COLOR } from "../../utils/chart.utils";
-import { toUSD } from "../../utils/common.utils";
 
 ChartJS.register(ArcElement, Tooltip);
 
@@ -33,12 +32,12 @@ const constructChartConfig = (
       backgroundColor: CHART_BACKGROUND_COLOR,
     },
   ];
-  let totalInvestmentValue = 0;
+  // let totalInvestmentValue = 0;
   investments.forEach(investment => {
     const { stockId, quantity } = investment;
     labels.push(stockId);
     const value = (stocks?.[stockId]?.c || 0) * quantity;
-    totalInvestmentValue += value;
+    // totalInvestmentValue += value;
     datasets[0].data.push(value);
   });
   return {

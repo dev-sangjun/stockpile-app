@@ -1,13 +1,10 @@
-import { Investment, Portfolio } from "@prisma/client";
+import { Investment, Portfolio, Prisma } from "@prisma/client";
 import DBClient from "../../prisma/DBClient";
 import {
   DuplicateEntityError,
   InternalServerError,
 } from "../global/errors.global";
-import {
-  AddInvestmentToPortfolioDto,
-  UpdatePortfolioDto,
-} from "../interfaces/dto/portfolio.dto";
+import { AddInvestmentToPortfolioDto } from "../interfaces/dto/portfolio.dto";
 import stockService from "./stock.service";
 import userService from "./user.service";
 import { OperationResponseDto } from "../interfaces/dto/common.dto";
@@ -18,9 +15,9 @@ const getAvgCost = (
   newQuantity: number
 ): number => {
   const prevInvestmentTotalPrice =
-    prevInvestment.avgCost * prevInvestment.quantity;
+    prevInvestment.avgCost.toNumber() * prevInvestment.quantity.toNumber();
   const newInvestmentTotalPrice = newCost * newQuantity;
-  const totalQuantity = prevInvestment.quantity + newQuantity;
+  const totalQuantity = prevInvestment.quantity.toNumber() + newQuantity;
   return (prevInvestmentTotalPrice + newInvestmentTotalPrice) / totalQuantity;
 };
 
@@ -91,7 +88,7 @@ const addInvestmentToPortfolio = async (
   }
   const updatedInvestment = await DBClient.investment.update({
     data: {
-      quantity: investment.quantity + quantity,
+      quantity: new Prisma.Decimal(investment.quantity.toNumber() + quantity),
       avgCost: getAvgCost(investment, adjustedCost, quantity),
     },
     where: {

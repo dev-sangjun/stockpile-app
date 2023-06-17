@@ -12,14 +12,15 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+const client_1 = require("@prisma/client");
 const DBClient_1 = __importDefault(require("../../prisma/DBClient"));
 const errors_global_1 = require("../global/errors.global");
 const stock_service_1 = __importDefault(require("./stock.service"));
 const user_service_1 = __importDefault(require("./user.service"));
 const getAvgCost = (prevInvestment, newCost, newQuantity) => {
-    const prevInvestmentTotalPrice = prevInvestment.avgCost * prevInvestment.quantity;
+    const prevInvestmentTotalPrice = prevInvestment.avgCost.toNumber() * prevInvestment.quantity.toNumber();
     const newInvestmentTotalPrice = newCost * newQuantity;
-    const totalQuantity = prevInvestment.quantity + newQuantity;
+    const totalQuantity = prevInvestment.quantity.toNumber() + newQuantity;
     return (prevInvestmentTotalPrice + newInvestmentTotalPrice) / totalQuantity;
 };
 const getPortfoliosByUserId = (userId) => __awaiter(void 0, void 0, void 0, function* () {
@@ -80,7 +81,7 @@ const addInvestmentToPortfolio = (userId, portfolioId, addInvestmentToPortfolioD
     }
     const updatedInvestment = yield DBClient_1.default.investment.update({
         data: {
-            quantity: investment.quantity + quantity,
+            quantity: new client_1.Prisma.Decimal(investment.quantity.toNumber() + quantity),
             avgCost: getAvgCost(investment, adjustedCost, quantity),
         },
         where: {

@@ -1,5 +1,4 @@
 import {
-  HiOutlineHome,
   HiOutlineChartBar,
   HiOutlineCog8Tooth,
   HiOutlineSquares2X2,
