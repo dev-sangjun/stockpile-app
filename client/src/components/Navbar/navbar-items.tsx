@@ -2,6 +2,7 @@ import {
   HiOutlineHome,
   HiOutlineChartBar,
   HiOutlineCog8Tooth,
+  HiOutlineSquares2X2,
 } from "react-icons/hi2";
 import { Home, Portfolios } from "../../pages";
 import Settings from "../../pages/Settings";
@@ -15,9 +16,9 @@ export type NavbarItem = {
 
 const navbarItems: NavbarItem[] = [
   {
-    label: "Home",
+    label: "Dashboard",
     path: "/",
-    icon: <HiOutlineHome className="text-lg" />,
+    icon: <HiOutlineSquares2X2 className="text-lg" />,
     element: <Home />,
   },
   {

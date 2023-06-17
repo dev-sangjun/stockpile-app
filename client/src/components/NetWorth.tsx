@@ -10,7 +10,7 @@ const NetWorth: FC = () => {
   const stocks = useSelector((state: RootState) => getStocks(state));
   return (
     <div className="flex flex-col h-full">
-      <h3 className="text-lg font-bold">Net Worth</h3>
+      <h3 className="text-lg font-semibold">Net Worth</h3>
       <div className="flex-1 flex flex-row items-center">
         <span className="text-2xl font-bold text-primary">
           {toUSD(getTotalNetWorth(Object.values(investments), stocks))}

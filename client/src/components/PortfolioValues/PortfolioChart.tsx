@@ -9,15 +9,18 @@ import {
   Tooltip,
   Colors,
   ChartOptions,
+  ChartData,
+  ChartDataset,
 } from "chart.js";
-import ChartDataLabels from "chartjs-plugin-datalabels";
 import { Bar } from "react-chartjs-2";
 import { useSelector } from "react-redux";
 import { Portfolio, Stocks } from "../../types/entity.types";
 import { RootState } from "../../states/store";
 import { getStocks } from "../../states/user.reducer";
-import { getPortfolioTotalValue } from "../../utils/entity.utils";
-import { Datasets } from "../../types/datasets.types";
+import {
+  getPortfolioTotalValue,
+  sortPortfoliosByValue,
+} from "../../utils/entity.utils";
 import { CHART_BACKGROUND_COLOR } from "../../utils/chart.utils";
 import { toUSD } from "../../utils/common.utils";
 
@@ -27,8 +30,7 @@ ChartJS.register(
   BarElement,
   Title,
   Tooltip,
-  Colors,
-  ChartDataLabels
+  Colors
 );
 
 interface PortfolioChartProps {
@@ -39,25 +41,22 @@ const constructChartConfig = (
   portfolios: Portfolio[],
   stocks: Stocks
 ): {
-  data: {
-    labels: string[];
-    datasets: Datasets;
-  };
-  options: ChartOptions<"bar">;
+  data: ChartData<"bar", number[], string>;
+  options?: ChartOptions<"bar">;
 } => {
   const labels: string[] = [];
-  const datasets: Datasets = [
+  const datasets: ChartDataset<"bar", number[]>[] = [
     {
-      label: "Total Value",
       data: [],
       backgroundColor: CHART_BACKGROUND_COLOR,
-      dataLabels: {
-        align: "end",
-      },
+      borderRadius: 20,
+      borderSkipped: false,
+      maxBarThickness: 64,
+      categoryPercentage: 1,
     },
   ];
   let maxPortfolioValue = 0;
-  portfolios.forEach(portfolio => {
+  sortPortfoliosByValue(portfolios, stocks).forEach(portfolio => {
     labels.push(portfolio.name);
     const portfolioTotalValue = getPortfolioTotalValue(portfolio, stocks);
     maxPortfolioValue = Math.max(maxPortfolioValue, portfolioTotalValue);
@@ -69,15 +68,26 @@ const constructChartConfig = (
       datasets,
     },
     options: {
+      maintainAspectRatio: false,
       plugins: {
-        datalabels: {
-          color: "white",
-          font: {
-            weight: "bold",
-            size: 16,
+        tooltip: {
+          callbacks: {
+            label: context => {
+              return `Total value: ${toUSD(context.formattedValue)}`;
+            },
           },
-          formatter: (value: number) => {
-            return value / maxPortfolioValue > 0.2 ? toUSD(value, false) : null;
+          yAlign: "bottom",
+        },
+      },
+      scales: {
+        x: {
+          grid: {
+            drawOnChartArea: false,
+          },
+        },
+        y: {
+          grid: {
+            drawOnChartArea: false,
           },
         },
       },
@@ -87,8 +97,11 @@ const constructChartConfig = (
 
 const PortfolioChart: FC<PortfolioChartProps> = ({ portfolios }) => {
   const stocks = useSelector((state: RootState) => getStocks(state));
-  const { data, options } = constructChartConfig(portfolios, stocks);
-  return <Bar data={data} options={options} className="my-auto pt-2 md:p-8" />;
+  return (
+    <div className="flex-1 mt-4">
+      <Bar {...constructChartConfig(portfolios, stocks)} />
+    </div>
+  );
 };
 
 export default PortfolioChart;

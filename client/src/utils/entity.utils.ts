@@ -133,3 +133,18 @@ export const getTotalNetWorth = (investments: Investment[], stocks: Stocks) =>
     const { quantity, stockId } = investment;
     return toDecimal(prev + (stocks?.[stockId]?.c || 0) * quantity);
   }, 0);
+
+export const sortPortfoliosByValue = (
+  portfolios: Portfolio[],
+  stocks: Stocks
+) => {
+  const compareFn = (p1: Portfolio, p2: Portfolio) => {
+    return (
+      toDecimal(getPortfolioTotalValue(p2, stocks)) -
+      toDecimal(getPortfolioTotalValue(p1, stocks))
+    );
+  };
+  const arr = [...portfolios];
+  arr.sort(compareFn);
+  return arr;
+};

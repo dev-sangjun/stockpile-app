@@ -34,17 +34,23 @@ const FavoriteStockList: FC<FavoriteStockListProps> = ({ stocks }) => {
     });
   };
   return (
-    <div className="flex flex-col gap-2">
-      <div className="flex gap-2 ml-auto">
-        <button className="btn btn-xs btn-ghost" onClick={() => scroll("left")}>
-          <HiOutlineChevronLeft />
-        </button>
-        <button
-          className="btn btn-xs btn-ghost"
-          onClick={() => scroll("right")}
-        >
-          <HiOutlineChevronRight />
-        </button>
+    <div className="flex flex-col gap-4 card bg-base-200 p-6">
+      <div className="flex justify-between items-center">
+        <h3 className="text-lg font-semibold">Favorite Stocks</h3>
+        <div className="flex gap-2">
+          <button
+            className="btn btn-xs btn-ghost"
+            onClick={() => scroll("left")}
+          >
+            <HiOutlineChevronLeft />
+          </button>
+          <button
+            className="btn btn-xs btn-ghost"
+            onClick={() => scroll("right")}
+          >
+            <HiOutlineChevronRight />
+          </button>
+        </div>
       </div>
       <ul
         className="carousel carousel-center flex items-start gap-4 rounded-box"
