@@ -56,8 +56,19 @@ const deleteInvestment = (req, res, next) => __awaiter(void 0, void 0, void 0, f
 const deletePortfolio = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     const { portfolioId } = req.params;
     try {
-        const investment = yield services_1.portfolioService.deletePortfolio(portfolioId);
-        return res.json(investment);
+        const result = yield services_1.portfolioService.deletePortfolio(portfolioId);
+        return res.json(result);
+    }
+    catch (e) {
+        return next(e);
+    }
+});
+const updatePortfolio = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
+    const { portfolioId } = req.params;
+    const { name } = req.body;
+    try {
+        const result = yield services_1.portfolioService.updatePortfolio(portfolioId, name);
+        return res.json(result);
     }
     catch (e) {
         return next(e);
@@ -69,4 +80,5 @@ exports.default = {
     addInvestmentToPortfolio,
     deleteInvestment,
     deletePortfolio,
+    updatePortfolio,
 };

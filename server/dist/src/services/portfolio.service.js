@@ -99,6 +99,9 @@ const deleteInvestment = (investmentId) => __awaiter(void 0, void 0, void 0, fun
         throw new errors_global_1.InternalServerError();
     }
     yield user_service_1.default.deleteStockWithNoReferenceFromUser(investment.userId, investment.stockId);
+    return {
+        success: true,
+    };
 });
 const deletePortfolio = (portfolioId) => __awaiter(void 0, void 0, void 0, function* () {
     const portfolio = yield DBClient_1.default.portfolio.delete({
@@ -109,6 +112,25 @@ const deletePortfolio = (portfolioId) => __awaiter(void 0, void 0, void 0, funct
     if (!portfolio) {
         throw new errors_global_1.InternalServerError();
     }
+    return {
+        success: true,
+    };
+});
+const updatePortfolio = (portfolioId, name) => __awaiter(void 0, void 0, void 0, function* () {
+    const portfolio = yield DBClient_1.default.portfolio.update({
+        data: {
+            name,
+        },
+        where: {
+            id: portfolioId,
+        },
+    });
+    if (!portfolio) {
+        throw new errors_global_1.InternalServerError();
+    }
+    return {
+        success: true,
+    };
 });
 exports.default = {
     getPortfoliosByUserId,
@@ -116,4 +138,5 @@ exports.default = {
     addInvestmentToPortfolio,
     deleteInvestment,
     deletePortfolio,
+    updatePortfolio,
 };

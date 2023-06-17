@@ -28,6 +28,18 @@ const getInvestments = (req, res, next) => __awaiter(void 0, void 0, void 0, fun
         return next(e);
     }
 });
+const updateInvestment = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
+    const { investmentId } = req.params;
+    try {
+        const result = yield services_1.investmentService.updateInvestment(investmentId, req.body);
+        console.log(result);
+        return res.json(result);
+    }
+    catch (e) {
+        return next(e);
+    }
+});
 exports.default = {
     getInvestments,
+    updateInvestment,
 };

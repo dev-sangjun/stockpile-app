@@ -13,6 +13,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const DBClient_1 = __importDefault(require("../../prisma/DBClient"));
+const errors_global_1 = require("../global/errors.global");
 const getInvestmentsByUserId = (userId) => __awaiter(void 0, void 0, void 0, function* () {
     const investments = yield DBClient_1.default.investment.findMany({
         where: {
@@ -29,7 +30,30 @@ const getInvestmentsByPortfolioId = (portfolioId) => __awaiter(void 0, void 0, v
     });
     return investments;
 });
+const updateInvestment = (investmentId, updateInvestmentDto) => __awaiter(void 0, void 0, void 0, function* () {
+    // remove fields with null values in updateInvestmentDto
+    // null values indicate that there is no update needed for that field
+    if (!updateInvestmentDto.quantity) {
+        delete updateInvestmentDto.quantity;
+    }
+    if (!updateInvestmentDto.avgCost) {
+        delete updateInvestmentDto.avgCost;
+    }
+    const investment = yield DBClient_1.default.investment.update({
+        data: Object.assign({}, updateInvestmentDto),
+        where: {
+            id: investmentId,
+        },
+    });
+    if (!investment) {
+        throw new errors_global_1.InternalServerError();
+    }
+    return {
+        success: true,
+    };
+});
 exports.default = {
     getInvestmentsByUserId,
     getInvestmentsByPortfolioId,
+    updateInvestment,
 };

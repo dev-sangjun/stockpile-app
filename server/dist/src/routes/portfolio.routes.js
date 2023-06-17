@@ -7,5 +7,6 @@ portfolioRouter.get("/", controllers_1.portfolioController.getPortfolios);
 portfolioRouter.post("/", controllers_1.portfolioController.createPortfolio);
 portfolioRouter.post("/:portfolioId/investments", controllers_1.portfolioController.addInvestmentToPortfolio);
 portfolioRouter.delete("/:portfolioId/investments/:investmentId", controllers_1.portfolioController.deleteInvestment);
-portfolioRouter.delete("/:portfolioId/", controllers_1.portfolioController.deletePortfolio);
+portfolioRouter.delete("/:portfolioId", controllers_1.portfolioController.deletePortfolio);
+portfolioRouter.patch("/:portfolioId", controllers_1.portfolioController.updatePortfolio);
 exports.default = portfolioRouter;
