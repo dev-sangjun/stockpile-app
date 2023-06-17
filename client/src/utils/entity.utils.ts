@@ -5,6 +5,7 @@ import {
   Stock,
   Stocks,
 } from "../types/entity.types";
+import { toDecimal } from "./common.utils";
 
 const addInvestments = (
   prevInvestment: Investment,
@@ -16,7 +17,7 @@ const addInvestments = (
   const totalQuantity = prevInvestment.quantity + curInvestmnent.quantity;
   return {
     ...prevInvestment,
-    avgCost: totalValue / totalQuantity,
+    avgCost: toDecimal(totalValue / totalQuantity),
     quantity: totalQuantity,
   };
 };
@@ -90,7 +91,7 @@ export const getPortfolioDetails = (portfolio: Portfolio, stocks: Stocks) => {
     totalValue,
     totalCost,
     investmentsCount: portfolio.investments.length,
-    dayChange: totalValue - prevTotalValue,
+    dayChange: toDecimal(totalValue - prevTotalValue),
   };
 };
 
@@ -106,10 +107,10 @@ export const getInvestmentDetails = (
   investment: Investment,
   stocks: Stocks
 ): InvestmentDetails => {
-  const curPrice = stocks?.[investment.stockId]?.c;
-  const totalValue = curPrice * investment.quantity;
-  const totalCost = investment.avgCost * investment.quantity;
-  const dayChange = curPrice - stocks?.[investment.stockId]?.pc;
+  const curPrice = toDecimal(stocks?.[investment.stockId]?.c);
+  const totalValue = toDecimal(curPrice * investment.quantity);
+  const totalCost = toDecimal(investment.avgCost * investment.quantity);
+  const dayChange = toDecimal(curPrice - stocks?.[investment.stockId]?.pc);
   return {
     curPrice,
     totalValue,
@@ -122,7 +123,7 @@ export const getInvestmentDetails = (
 export const getTotalInvestedAmount = (investments: Investment[]) => {
   const total = investments.reduce((prev, investment) => {
     const investedAmount = investment.avgCost * investment.quantity;
-    return prev + investedAmount;
+    return toDecimal(prev + investedAmount);
   }, 0);
   return total;
 };
@@ -130,5 +131,5 @@ export const getTotalInvestedAmount = (investments: Investment[]) => {
 export const getTotalNetWorth = (investments: Investment[], stocks: Stocks) =>
   investments.reduce((prev, investment) => {
     const { quantity, stockId } = investment;
-    return prev + (stocks?.[stockId]?.c || 0) * quantity;
+    return toDecimal(prev + (stocks?.[stockId]?.c || 0) * quantity);
   }, 0);

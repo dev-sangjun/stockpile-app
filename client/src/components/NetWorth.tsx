@@ -2,8 +2,8 @@ import { FC } from "react";
 import { useSelector } from "react-redux";
 import { RootState } from "../states/store";
 import { getInvestments, getStocks } from "../states/user.reducer";
-import { toUSD } from "../utils/numeral.utils";
 import { getTotalNetWorth } from "../utils/entity.utils";
+import { toUSD } from "../utils/common.utils";
 
 const NetWorth: FC = () => {
   const investments = useSelector((state: RootState) => getInvestments(state));

@@ -1,9 +1,10 @@
 import { FC } from "react";
-import { toUSD } from "../utils/numeral.utils";
 import { HiArrowDown, HiArrowUp } from "react-icons/hi2";
+import { toUSD } from "../utils/common.utils";
 
 interface ValueChangeTextProps {
   value: number;
+  usePercentage?: boolean;
 }
 
 const getGainLossTextColor = (value: number) => {
@@ -24,12 +25,15 @@ const renderDayChangeArrow = (value: number) => {
   return null;
 };
 
-const ValueChangeText: FC<ValueChangeTextProps> = ({ value }) => {
+const ValueChangeText: FC<ValueChangeTextProps> = ({
+  value,
+  usePercentage = false,
+}) => {
   return (
     <div className={`flex items-center ${getGainLossTextColor(value)}`}>
       <span>
         {value > 0 && "+"}
-        {toUSD(value)}
+        {usePercentage ? `${value}%` : toUSD(value)}
       </span>
       {renderDayChangeArrow(value)}
     </div>

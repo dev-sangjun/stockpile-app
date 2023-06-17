@@ -1,12 +1,12 @@
 import GridItem, { GridItemProps } from ".";
 import { Investment, Stock, Stocks } from "../../types/entity.types";
+import { toDecimal, toUSD } from "../../utils/common.utils";
 import {
   InvestmentDetails,
   PortfolioDetails,
   getTotalInvestedAmount,
   getTotalNetWorth,
 } from "../../utils/entity.utils";
-import { toUSD } from "../../utils/numeral.utils";
 import ValueChangeText from "../ValueChangeText";
 
 const getPortfolioGridItems = (
@@ -80,15 +80,12 @@ const getPortfolioOverviewGridItems = (
   const totalNetWorth = getTotalNetWorth(investments, stocks);
   const totalInvestedAmount = getTotalInvestedAmount(investments);
   const gainLoss = totalNetWorth - totalInvestedAmount;
-  const investmentCount = investments.length;
   return [
     {
-      className: "col-span-2",
       title: "Total Value",
       text: toUSD(totalNetWorth),
     },
     {
-      className: "col-span-2",
       title: "Total Invested",
       text: toUSD(totalInvestedAmount),
     },
@@ -98,11 +95,12 @@ const getPortfolioOverviewGridItems = (
     },
     {
       title: "Total Gain/Loss (%)",
-      text: <ValueChangeText value={gainLoss / totalInvestedAmount} />,
-    },
-    {
-      title: "Total investments",
-      text: String(investmentCount),
+      text: (
+        <ValueChangeText
+          value={toDecimal(gainLoss / totalInvestedAmount)}
+          usePercentage={true}
+        />
+      ),
     },
   ];
 };

@@ -6,7 +6,7 @@ import {
   getStocks,
 } from "../states/user.reducer";
 import { RootState } from "../states/store";
-import { toUSD } from "../utils/numeral.utils";
+import { toUSD } from "../utils/common.utils";
 
 const GoalProgress: FC = () => {
   const investments = useSelector((state: RootState) => getInvestments(state));

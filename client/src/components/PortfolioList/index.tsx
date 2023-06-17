@@ -8,7 +8,11 @@ import { getPortfolios, getSelectedPortfolio } from "../../states/user.reducer";
 import Fallback from "../Fallback";
 import InvestmentList from "../InvestmentList";
 
-const PortfolioList: FC = () => {
+interface PortfolioListProps {
+  className?: string;
+}
+
+const PortfolioList: FC<PortfolioListProps> = ({ className }) => {
   const portfolios = useSelector((state: RootState) => getPortfolios(state));
   const selectedPortfolio = useSelector((state: RootState) =>
     getSelectedPortfolio(state)
@@ -30,7 +34,7 @@ const PortfolioList: FC = () => {
     return <InvestmentList />;
   }
   return (
-    <div className="flex flex-col gap-4">
+    <div className={`flex flex-col gap-4 ${className ? className : ""}`}>
       <div className="flex justify-between items-center">
         <h2 className="text-xl font-bold">Portfolios</h2>
         {getActionButtons()}

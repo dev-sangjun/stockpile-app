@@ -7,7 +7,7 @@ import {
   renderPortfolioGridItems,
 } from "../EntityListGridItem/renderer";
 import { Stock } from "../../types/entity.types";
-import { toUSD } from "../../utils/numeral.utils";
+import { toUSD } from "../../utils/common.utils";
 
 interface FavoriteStockDetails {
   stock: Stock;

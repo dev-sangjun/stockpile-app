@@ -19,7 +19,7 @@ import { getStocks } from "../../states/user.reducer";
 import { getPortfolioTotalValue } from "../../utils/entity.utils";
 import { Datasets } from "../../types/datasets.types";
 import { CHART_BACKGROUND_COLOR } from "../../utils/chart.utils";
-import { toUSD } from "../../utils/numeral.utils";
+import { toUSD } from "../../utils/common.utils";
 
 ChartJS.register(
   CategoryScale,

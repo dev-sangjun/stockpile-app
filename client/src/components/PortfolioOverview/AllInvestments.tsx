@@ -15,7 +15,9 @@ const AllInvestments: FC<AllInvestmentsProps> = ({ investments }) => {
   );
   return (
     <div className="flex flex-col gap-4">
-      <h2 className="text-xl font-bold">All Investments</h2>
+      <h2 className="text-xl font-bold">
+        All Investments ({investments.length})
+      </h2>
       <ul className="flex flex-col gap-4">
         {renderInvestmentListItems(investments, favoriteStocks)}
       </ul>

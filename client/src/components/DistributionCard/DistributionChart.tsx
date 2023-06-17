@@ -7,7 +7,7 @@ import { RootState } from "../../states/store";
 import { getStocks } from "../../states/user.reducer";
 import { Datasets } from "../../types/datasets.types";
 import { CHART_BACKGROUND_COLOR } from "../../utils/chart.utils";
-import { toUSD } from "../../utils/numeral.utils";
+import { toUSD } from "../../utils/common.utils";
 
 ChartJS.register(ArcElement, Tooltip);
 
