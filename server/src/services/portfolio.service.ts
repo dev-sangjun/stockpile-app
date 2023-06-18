@@ -15,9 +15,9 @@ const getAvgCost = (
   newQuantity: number
 ): number => {
   const prevInvestmentTotalPrice =
-    prevInvestment.avgCost.toNumber() * prevInvestment.quantity.toNumber();
+    prevInvestment.avgCost * prevInvestment.quantity;
   const newInvestmentTotalPrice = newCost * newQuantity;
-  const totalQuantity = prevInvestment.quantity.toNumber() + newQuantity;
+  const totalQuantity = prevInvestment.quantity + newQuantity;
   return (prevInvestmentTotalPrice + newInvestmentTotalPrice) / totalQuantity;
 };
 
@@ -88,7 +88,7 @@ const addInvestmentToPortfolio = async (
   }
   const updatedInvestment = await DBClient.investment.update({
     data: {
-      quantity: new Prisma.Decimal(investment.quantity.toNumber() + quantity),
+      quantity: investment.quantity + quantity,
       avgCost: getAvgCost(investment, adjustedCost, quantity),
     },
     where: {

@@ -49,10 +49,9 @@ model Company {
 }
 
 model Investment {
-  id       String  @id @default(uuid())
-  quantity Decimal @db.Decimal(10, 2)
-  avgCost  Decimal @db.Decimal(10, 2)
-
+  id          String    @id @default(uuid())
+  quantity    Float
+  avgCost     Float
   user        User      @relation(fields: [userId], references: [id], onDelete: Cascade)
   userId      String
   Portfolio   Portfolio @relation(fields: [portfolioId], references: [id], onDelete: Cascade)
