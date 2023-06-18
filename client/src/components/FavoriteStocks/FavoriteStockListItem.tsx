@@ -21,7 +21,7 @@ const FavoriteStockListItem: FC<StockListItemProps> = ({ stock, quantity }) => {
   );
   return (
     <EntityListItem
-      className="carousel-item max-w-[16rem]"
+      className="carousel-item md:max-w-[16rem]"
       entityType="FavoriteStock"
       logoUrl={stock.company.logo}
       title={stock.id}

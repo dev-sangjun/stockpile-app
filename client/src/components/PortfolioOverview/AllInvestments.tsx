@@ -14,11 +14,11 @@ const AllInvestments: FC<AllInvestmentsProps> = ({ investments }) => {
     getFavoriteStocks(state)
   );
   return (
-    <div className="flex flex-col gap-4">
-      <h2 className="text-xl font-bold">
+    <div className="flex flex-col relative card border-2 overflow-hidden">
+      <h2 className="text-xl font-semibold p-4 bg-slate-100">
         All Investments ({investments.length})
       </h2>
-      <ul className="flex flex-col gap-4">
+      <ul className="gap-4 max-h-[18rem] overflow-y-auto no-scrollbar snap-y">
         {renderInvestmentListItems(investments, favoriteStocks)}
       </ul>
     </div>

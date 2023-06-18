@@ -8,7 +8,7 @@ import Greeting from "../components/Greeting";
 const Home: FC = () => {
   return (
     <div className="flex flex-col gap-4 w-full p-4">
-      <div className="mb-8">
+      <div className="md:mb-8">
         <Greeting />
       </div>
       <div className="grid grid-cols-4 grid-flow-row-dense gap-4">

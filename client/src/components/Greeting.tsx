@@ -12,12 +12,14 @@ const Greeting: FC = () => {
   return (
     <div className="flex justify-between items-center">
       <div className="flex flex-col gap-2">
-        <h2 className="text-3xl font-medium">Hello, {userInfo.username} 👋</h2>
+        <h2 className="text-2xl md:text-3xl font-semibold">
+          Hello, {userInfo.username} 👋
+        </h2>
         <p className="text-sm text-slate-500">
-          We'll help you with tracking and reaching your financial goal! 💰
+          We'll help you with reaching your financial goal! 💰
         </p>
       </div>
-      <div className="text-sm font-medium text-slate-500">
+      <div className="hidden md:block text-sm font-normal text-slate-500">
         {moment().format("MMM Do, YYYY")}
       </div>
     </div>

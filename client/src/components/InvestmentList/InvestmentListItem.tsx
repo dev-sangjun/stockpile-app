@@ -76,6 +76,7 @@ const InvestmentListItem: FC<InvestmentItemProps> = ({
   );
   return (
     <EntityListItem
+      className="border-b last:border-none snap-start"
       entityType="Investment"
       logoUrl={logoUrl}
       title={investment.stockId}

@@ -49,9 +49,9 @@ const constructChartConfig = (
     {
       data: [],
       backgroundColor: CHART_BACKGROUND_COLOR,
-      borderRadius: 20,
+      borderRadius: 12,
       borderSkipped: false,
-      maxBarThickness: 64,
+      maxBarThickness: 36,
       categoryPercentage: 1,
     },
   ];
