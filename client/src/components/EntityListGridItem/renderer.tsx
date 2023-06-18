@@ -97,7 +97,7 @@ const getPortfolioOverviewGridItems = (
       title: "Total Gain/Loss (%)",
       text: (
         <ValueChangeText
-          value={toDecimal(gainLoss / totalInvestedAmount)}
+          value={toDecimal(gainLoss / totalInvestedAmount) * 100}
           usePercentage={true}
         />
       ),
