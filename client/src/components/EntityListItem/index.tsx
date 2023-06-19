@@ -1,4 +1,4 @@
-import { FC, ReactNode } from "react";
+import { FC, ReactNode, useRef, useState } from "react";
 // import { renderCompanyLogo } from "../InvestmentList/renderer";
 import { InvestmentDetails, PortfolioDetails } from "../../utils/entity.utils";
 import {
@@ -8,6 +8,7 @@ import {
 } from "../EntityListGridItem/renderer";
 import { Stock } from "../../types/entity.types";
 import { toUSD } from "../../utils/common.utils";
+import { useOutsideClick } from "../../hooks";
 
 interface FavoriteStockDetails {
   stock: Stock;
@@ -35,6 +36,10 @@ const EntityListItem: FC<EntityListItemProps> = ({
   entityDetails,
   // onClick,
 }) => {
+  const [isChecked, setIsChecked] = useState(false);
+  const collapseRef = useOutsideClick<HTMLDivElement>(() =>
+    setIsChecked(false)
+  );
   const getEntityGridItems = () => {
     if (entityType === "Portfolio") {
       return renderPortfolioGridItems(entityDetails as PortfolioDetails);
@@ -64,8 +69,10 @@ const EntityListItem: FC<EntityListItemProps> = ({
   return (
     <div
       className={`collapse collapse-plus bg-base-100 min-w-[14rem] min-h-16 rounded-none ${className}`}
+      ref={collapseRef}
+      onMouseDown={() => setIsChecked(true)}
     >
-      <input type="checkbox" />
+      <input type="radio" name="my-accordion-1" checked={isChecked} />
       <div className="collapse-title flex justify-between">
         <h3 className="text-md font-bold mt-1">{title}</h3>
         <div className="flex flex-col items-end">
