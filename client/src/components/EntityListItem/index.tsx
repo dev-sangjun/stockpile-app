@@ -1,4 +1,4 @@
-import { FC, ReactNode, useRef, useState } from "react";
+import { FC, ReactNode, useState } from "react";
 // import { renderCompanyLogo } from "../InvestmentList/renderer";
 import { InvestmentDetails, PortfolioDetails } from "../../utils/entity.utils";
 import {
@@ -72,7 +72,12 @@ const EntityListItem: FC<EntityListItemProps> = ({
       ref={collapseRef}
       onMouseDown={() => setIsChecked(true)}
     >
-      <input type="radio" name="my-accordion-1" checked={isChecked} />
+      <input
+        type="radio"
+        name="my-accordion-1"
+        checked={isChecked}
+        onChange={e => setIsChecked(e.currentTarget.checked)}
+      />
       <div className="collapse-title flex justify-between">
         <h3 className="text-md font-bold mt-1">{title}</h3>
         <div className="flex flex-col items-end">

@@ -18,6 +18,7 @@ const UpdateGoalAmountForm: FC = () => {
   const {
     register,
     handleSubmit,
+    watch,
     formState: { errors },
   } = useForm<FormValues>();
   const [isGoalAmountUpdated, setIsGoalAmountUpdated] = useState(false);
@@ -51,7 +52,7 @@ const UpdateGoalAmountForm: FC = () => {
         <button
           type="submit"
           className="btn btn-primary btn-sm normal-case"
-          disabled={isGoalAmountUpdated}
+          disabled={isGoalAmountUpdated || watch("goalAmount") == goalAmount}
         >
           {isGoalAmountUpdated ? "Updated!" : "Update"}
         </button>
