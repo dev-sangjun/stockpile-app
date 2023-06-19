@@ -40,7 +40,7 @@ const PortfolioList: FC<PortfolioListProps> = ({ className }) => {
     return <InvestmentList />;
   }
   return (
-    <div className={`flex flex-col gap-4 ${className ? className : ""}`}>
+    <div className={`flex flex-col gap-2 ${className ? className : ""}`}>
       <div className="flex justify-between items-center">
         <h2 className="text-xl font-bold">Portfolios</h2>
         <AddPortfolio />

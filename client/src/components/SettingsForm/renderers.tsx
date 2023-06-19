@@ -27,8 +27,8 @@ export const renderSettingItems = () => {
   return settingItems.map(({ title, content }) => (
     <div className="collapse collapse-arrow bg-base-100" key={title}>
       <input type="checkbox" name="my-accordion-2" />
-      <div className="collapse-title font-medium">{title}</div>
-      <div className="collapse-content">{content}</div>
+      <div className="collapse-title font-medium pl-0">{title}</div>
+      <div className="collapse-content pl-0">{content}</div>
     </div>
   ));
 };
