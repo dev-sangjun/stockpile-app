@@ -26,6 +26,7 @@ interface SymbolState {
 interface InvestmentFormProps {
   className?: string;
   title?: string;
+  titleLabel?: string;
   actionType: "ADD" | "UPDATE";
   investment?: Investment;
   isModal?: boolean;
@@ -35,6 +36,7 @@ interface InvestmentFormProps {
 const InvestmentForm: FC<InvestmentFormProps> = ({
   className,
   title,
+  titleLabel,
   actionType,
   investment,
   isModal = false,
@@ -180,6 +182,11 @@ const InvestmentForm: FC<InvestmentFormProps> = ({
       ref={formRef}
     >
       {title && <h3 className="font-bold text-lg">{title}</h3>}
+      {titleLabel && (
+        <label className="label p-0">
+          <span className="label-text font-bold">{titleLabel}</span>
+        </label>
+      )}
       <input
         type="text"
         name="keyword"

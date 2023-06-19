@@ -20,8 +20,8 @@ const AddPortfolio: FC = () => {
     useAddPortfolioForm(closeDropdown);
   const formRef = useOutsideClick<HTMLFormElement>(resetFormData);
   return (
-    <div className="dropdown dropdown-bottom dropdown-end top-[-1px]">
-      <label tabIndex={0} className="btn btn-xs btn-outline">
+    <div className="dropdown dropdown-bottom dropdown-end">
+      <label tabIndex={0} className="btn btn-sm btn-ghost">
         <HiPlus />
       </label>
       <div
@@ -34,12 +34,12 @@ const AddPortfolio: FC = () => {
           onSubmit={handleSubmit}
         >
           <label className="label p-0">
-            <span className="label-text font-bold">Portfolio name</span>
+            <span className="label-text font-bold">Add portfolio</span>
           </label>
           <input
             type="text"
             name="name"
-            placeholder="Seach..."
+            placeholder="Portfolio name"
             className="input input-sm input-bordered w-full max-w-xs"
             onChange={handleFormChange}
             value={formData.name}

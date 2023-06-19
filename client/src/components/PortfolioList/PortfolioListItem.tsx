@@ -4,13 +4,9 @@ import { Portfolio } from "../../types/entity.types";
 import { AppDispatch, RootState } from "../../states/store";
 import { useDispatch } from "react-redux";
 import { getStocks, selectPortfolio } from "../../states/user.reducer";
-import { HiEye, HiPencilSquare, HiTrash } from "react-icons/hi2";
+import { HiChevronRight } from "react-icons/hi2";
 import { getPortfolioDetails } from "../../utils/entity.utils";
-import EntityListItem from "../EntityListItem";
-import {
-  openDeleteEntityModal,
-  openUpdateEntityModal,
-} from "../../states/modal.reducer";
+import { toUSD } from "../../utils/common.utils";
 
 interface PortfolioListItemProps {
   portfolio: Portfolio;
@@ -26,53 +22,20 @@ const PortfolioListItem: FC<PortfolioListItemProps> = ({ portfolio }) => {
   const handlePortfolioClick = () => {
     dispatch(selectPortfolio(portfolio));
   };
-  const handleUpdatePortfolio = () => {
-    dispatch(
-      openUpdateEntityModal({
-        entity: portfolio,
-        entityType: "Portfolio",
-      })
-    );
-  };
-  const handleDeletePortfolio = () => {
-    dispatch(
-      openDeleteEntityModal({
-        entity: portfolio,
-        entityType: "Portfolio",
-      })
-    );
-  };
-  const actionButtons = (
-    <>
-      <button
-        className="btn btn-sm btn-ghost text-base"
-        onClick={handleUpdatePortfolio}
-      >
-        <HiPencilSquare />
-      </button>
-      <button
-        className="btn btn-sm btn-ghost text-base"
-        onClick={handleDeletePortfolio}
-      >
-        <HiTrash />
-      </button>
-      <button
-        className="btn btn-sm btn-ghost text-base"
-        onClick={handlePortfolioClick}
-      >
-        <HiEye />
-      </button>
-    </>
-  );
   return (
-    <EntityListItem
-      entityType="Portfolio"
-      title={portfolio.name}
-      actionButtons={actionButtons}
-      valueLabel="Total Balance"
-      entityDetails={portfolioDetails}
+    <div
+      className="flex items-center min-h-[3.75rem] hover:cursor-pointer"
       onClick={handlePortfolioClick}
-    />
+    >
+      <h3 className="flex-1 text-md font-bold mt-1">{portfolio.name}</h3>
+      <div className="flex flex-col items-end">
+        <span className="text-xs text-slate-500">Total Balance</span>
+        <span className="text-xs font-bold">
+          {toUSD(portfolioDetails.totalValue)}
+        </span>
+      </div>
+      <HiChevronRight className="mx-4" />
+    </div>
   );
 };
 

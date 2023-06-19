@@ -25,11 +25,6 @@ const PortfolioList: FC<PortfolioListProps> = ({ className }) => {
       <PortfolioListItem key={portfolio.id} portfolio={portfolio} />
     ));
   };
-  const getActionButtons = () => (
-    <div className="flex items-center gap-2">
-      <AddPortfolio />
-    </div>
-  );
   if (selectedPortfolio) {
     return <InvestmentList />;
   }
@@ -37,7 +32,7 @@ const PortfolioList: FC<PortfolioListProps> = ({ className }) => {
     <div className={`flex flex-col gap-4 ${className ? className : ""}`}>
       <div className="flex justify-between items-center">
         <h2 className="text-xl font-bold">Portfolios</h2>
-        {getActionButtons()}
+        <AddPortfolio />
       </div>
       <ul className="flex flex-col gap-4">{renderPortfolios()}</ul>
     </div>
