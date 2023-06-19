@@ -16,7 +16,7 @@ const Greeting: FC = () => {
           Hello, {userInfo.username} 👋
         </h2>
         <p className="text-sm text-slate-500">
-          We'll help you with reaching your financial goal! 💰
+          We'll help you reach your financial goal! 💰
         </p>
       </div>
       <div className="hidden md:block text-sm font-normal text-slate-500">

@@ -67,13 +67,13 @@ const DeleteEntityModal: FC<DeleteEntityModalProps> = ({
         <p className="py-4">Are you sure you want to delete {getTitle()}?</p>
         <div className="modal-action">
           <button
-            className="btn btn-ghost"
+            className="btn btn-ghost btn-sm normal-case"
             type="button"
             onClick={handleCancel}
           >
             Cancel
           </button>
-          <button className="btn btn-primary" type="submit">
+          <button className="btn btn-primary btn-sm normal-case" type="submit">
             Confirm
           </button>
         </div>

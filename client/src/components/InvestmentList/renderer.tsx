@@ -6,7 +6,8 @@ import Fallback from "../Fallback";
 
 export const renderInvestmentListItems = (
   investments: Investment[],
-  favoriteStocks: string[]
+  favoriteStocks: string[],
+  showActionButtons = false
 ) => {
   if (isEmpty(investments)) {
     return <Fallback message="Please add your investment." />;
@@ -18,6 +19,7 @@ export const renderInvestmentListItems = (
       key={investment.id}
       investment={investment}
       isFavorite={isFavorite(investment.stockId)}
+      showActionButtons={showActionButtons}
     />
   ));
 };

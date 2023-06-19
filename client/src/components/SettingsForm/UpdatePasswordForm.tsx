@@ -35,7 +35,7 @@ const UpdatePassword: FC = () => {
     <form onSubmit={onSubmit}>
       <div className="flex gap-2">
         <input
-          className="input input-bordered w-full"
+          className="input input-bordered input-sm w-full"
           type="password"
           placeholder="Password"
           {...register("password", {
@@ -48,7 +48,7 @@ const UpdatePassword: FC = () => {
         />
         <button
           type="submit"
-          className="btn btn-primary normal-case"
+          className="btn btn-primary btn-sm normal-case"
           disabled={isPasswordUpdated}
         >
           {isPasswordUpdated ? "Updated!" : "Update"}

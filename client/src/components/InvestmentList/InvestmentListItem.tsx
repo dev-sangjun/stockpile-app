@@ -19,11 +19,13 @@ import {
 interface InvestmentItemProps {
   investment: Investment;
   isFavorite: boolean;
+  showActionButtons?: boolean;
 }
 
 const InvestmentListItem: FC<InvestmentItemProps> = ({
   investment,
   isFavorite,
+  showActionButtons = false,
 }) => {
   const { stocks, selectedPortfolio } = useUserState();
   const dispatch = useDispatch<AppDispatch>();
@@ -56,7 +58,7 @@ const InvestmentListItem: FC<InvestmentItemProps> = ({
   const actionButtons = (
     <>
       <FavoritesButton isFavorite={isFavorite} onClick={handleFavoriteClick} />
-      {selectedPortfolio && (
+      {showActionButtons && selectedPortfolio && (
         <>
           <button
             className="btn btn-sm btn-ghost text-base"

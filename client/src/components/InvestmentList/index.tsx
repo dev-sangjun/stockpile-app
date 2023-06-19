@@ -93,7 +93,8 @@ const InvestmentList: FC = () => {
       <ul className="flex flex-col gap-4">
         {renderInvestmentListItems(
           selectedPortfolio?.investments || [],
-          favoriteStocks
+          favoriteStocks,
+          true
         )}
       </ul>
     </div>
