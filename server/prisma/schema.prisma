@@ -19,9 +19,10 @@ model User {
   favoriteStocks     String[] // stockIds
   goalAmount         Float    @default(100000)
 
-  portfolios  Portfolio[]
-  investments Investment[]
-  stocks      Stock[]
+  portfolios    Portfolio[]
+  investments   Investment[]
+  stocks        Stock[]
+  refreshTokens String[]
 }
 
 model Stock {
