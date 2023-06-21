@@ -9,7 +9,7 @@ import Settings from "./Settings";
 const publicRouter = createBrowserRouter([
   {
     element: (
-      <div className="flex flex-col bg-slate-200">
+      <div className="flex flex-col bg-base-100">
         <div className="max-w-7xl h-screen w-full mx-auto py-24">
           <Outlet />
         </div>

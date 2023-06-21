@@ -49,7 +49,7 @@ const UserForm: FC = () => {
     setAlertErrorMessages([]);
   }, [isSignIn, clearErrors]);
   return (
-    <div className="card flex flex-col gap-4 bg-base-100 p-12 w-full max-w-lg">
+    <div className="card flex flex-col gap-4 bg-slate-100 p-12 w-full max-w-lg">
       <div className="flex flex-col gap-2">
         <h2 className="text-2xl font-bold">{title}</h2>
         <span className="">{greetings}</span>

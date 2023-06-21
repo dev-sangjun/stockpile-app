@@ -15,7 +15,7 @@ const Home: FC = () => {
         <div className="col-span-4 md:col-span-3">
           <PortfolioValues />
         </div>
-        <div className="col-span-4 md:col-span-1 flex flex-col card border-2 border-dashed p-2">
+        <div className="col-span-4 md:col-span-1 flex flex-col card border-2 border-dashed border-slate-200 p-2">
           <div className="p-4">
             <NetWorth />
           </div>

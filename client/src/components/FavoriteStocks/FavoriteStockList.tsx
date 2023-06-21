@@ -34,7 +34,7 @@ const FavoriteStockList: FC<FavoriteStockListProps> = ({ stocks }) => {
     });
   };
   return (
-    <div className="flex flex-col gap-4 card bg-base-200 p-6">
+    <div className="flex flex-col gap-4 card bg-slate-100 p-6">
       <div className="flex justify-between items-center">
         <h3 className="text-lg font-semibold">Favorite Stocks</h3>
         <div className="flex gap-2">

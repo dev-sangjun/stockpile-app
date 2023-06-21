@@ -77,7 +77,7 @@ const InvestmentForm: FC<InvestmentFormProps> = ({
     }));
   };
   const renderFilteredSymbols = () => (
-    <ul className="menu menu-sm bg-base-200 w-full rounded-box">
+    <ul className="menu menu-sm bg-slate-100 w-full rounded-box">
       {symbolState.filteredSymbols.map(symbol => (
         <li key={symbol} onClick={() => handleSymbolClick(symbol)}>
           <a>{symbol}</a>

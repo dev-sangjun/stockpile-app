@@ -9,7 +9,7 @@ import Fallback from "../Fallback";
 const PortfolioValues: FC = () => {
   const portfolios = useSelector((state: RootState) => getPortfolios(state));
   return (
-    <div className="card h-full bg-base-200 p-6">
+    <div className="card h-full bg-slate-100 p-6">
       <h3 className="text-lg font-semibold">Portfolio Values</h3>
       {isEmpty(portfolios) ? (
         <Fallback message="No portfolio to display 🥲" />
