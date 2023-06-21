@@ -7,4 +7,5 @@ const authRouter = (0, express_1.Router)();
 authRouter.post("/signup", controllers_1.authController.signUpUser);
 authRouter.post("/signin", controllers_1.authController.signInUser);
 authRouter.get("/signout", auth_middleware_1.authMiddleware, controllers_1.authController.signOutUser);
+authRouter.get("/refresh", controllers_1.authController.regenerateAccessToken);
 exports.default = authRouter;

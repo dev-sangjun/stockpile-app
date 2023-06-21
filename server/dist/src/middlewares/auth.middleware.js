@@ -9,7 +9,7 @@ const authMiddleware = (req, res, next) => {
     var _a;
     const token = (_a = req.cookies) === null || _a === void 0 ? void 0 : _a.access_token;
     if (!token)
-        return res.sendStatus(401); // not authorized
+        return res.sendStatus(403); // forbidden
     try {
         const JWT_SECRET_KEY = process.env.JWT_SECRET_KEY;
         const payload = jsonwebtoken_1.default.verify(token, JWT_SECRET_KEY);
@@ -18,7 +18,7 @@ const authMiddleware = (req, res, next) => {
     }
     catch (e) {
         console.error(e);
-        return res.status(401);
+        return res.sendStatus(401); // unauthorized
     }
 };
 exports.authMiddleware = authMiddleware;

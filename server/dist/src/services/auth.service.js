@@ -18,6 +18,7 @@ const errors_global_1 = require("../global/errors.global");
 const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
 const client_1 = require("@prisma/client");
 const JWT_SECRET_KEY = process.env.JWT_SECRET_KEY;
+const JWT_REFRESH_SECRET_KEY = process.env.JWT_REFRESH_SECRET_KEY;
 const createUser = (authUserSignUpRequestDto) => __awaiter(void 0, void 0, void 0, function* () {
     var _a, _b;
     const { email, username, password } = authUserSignUpRequestDto;
@@ -77,13 +78,35 @@ const signInUser = (authUserSignInRequestDto) => __awaiter(void 0, void 0, void 
     // generate access token
     const accessToken = jsonwebtoken_1.default.sign({
         userId: user.id,
-    }, JWT_SECRET_KEY);
+    }, JWT_SECRET_KEY, {
+        expiresIn: "5s", // 5 seconds
+    });
+    // generate refresh token
+    const refreshToken = jsonwebtoken_1.default.sign({
+        userId: user.id,
+    }, JWT_REFRESH_SECRET_KEY, {
+        expiresIn: 7 * 24 * 3600 * 1000, // 7 days
+    });
     return {
         accessToken,
+        refreshToken,
         userId: user.id,
     };
 });
+const regenerateAccessToken = (refreshToken) => {
+    // verify refresh_token
+    const payload = jsonwebtoken_1.default.verify(refreshToken, JWT_REFRESH_SECRET_KEY);
+    // add new access_token to response cookie
+    const accessToken = jsonwebtoken_1.default.sign({
+        userId: payload.userId,
+    }, JWT_SECRET_KEY, {
+        expiresIn: "5s", // 5s
+    });
+    console.log("setting new access token");
+    return accessToken;
+};
 exports.default = {
     createUser,
     signInUser,
+    regenerateAccessToken,
 };
