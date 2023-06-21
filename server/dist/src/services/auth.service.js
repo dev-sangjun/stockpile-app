@@ -79,13 +79,13 @@ const signInUser = (authUserSignInRequestDto) => __awaiter(void 0, void 0, void 
     const accessToken = jsonwebtoken_1.default.sign({
         userId: user.id,
     }, JWT_SECRET_KEY, {
-        expiresIn: "5s", // 5 seconds
+        expiresIn: 3600, // 1 hour
     });
     // generate refresh token
     const refreshToken = jsonwebtoken_1.default.sign({
         userId: user.id,
     }, JWT_REFRESH_SECRET_KEY, {
-        expiresIn: 7 * 24 * 3600 * 1000, // 7 days
+        expiresIn: 7 * 24 * 3600, // 7 days
     });
     return {
         accessToken,
@@ -100,7 +100,7 @@ const regenerateAccessToken = (refreshToken) => {
     const accessToken = jsonwebtoken_1.default.sign({
         userId: payload.userId,
     }, JWT_SECRET_KEY, {
-        expiresIn: "5s", // 5s
+        expiresIn: 3600, // 1 hour
     });
     console.log("setting new access token");
     return accessToken;

@@ -87,7 +87,7 @@ const signInUser = async (
     },
     JWT_SECRET_KEY,
     {
-      expiresIn: "5s", // 5 seconds
+      expiresIn: 3600, // 1 hour
     }
   );
   // generate refresh token
@@ -97,7 +97,7 @@ const signInUser = async (
     },
     JWT_REFRESH_SECRET_KEY,
     {
-      expiresIn: 7 * 24 * 3600 * 1000, // 7 days
+      expiresIn: 7 * 24 * 3600, // 7 days
     }
   );
   return {
@@ -120,7 +120,7 @@ const regenerateAccessToken = (refreshToken: string) => {
     },
     JWT_SECRET_KEY,
     {
-      expiresIn: "5s", // 5s
+      expiresIn: 3600, // 1 hour
     }
   );
   console.log("setting new access token");
