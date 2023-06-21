@@ -4,6 +4,7 @@ import {
   AuthUserSignUpRequestDto,
 } from "../interfaces/dto/auth-user.dto";
 import { authService } from "../services";
+import { UnauthorizedError } from "../global/errors.global";
 
 const signUpUser = async (req: Request, res: Response, next: NextFunction) => {
   const authUserSignUpRequestDto: AuthUserSignUpRequestDto = req.body;
@@ -20,12 +21,17 @@ const signUpUser = async (req: Request, res: Response, next: NextFunction) => {
 const signInUser = async (req: Request, res: Response, next: NextFunction) => {
   const authUserSignInRequestDto: AuthUserSignInRequestDto = req.body;
   try {
-    const { accessToken, userId } = await authService.signInUser(
+    const { accessToken, refreshToken, userId } = await authService.signInUser(
       authUserSignInRequestDto
     );
     return res
       .cookie("access_token", accessToken, {
         httpOnly: true,
+        sameSite: true,
+      })
+      .cookie("refresh_token", refreshToken, {
+        httpOnly: true,
+        sameSite: true,
       })
       .json({ userId });
   } catch (e) {
@@ -35,10 +41,37 @@ const signInUser = async (req: Request, res: Response, next: NextFunction) => {
 
 const signOutUser = async (req: Request, res: Response, next: NextFunction) => {
   try {
-    return res.clearCookie("access_token").sendStatus(200);
+    return res
+      .clearCookie("access_token")
+      .clearCookie("refresh_token")
+      .sendStatus(200);
   } catch (e) {
     return next(e);
   }
 };
 
-export default { signUpUser, signInUser, signOutUser };
+const regenerateAccessToken = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    const refreshToken = req.cookies.refresh_token;
+    if (!refreshToken) {
+      throw new UnauthorizedError();
+    }
+    const newAccessToken = authService.regenerateAccessToken(refreshToken);
+    return res
+      .cookie("access_token", newAccessToken, {
+        httpOnly: true,
+        sameSite: true,
+      })
+      .json({
+        success: true,
+      });
+  } catch (e) {
+    return next(e);
+  }
+};
+
+export default { signUpUser, signInUser, signOutUser, regenerateAccessToken };

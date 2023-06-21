@@ -13,6 +13,7 @@ import jwt from "jsonwebtoken";
 import { Prisma } from "@prisma/client";
 
 const JWT_SECRET_KEY = process.env.JWT_SECRET_KEY!;
+const JWT_REFRESH_SECRET_KEY = process.env.JWT_REFRESH_SECRET_KEY!;
 
 const createUser = async (
   authUserSignUpRequestDto: AuthUserSignUpRequestDto
@@ -63,6 +64,7 @@ const signInUser = async (
   authUserSignInRequestDto: AuthUserSignInRequestDto
 ): Promise<{
   accessToken: string;
+  refreshToken: string;
   userId: string;
 }> => {
   const { email, password } = authUserSignInRequestDto;
@@ -83,15 +85,50 @@ const signInUser = async (
     {
       userId: user.id,
     },
-    JWT_SECRET_KEY
+    JWT_SECRET_KEY,
+    {
+      expiresIn: "5s", // 5 seconds
+    }
+  );
+  // generate refresh token
+  const refreshToken = jwt.sign(
+    {
+      userId: user.id,
+    },
+    JWT_REFRESH_SECRET_KEY,
+    {
+      expiresIn: 7 * 24 * 3600 * 1000, // 7 days
+    }
   );
   return {
     accessToken,
+    refreshToken,
     userId: user.id,
   };
+};
+
+const regenerateAccessToken = (refreshToken: string) => {
+  // verify refresh_token
+  const payload = jwt.verify(refreshToken, JWT_REFRESH_SECRET_KEY) as {
+    userId: string;
+  };
+
+  // add new access_token to response cookie
+  const accessToken = jwt.sign(
+    {
+      userId: payload.userId,
+    },
+    JWT_SECRET_KEY,
+    {
+      expiresIn: "5s", // 5s
+    }
+  );
+  console.log("setting new access token");
+  return accessToken;
 };
 
 export default {
   createUser,
   signInUser,
+  regenerateAccessToken,
 };
