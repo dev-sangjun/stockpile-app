@@ -9,8 +9,23 @@ export default defineConfig({
     VitePWA({
       registerType: "autoUpdate",
       devOptions: { enabled: true },
+      includeAssets: ["assets/favicon.ico", "assets/apple-touch-icon.png"],
       manifest: {
+        name: "Stockpile",
+        short_name: "Stockpile",
         theme_color: "#ffffff",
+        icons: [
+          {
+            src: "assets/android-chrome-192x192.png",
+            sizes: "192x192",
+            type: "image/png",
+          },
+          {
+            src: "assets/android-chrome-512x512.png",
+            sizes: "512x512",
+            type: "image/png",
+          },
+        ],
       },
     }),
   ],
