@@ -1,12 +1,5 @@
-import { FC } from "react";
-import SettingsForm from "../components/SettingsForm";
-
-const Settings: FC = () => {
-  return (
-    <div className="p-4">
-      <SettingsForm />
-    </div>
-  );
+const Settings = () => {
+  return <div>Settings</div>;
 };
 
 export default Settings;
