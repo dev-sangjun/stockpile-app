@@ -39,7 +39,6 @@ const updateInvestment = async (
       investmentId,
       req.body as UpdateInvestmentDto
     );
-    console.log(result);
     return res.json(result);
   } catch (e) {
     return next(e);

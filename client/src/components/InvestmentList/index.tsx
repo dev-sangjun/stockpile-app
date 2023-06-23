@@ -67,15 +67,20 @@ const InvestmentList: FC = () => {
   );
   return (
     <div className="flex flex-col gap-4">
-      <div className="flex items-center">
+      <div className="flex items-center relative">
         <div className="flex flex-1 items-center gap-2">
           {selectedPortfolio && (
-            <HiArrowLeft
-              className="hover:cursor-pointer"
+            <button
+              className="btn btn-ghost btn-sm text-sm normal-case gap-2"
               onClick={handleBackButton}
-            />
+            >
+              <HiArrowLeft className="hover:cursor-pointer" />
+              Portfolios
+            </button>
           )}
-          <h2 className="text-xl font-bold">{selectedPortfolio?.name}</h2>
+          <h2 className="absolute left-1/2 translate-x-[-50%] mx-auto text-lg font-semibold">
+            {selectedPortfolio?.name}
+          </h2>
         </div>
         <div className="flex flex-col items-end">
           <span className="text-xs text-slate-500">Total Balance</span>

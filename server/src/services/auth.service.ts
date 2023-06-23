@@ -123,7 +123,6 @@ const regenerateAccessToken = (refreshToken: string) => {
       expiresIn: 3600, // 1 hour
     }
   );
-  console.log("setting new access token");
   return accessToken;
 };
 

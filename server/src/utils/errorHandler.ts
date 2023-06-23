@@ -26,7 +26,6 @@ export const errorHandler: ErrorRequestHandler = (
       payload: err.meta?.target,
     });
   }
-
   const errorMessage = err.message || "Something went wrong";
   if (err && err.status) {
     return res.status(err.status).json({

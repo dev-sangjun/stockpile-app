@@ -32,7 +32,6 @@ const updateInvestment = (req, res, next) => __awaiter(void 0, void 0, void 0, f
     const { investmentId } = req.params;
     try {
         const result = yield services_1.investmentService.updateInvestment(investmentId, req.body);
-        console.log(result);
         return res.json(result);
     }
     catch (e) {

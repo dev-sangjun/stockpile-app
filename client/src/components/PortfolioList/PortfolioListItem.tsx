@@ -34,7 +34,7 @@ const PortfolioListItem: FC<PortfolioListItemProps> = ({ portfolio }) => {
           {toUSD(portfolioDetails.totalValue)}
         </span>
       </div>
-      <HiChevronRight className="mx-4" />
+      <HiChevronRight className="ml-4" />
     </div>
   );
 };

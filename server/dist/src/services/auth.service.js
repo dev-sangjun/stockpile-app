@@ -102,7 +102,6 @@ const regenerateAccessToken = (refreshToken) => {
     }, JWT_SECRET_KEY, {
         expiresIn: 3600, // 1 hour
     });
-    console.log("setting new access token");
     return accessToken;
 };
 exports.default = {

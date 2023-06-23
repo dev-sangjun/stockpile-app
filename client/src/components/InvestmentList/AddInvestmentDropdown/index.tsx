@@ -6,7 +6,6 @@ const AddInvestmentDropdown: FC = () => {
   const dropdownRef = useRef<HTMLDivElement>(null);
   const blur = () => {
     if (dropdownRef.current) {
-      console.log("blurring", dropdownRef.current);
       dropdownRef.current.blur();
     }
   };
