@@ -32,8 +32,14 @@ const ValueChangeText: FC<ValueChangeTextProps> = ({
   return (
     <div className={`flex items-center ${getGainLossTextColor(value)}`}>
       <span>
-        {value > 0 && "+"}
-        {usePercentage ? `${value}%` : toUSD(value)}
+        {isNaN(value) ? (
+          "N/A"
+        ) : (
+          <>
+            {value > 0 && "+"}
+            {usePercentage ? `${value}%` : toUSD(value)}
+          </>
+        )}
       </span>
       {renderDayChangeArrow(value)}
     </div>

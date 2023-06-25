@@ -107,7 +107,7 @@ export const getInvestmentDetails = (
   };
 };
 
-export const getTotalInvestedAmount = (investments: Investment[]) => {
+export const getInvestedAmount = (investments: Investment[]) => {
   const total = investments.reduce((prev, investment) => {
     const investedAmount = investment.avgCost * investment.quantity;
     return toDecimal(prev + investedAmount);

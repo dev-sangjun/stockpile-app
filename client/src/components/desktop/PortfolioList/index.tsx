@@ -1,31 +1,38 @@
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { getUser } from "../../../store/user.reducer";
 import Section from "../../common/Section";
 import EntityListItem from "../EntityListItem";
-import { RootState } from "../../../store";
+import { AppDispatch, RootState } from "../../../store";
 import { getPortfolioTotalValue } from "../../../utils/entity.utils";
 import { toUSD } from "../../../utils/common.utils";
+import { selectPortfolio } from "../../../store/entity.reducer";
+import { ENTITY_LIST_CLASSES } from "../../../constants/classes.constants";
 
 const PortfolioList = () => {
+  const dispatch = useDispatch<AppDispatch>();
   const { portfolios, stocks } = useSelector((state: RootState) =>
     getUser(state)
   );
   const renderPortfolioListItems = () => (
-    <div className="flex flex-col h-full bg-slate-100 border rounded-xl overflow-y-auto">
+    <div className={`${ENTITY_LIST_CLASSES} h-full`}>
       {portfolios.map(portfolio => {
         const totalBalance = getPortfolioTotalValue(portfolio, stocks);
         return (
           <EntityListItem
-            className="bg-base-100 border-b hover:cursor-pointer"
             title={portfolio.name}
             labelTitle="Total Balance"
             labelValue={toUSD(totalBalance)}
+            onClick={() => dispatch(selectPortfolio(portfolio))}
           />
         );
       })}
     </div>
   );
-  return <Section title="Portfolios">{renderPortfolioListItems()}</Section>;
+  return (
+    <Section title={`Portfolios (${portfolios.length})`}>
+      {renderPortfolioListItems()}
+    </Section>
+  );
 };
 
 export default PortfolioList;

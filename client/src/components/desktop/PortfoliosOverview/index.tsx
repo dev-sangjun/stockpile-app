@@ -4,7 +4,7 @@ import { getUser } from "../../../store/user.reducer";
 import { Investment, Stocks } from "../../../global/entity.interfaces";
 import { toDecimal, toUSD } from "../../../utils/common.utils";
 import {
-  getTotalInvestedAmount,
+  getInvestedAmount,
   getTotalNetWorth,
 } from "../../../utils/entity.utils";
 import ValueChangeText from "../../common/ValueChangeText";
@@ -15,13 +15,13 @@ const getPortfolioOverviewGridItems = (
   investments: Investment[],
   stocks: Stocks
 ): InnerGridItemProps[] => {
-  const totalNetWorth = getTotalNetWorth(investments, stocks);
-  const totalInvestedAmount = getTotalInvestedAmount(investments);
-  const gainLoss = totalNetWorth - totalInvestedAmount;
+  const totalBalance = getTotalNetWorth(investments, stocks);
+  const totalInvestedAmount = getInvestedAmount(investments);
+  const gainLoss = totalBalance - totalInvestedAmount;
   return [
     {
-      title: "Total Value",
-      value: toUSD(totalNetWorth),
+      title: "Total Balance",
+      value: toUSD(totalBalance),
     },
     {
       title: "Total Invested",
