@@ -3,12 +3,7 @@ import { User } from "../global/entity.interfaces";
 import { PrismaError } from "../global/error.interfaces";
 import { SERVER_ENDPOINT } from "./constants";
 import { OperationResponseDto } from "./interfaces";
-
-export interface CreateUserDto {
-  username: string;
-  email: string;
-  password: string;
-}
+import { CreateUserDto, SignInUserDto } from "./interfaces";
 
 const createUser = async (
   createUserDto: CreateUserDto
@@ -19,11 +14,6 @@ const createUser = async (
   );
   return res.data;
 };
-
-export interface SignInUserDto {
-  email: string;
-  password: string;
-}
 
 const signIn = async (signInUserDto: SignInUserDto): Promise<string> => {
   const res: AxiosResponse<{ userId: string }> = await axios.post(

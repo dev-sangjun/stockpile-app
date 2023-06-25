@@ -24,6 +24,13 @@ export interface Portfolio {
   userId: string;
 }
 
+export interface PortfolioDetails {
+  totalValue: number;
+  totalCost: number;
+  investmentsCount: number;
+  dayChange: number;
+}
+
 export interface Investment {
   avgCost: number;
   id: string;
@@ -31,6 +38,14 @@ export interface Investment {
   quantity: number;
   stockId: string;
   userId: string;
+}
+
+export interface InvestmentDetails {
+  curPrice: number;
+  totalValue: number;
+  totalCost: number;
+  quantity: number;
+  dayChange: number;
 }
 
 export interface Investments {
