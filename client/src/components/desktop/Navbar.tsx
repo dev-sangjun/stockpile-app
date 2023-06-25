@@ -59,7 +59,7 @@ const Navbar = () => {
     dispatch(asyncSignOut());
   };
   return (
-    <div className="flex flex-col justify-between h-full bg-base-200 p-16">
+    <div className="flex flex-col justify-between h-full bg-slate-100 p-16">
       <div className="flex flex-col gap-20">
         <Logo />
         <div className="flex flex-col gap-4">{renderNavbarItems()}</div>

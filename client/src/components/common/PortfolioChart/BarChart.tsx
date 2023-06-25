@@ -78,6 +78,9 @@ const constructChartConfig = (
           },
           yAlign: "bottom",
         },
+        datalabels: {
+          formatter: () => null,
+        },
       },
       scales: {
         x: {
