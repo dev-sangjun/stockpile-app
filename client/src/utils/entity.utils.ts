@@ -66,10 +66,12 @@ export const getStocksObject = (stocks: Stock[]): Stocks => {
  * @returns portfolio value (sum of all investments in a single portfolio)
  */
 export const getPortfolioTotalValue = (portfolio: Portfolio, stocks: Stocks) =>
-  portfolio.investments.reduce((prev, investment) => {
-    const { quantity, stockId } = investment;
-    return prev + (stocks?.[stockId]?.c || 0) * quantity;
-  }, 0);
+  toDecimal(
+    portfolio.investments.reduce((prev, investment) => {
+      const { quantity, stockId } = investment;
+      return prev + (stocks?.[stockId]?.c || 0) * quantity;
+    }, 0)
+  );
 
 export const getPortfolioDetails = (portfolio: Portfolio, stocks: Stocks) => {
   let totalValue = 0;

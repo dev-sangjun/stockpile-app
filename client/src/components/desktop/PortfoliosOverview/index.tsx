@@ -9,6 +9,7 @@ import {
 } from "../../../utils/entity.utils";
 import ValueChangeText from "../../common/ValueChangeText";
 import InnerGridItem, { InnerGridItemProps } from "../InnerGridItem";
+import Section from "../../common/Section";
 
 const getPortfolioOverviewGridItems = (
   investments: Investment[],
@@ -56,12 +57,7 @@ const PortfoliosOverview = () => {
     </div>
   );
 
-  return (
-    <div className="flex flex-col gap-2">
-      <h2 className="text-xl font-semibold">Overview</h2>
-      {renderInnerGridItems()}
-    </div>
-  );
+  return <Section title="Overview">{renderInnerGridItems()}</Section>;
 };
 
 export default PortfoliosOverview;

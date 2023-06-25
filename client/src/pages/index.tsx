@@ -7,8 +7,8 @@ import Settings from "./Settings";
 import Portfolios from "./Portfolios";
 
 const BASE_CONTAINER_CLASSES =
-  "flex justify-center h-screen max-w-7xl mx-auto bg-base-100 ";
-const OUTLET_CONTAINER_CLASSES = "flex-1 p-24";
+  "flex justify-center h-screen max-w-[1440px] min-w-[1080px] mx-auto bg-base-100";
+const OUTLET_CONTAINER_CLASSES = "flex-1 min-w-[840px] p-16";
 
 export const privateRouter = createBrowserRouter([
   {

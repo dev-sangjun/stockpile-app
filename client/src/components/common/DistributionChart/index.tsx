@@ -5,22 +5,22 @@ import { RootState } from "../../../store";
 import { getUser } from "../../../store/user.reducer";
 import Fallback from "../Fallback";
 import PieChart from "./PieChart";
+import Section from "../Section";
 
 ChartJS.register(ArcElement, Tooltip);
 
 const DistributionChart = () => {
   const { investments } = useSelector((state: RootState) => getUser(state));
   return (
-    <div className="flex flex-col gap-2">
-      <h2 className="text-xl font-semibold">Distribution</h2>
+    <Section title="Distribution">
       {isEmpty(investments) ? (
         <Fallback message="No portfolio to display 🥲" />
       ) : (
-        <div className="card h-full bg-slate-100 p-6">
+        <div className="card justify-center h-[24rem] bg-slate-100 p-6">
           <PieChart investments={Object.values(investments)} />
         </div>
       )}
-    </div>
+    </Section>
   );
 };
 

@@ -32,7 +32,7 @@ const renderNavbarItems = () => {
     },
     {
       path: "/portfolios",
-      text: "Portfolio",
+      text: "Portfolios",
       icon: <HiOutlineChartBar className={NAVBAR_ITEM_ICON_CLASSES} />,
     },
     {
@@ -59,7 +59,7 @@ const Navbar = () => {
     dispatch(asyncSignOut());
   };
   return (
-    <div className="flex flex-col justify-between h-full bg-slate-100 p-16">
+    <div className="flex flex-col justify-between border-r h-full px-8 py-16">
       <div className="flex flex-col gap-20">
         <Logo />
         <div className="flex flex-col gap-4">{renderNavbarItems()}</div>
