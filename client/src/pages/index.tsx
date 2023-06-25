@@ -6,8 +6,9 @@ import Navbar from "../components/desktop/Navbar";
 import Settings from "./Settings";
 import Portfolios from "./Portfolios";
 
-const BASE_CONTAINER_CLASSES = "flex h-screen bg-base-100";
-const OUTLET_CONTAINER_CLASSES = "p-24";
+const BASE_CONTAINER_CLASSES =
+  "flex justify-center h-screen max-w-7xl mx-auto bg-base-100 ";
+const OUTLET_CONTAINER_CLASSES = "flex-1 p-24";
 
 export const privateRouter = createBrowserRouter([
   {

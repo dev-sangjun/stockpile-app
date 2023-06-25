@@ -7,6 +7,9 @@ import {
 } from "react-icons/hi2";
 import logo from "../../assets/logo.png";
 import { BASE_BUTTON_CLASSES } from "../../constants/classes.constants";
+import { useDispatch } from "react-redux";
+import { AppDispatch } from "../../store";
+import { asyncSignOut } from "../../store/user.reducer";
 
 const NAVBAR_ITEM_ICON_CLASSES = "text-lg";
 
@@ -51,8 +54,9 @@ const renderNavbarItems = () => {
 };
 
 const Navbar = () => {
+  const dispatch = useDispatch<AppDispatch>();
   const handleSignOut = () => {
-    // TODO
+    dispatch(asyncSignOut());
   };
   return (
     <div className="flex flex-col justify-between h-full bg-base-200 p-16">
@@ -60,7 +64,10 @@ const Navbar = () => {
         <Logo />
         <div className="flex flex-col gap-4">{renderNavbarItems()}</div>
       </div>
-      <button className={`${BASE_BUTTON_CLASSES.md} justify-start`}>
+      <button
+        className={`${BASE_BUTTON_CLASSES.md} justify-start`}
+        onClick={handleSignOut}
+      >
         <HiOutlineArrowRightOnRectangle className={NAVBAR_ITEM_ICON_CLASSES} />
         Sign Out
       </button>

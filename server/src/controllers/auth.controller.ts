@@ -5,6 +5,7 @@ import {
 } from "../interfaces/dto/auth-user.dto";
 import { authService } from "../services";
 import { UnauthorizedError } from "../global/errors.global";
+import { OperationResponseDto } from "../interfaces/dto/common.dto";
 
 const signUpUser = async (req: Request, res: Response, next: NextFunction) => {
   const authUserSignUpRequestDto: AuthUserSignUpRequestDto = req.body;
@@ -41,10 +42,13 @@ const signInUser = async (req: Request, res: Response, next: NextFunction) => {
 
 const signOutUser = async (req: Request, res: Response, next: NextFunction) => {
   try {
+    const paylaod: OperationResponseDto = {
+      success: true,
+    };
     return res
       .clearCookie("access_token")
       .clearCookie("refresh_token")
-      .sendStatus(200);
+      .json(paylaod);
   } catch (e) {
     return next(e);
   }
