@@ -135,7 +135,7 @@ const getNewStocks = (
 const addToFavoriteStocks = async (
   id: string,
   stockId: string
-): Promise<string[]> => {
+): Promise<OperationResponseDto> => {
   const user = await DBClient.user.findUnique({
     where: {
       id,
@@ -154,7 +154,9 @@ const addToFavoriteStocks = async (
     throw new EntityNotFoundError();
   }
   if (user.favoriteStocks.includes(stockId)) {
-    return user.favoriteStocks;
+    return {
+      success: true,
+    };
   }
   // add portfolioId to favorites only if it doesn't already exist
   const stock = await stockService.getStock(stockId);
@@ -182,13 +184,15 @@ const addToFavoriteStocks = async (
   if (!udpatedUser) {
     throw new InternalServerError();
   }
-  return udpatedUser.favoriteStocks;
+  return {
+    success: true,
+  };
 };
 
 const deleteFromFavoriteStocks = async (
   id: string,
   stockId: string
-): Promise<string[]> => {
+): Promise<OperationResponseDto> => {
   const user = await DBClient.user.findUnique({
     where: {
       id,
@@ -229,7 +233,9 @@ const deleteFromFavoriteStocks = async (
   if (!udpatedUser) {
     throw new InternalServerError();
   }
-  return udpatedUser.favoriteStocks;
+  return {
+    success: true,
+  };
 };
 
 const deleteStockWithNoReferenceFromUser = async (

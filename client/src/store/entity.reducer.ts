@@ -3,14 +3,11 @@ import { Investment, Portfolio } from "../global/entity.interfaces";
 import { RootState } from ".";
 
 interface EntityState {
-  selectedPortfolio: Portfolio | null;
-  selectedInvestment: Investment | null;
+  selectedPortfolio?: Portfolio;
+  selectedInvestment?: Investment;
 }
 
-const initialState: EntityState = {
-  selectedPortfolio: null,
-  selectedInvestment: null,
-};
+const initialState: EntityState = {};
 
 export const entitySlice = createSlice({
   name: "entity",
@@ -20,13 +17,13 @@ export const entitySlice = createSlice({
       state.selectedPortfolio = action.payload;
     },
     deselectPortfolio: state => {
-      state.selectedPortfolio = null;
+      state.selectedPortfolio = undefined;
     },
     selectInvestment: (state, action: PayloadAction<Investment>) => {
       state.selectedInvestment = action.payload;
     },
     deselectInvestment: state => {
-      state.selectedInvestment = null;
+      state.selectedInvestment = undefined;
     },
   },
 });

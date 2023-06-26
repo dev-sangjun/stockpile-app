@@ -67,3 +67,5 @@ export const signOutUser = async (): Promise<void> => {
     withCredentials: true,
   });
 };
+
+const authAPI = {};

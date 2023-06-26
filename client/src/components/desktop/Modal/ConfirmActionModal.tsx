@@ -1,7 +1,8 @@
 import { FC, FormEvent, useEffect, useRef } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { AppDispatch, RootState } from "../../../store";
-import { closeModal, getModalType } from "../../../store/modal.reducer";
+import { useSelector } from "react-redux";
+import { RootState } from "../../../store";
+import { getModalType } from "../../../store/modal.reducer";
+import useDispatchActions from "../../../hooks/useDispatchActions";
 
 interface ConfirmActionModalProps {
   title: string;
@@ -14,7 +15,7 @@ const ConfirmActionModal: FC<ConfirmActionModalProps> = ({
   questionLabel,
   onConfirm,
 }) => {
-  const dispatch = useDispatch<AppDispatch>();
+  const { modalActions } = useDispatchActions();
   const dialogRef = useRef<HTMLDialogElement>(null);
   const modalType = useSelector((state: RootState) => getModalType(state));
   const handleSubmit = (e: FormEvent) => {
@@ -39,7 +40,7 @@ const ConfirmActionModal: FC<ConfirmActionModalProps> = ({
           <button
             className="btn btn-ghost btn-sm normal-case"
             type="button"
-            onClick={() => dispatch(closeModal())}
+            onClick={modalActions.close}
           >
             Cancel
           </button>

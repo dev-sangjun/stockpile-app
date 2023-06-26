@@ -48,11 +48,11 @@ const addToFavorites = async (
   const { stockId } = req.body;
   try {
     if (stockId) {
-      const favoriteStocks = await userService.addToFavoriteStocks(
+      const result = await userService.addToFavoriteStocks(
         authorizedUserId,
         stockId
       );
-      return res.json(favoriteStocks);
+      return res.json(result);
     }
     throw new BadRequestError();
   } catch (e) {
@@ -74,11 +74,11 @@ const deleteFromFavorites = async (
   const { stockId } = req.query;
   try {
     if (stockId) {
-      const favoriteStocks = await userService.deleteFromFavoriteStocks(
+      const result = await userService.deleteFromFavoriteStocks(
         authorizedUserId,
         stockId
       );
-      return res.json(favoriteStocks);
+      return res.json(result);
     }
     throw new BadRequestError();
   } catch (e) {

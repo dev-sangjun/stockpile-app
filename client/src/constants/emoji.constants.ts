@@ -1,4 +1,5 @@
 const emojis = {
+  clap: "👏",
   crying: "😢",
   handWave: "👋",
   moneyBag: "💰",

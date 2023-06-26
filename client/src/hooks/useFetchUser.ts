@@ -8,7 +8,6 @@ const useFetchUser = () => {
   const user = useSelector((state: RootState) => getUser(state));
   const [isFetched, setIsFetched] = useState(false);
   const isSignedIn = !!user.userInfo?.id;
-  console.log("isSignedIn", isSignedIn);
   useEffect(() => {
     const fetchUser = async () => {
       await dispatch(asyncFetchUser());

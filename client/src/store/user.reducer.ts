@@ -1,5 +1,4 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import userAPI from "../api/user.api";
 import {
   Investments,
   Portfolio,
@@ -8,10 +7,7 @@ import {
 } from "../global/entity.interfaces";
 import { getInvestmentsObject, getStocksObject } from "../utils/entity.utils";
 import { RootState } from ".";
-import authAPI from "../api/auth.api";
-import { DeleteInvestmentFromPortfolioDto } from "../api/interfaces";
-import investmentAPI from "../api/investment.api";
-import portfolioAPI from "../api/portfolio.api";
+import { authAPI, userAPI } from "../api";
 
 interface UserState {
   userInfo: UserInfo | null;
@@ -68,83 +64,6 @@ export const asyncSignOut = createAsyncThunk("user/asyncSignOut", async () => {
   return res;
 });
 
-export const asyncAddPortfolio = createAsyncThunk(
-  "user/asyncAddPortfolio",
-  async (portfolioName: string) => {
-    const res = await portfolioAPI.addPortfolio(portfolioName);
-    return res;
-  }
-);
-
-export const asyncDeletePortfolio = createAsyncThunk(
-  "user/asyncDeletePortfolio",
-  async (
-    portfolioId: string
-  ): Promise<{
-    success: boolean;
-    data?: {
-      portfolioId: string;
-    };
-  }> => {
-    const res = await portfolioAPI.deletePortfolio(portfolioId);
-    if (res.success) {
-      return {
-        success: true,
-        data: {
-          portfolioId,
-        },
-      };
-    }
-    return {
-      success: false,
-    };
-  }
-);
-
-export const asyncAddToFavoriteStocks = createAsyncThunk(
-  "user/asyncAddToFavoriteStocks",
-  async (stockId: string) => {
-    const res = await userAPI.addToFavoriteStocks(stockId);
-    return res;
-  }
-);
-
-export const asyncDeleteFromFavoriteStocks = createAsyncThunk(
-  "user/asyncDeleteFromFavoriteStocks",
-  async (stockId: string) => {
-    const res = await userAPI.deleteFromFavoriteStocks(stockId);
-    return res;
-  }
-);
-
-export const asyncDeleteInvestmentFromPortfolio = createAsyncThunk(
-  "user/asyncDeleteInvestmentFromPortfolio",
-  async (
-    dto: DeleteInvestmentFromPortfolioDto
-  ): Promise<{
-    success: boolean;
-    data?: {
-      portfolioId: string;
-      investmentId: string;
-    };
-  }> => {
-    const res = await investmentAPI.deleteInvestmentFromPortfolio(dto);
-    if (res.success) {
-      const { portfolioId, investmentId } = dto;
-      return {
-        success: true,
-        data: {
-          portfolioId,
-          investmentId,
-        },
-      };
-    }
-    return {
-      success: false,
-    };
-  }
-);
-
 export const userSlice = createSlice({
   name: "user",
   initialState,
@@ -184,48 +103,6 @@ export const userSlice = createSlice({
         state.stocks = stocks;
       }
     });
-    builder.addCase(asyncAddPortfolio.fulfilled, (state, action) => {
-      state.portfolios = [...state.portfolios, action.payload];
-    });
-    builder.addCase(asyncDeletePortfolio.fulfilled, (state, action) => {
-      const { success, data } = action.payload;
-      if (success && data) {
-        state.portfolios = state.portfolios.filter(
-          ({ id }) => id !== data.portfolioId
-        );
-      }
-    });
-    builder.addCase(asyncAddToFavoriteStocks.fulfilled, (state, action) => {
-      state.favoriteStocks = action.payload;
-    });
-    builder.addCase(
-      asyncDeleteFromFavoriteStocks.fulfilled,
-      (state, action) => {
-        state.favoriteStocks = action.payload;
-      }
-    );
-    builder.addCase(
-      asyncDeleteInvestmentFromPortfolio.fulfilled,
-      (state, action) => {
-        const { success, data } = action.payload;
-        if (success && data) {
-          const { portfolioId, investmentId } = data;
-          const updatedPortfolios = state.portfolios.map(portfolio => {
-            if (portfolio.id !== portfolioId) {
-              return portfolio;
-            }
-            const updatedInvestments = portfolio.investments.filter(
-              ({ id }) => id !== investmentId
-            );
-            return {
-              ...portfolio,
-              investments: updatedInvestments,
-            };
-          });
-          state.portfolios = updatedPortfolios;
-        }
-      }
-    );
   },
 });
 
