@@ -1,16 +1,28 @@
 import { FC } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { AppDispatch, RootState } from "../../../store";
-import { closeModal, getModalType } from "../../../store/modal.reducer";
+import { useSelector } from "react-redux";
+import { RootState } from "../../../store";
+import { getModalType } from "../../../store/modal.reducer";
 import ConfirmActionModal from "./ConfirmActionModal";
-import { deselectInvestment } from "../../../store/entity.reducer";
-import { asyncDeleteInvestmentFromPortfolio } from "../../../store/user.reducer";
 import { useSelectedEntity } from "../../../hooks";
+import useDispatchActions from "../../../hooks/useDispatchActions";
 
 const Modal: FC = () => {
-  const dispatch = useDispatch<AppDispatch>();
+  const { portfolioActions, investmentActions, modalActions } =
+    useDispatchActions();
   const modalType = useSelector((state: RootState) => getModalType(state));
   const { selectedPortfolio, selectedInvestment } = useSelectedEntity();
+  if (modalType === "DELETE_PORTFOLIO" && selectedPortfolio) {
+    return (
+      <ConfirmActionModal
+        title="Delete Portfolio"
+        questionLabel={`Are you sure you want to delete ${selectedPortfolio.name}?`}
+        onConfirm={async () => {
+          await portfolioActions.delete(selectedPortfolio.id);
+          modalActions.close();
+        }}
+      />
+    );
+  }
   if (
     modalType === "DELETE_INVESTMENT" &&
     selectedPortfolio &&
@@ -19,16 +31,13 @@ const Modal: FC = () => {
     return (
       <ConfirmActionModal
         title="Delete Investment"
-        questionLabel={`Are you sure you want to delete ${selectedInvestment.stockId}`}
+        questionLabel={`Are you sure you want to delete ${selectedInvestment.stockId}?`}
         onConfirm={async () => {
-          await dispatch(
-            asyncDeleteInvestmentFromPortfolio({
-              portfolioId: selectedPortfolio.id,
-              investmentId: selectedInvestment.id,
-            })
+          await investmentActions.delete(
+            selectedPortfolio.id,
+            selectedInvestment.id
           );
-          dispatch(deselectInvestment());
-          dispatch(closeModal());
+          modalActions.close();
         }}
       />
     );

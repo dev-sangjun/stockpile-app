@@ -3,6 +3,9 @@ import { AppDispatch } from "../store";
 import {
   asyncAddToFavoriteStocks,
   asyncDeleteFromFavoriteStocks,
+  asyncDeleteInvestmentFromPortfolio,
+  asyncDeletePortfolio,
+  asyncFetchUser,
   asyncSignOut,
 } from "../store/user.reducer";
 import { Investment, Portfolio } from "../global/entity.interfaces";
@@ -13,6 +16,7 @@ import {
   selectPortfolio,
 } from "../store/entity.reducer";
 import { ModalType, closeModal, openModal } from "../store/modal.reducer";
+import { notify } from "../utils/common.utils";
 
 const useDispatchActions = () => {
   const dispatch = useDispatch<AppDispatch>();
@@ -25,10 +29,28 @@ const useDispatchActions = () => {
       dispatch(deselectPortfolio());
       dispatch(deselectInvestment());
     },
+    delete: async (portfolioId: string) => {
+      await dispatch(asyncDeletePortfolio(portfolioId));
+      await dispatch(asyncFetchUser());
+      notify(`Successfully deleted the portfolio!`);
+      dispatch(deselectPortfolio());
+      dispatch(deselectInvestment());
+    },
   };
   const investmentActions = {
     select: (investment: Investment) => dispatch(selectInvestment(investment)),
     deselect: () => dispatch(deselectInvestment()),
+    delete: async (portfolioId: string, investmentId: string) => {
+      await dispatch(
+        asyncDeleteInvestmentFromPortfolio({
+          portfolioId,
+          investmentId,
+        })
+      );
+      await dispatch(asyncFetchUser());
+      notify("Successfully deleted the investment!");
+      dispatch(deselectInvestment());
+    },
   };
   const stockActions = {
     addToFavorites: (stockId: string) =>

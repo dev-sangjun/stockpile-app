@@ -76,6 +76,31 @@ export const asyncAddPortfolio = createAsyncThunk(
   }
 );
 
+export const asyncDeletePortfolio = createAsyncThunk(
+  "user/asyncDeletePortfolio",
+  async (
+    portfolioId: string
+  ): Promise<{
+    success: boolean;
+    data?: {
+      portfolioId: string;
+    };
+  }> => {
+    const res = await portfolioAPI.deletePortfolio(portfolioId);
+    if (res.success) {
+      return {
+        success: true,
+        data: {
+          portfolioId,
+        },
+      };
+    }
+    return {
+      success: false,
+    };
+  }
+);
+
 export const asyncAddToFavoriteStocks = createAsyncThunk(
   "user/asyncAddToFavoriteStocks",
   async (stockId: string) => {
@@ -107,7 +132,7 @@ export const asyncDeleteInvestmentFromPortfolio = createAsyncThunk(
     if (res.success) {
       const { portfolioId, investmentId } = dto;
       return {
-        success: res.success,
+        success: true,
         data: {
           portfolioId,
           investmentId,
@@ -162,6 +187,14 @@ export const userSlice = createSlice({
     builder.addCase(asyncAddPortfolio.fulfilled, (state, action) => {
       state.portfolios = [...state.portfolios, action.payload];
     });
+    builder.addCase(asyncDeletePortfolio.fulfilled, (state, action) => {
+      const { success, data } = action.payload;
+      if (success && data) {
+        state.portfolios = state.portfolios.filter(
+          ({ id }) => id !== data.portfolioId
+        );
+      }
+    });
     builder.addCase(asyncAddToFavoriteStocks.fulfilled, (state, action) => {
       state.favoriteStocks = action.payload;
     });
@@ -189,7 +222,6 @@ export const userSlice = createSlice({
               investments: updatedInvestments,
             };
           });
-          console.log("updated portfolios", updatedPortfolios);
           state.portfolios = updatedPortfolios;
         }
       }
