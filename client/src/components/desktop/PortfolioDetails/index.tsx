@@ -3,13 +3,16 @@ import { useDispatch, useSelector } from "react-redux";
 import { Portfolio, Stocks } from "../../../global/entity.interfaces";
 import Section from "../../common/Section";
 import { AppDispatch, RootState } from "../../../store";
-import { deselectPortfolio } from "../../../store/entity.reducer";
+import {
+  deselectInvestment,
+  deselectPortfolio,
+} from "../../../store/entity.reducer";
 import InnerGridItem, { InnerGridItemProps } from "../InnerGridItem";
 import {
   getInvestedAmount,
   getPortfolioTotalValue,
 } from "../../../utils/entity.utils";
-import { toDecimal, toUSD } from "../../../utils/common.utils";
+import { toUSD } from "../../../utils/common.utils";
 import ValueChangeText from "../../common/ValueChangeText";
 import { getUser } from "../../../store/user.reducer";
 
@@ -23,7 +26,6 @@ const getPortfolioDetailsGridItems = (
 ): InnerGridItemProps[] => {
   const totalBalance = getPortfolioTotalValue(portfolio, stocks);
   const totalInvestedAmount = getInvestedAmount(portfolio.investments);
-  const gainLoss = totalBalance - totalInvestedAmount;
   return [
     {
       title: "Total Balance",
@@ -34,15 +36,11 @@ const getPortfolioDetailsGridItems = (
       value: toUSD(totalInvestedAmount),
     },
     {
-      title: "Total Gain/Loss ($)",
-      value: <ValueChangeText value={gainLoss} />,
-    },
-    {
-      title: "Total Gain/Loss (%)",
+      title: "Total Gain/Loss",
       value: (
         <ValueChangeText
-          value={toDecimal(gainLoss / totalInvestedAmount) * 100}
-          usePercentage={true}
+          prevValue={totalInvestedAmount}
+          curValue={totalBalance}
         />
       ),
     },
@@ -64,7 +62,10 @@ const PortfolioDetails: FC<PortfolioDetailsProps> = ({ portfolio }) => {
       title={portfolio.name}
       backButton={{
         text: "Portfolios",
-        onClick: () => dispatch(deselectPortfolio()),
+        onClick: () => {
+          dispatch(deselectPortfolio());
+          dispatch(deselectInvestment());
+        },
       }}
     >
       {renderInnerGridItems()}

@@ -65,6 +65,22 @@ export const asyncSignOut = createAsyncThunk("user/asyncSignOut", async () => {
   return res;
 });
 
+export const asyncAddToFavoriteStocks = createAsyncThunk(
+  "user/asyncAddToFavoriteStocks",
+  async (stockId: string) => {
+    const res = await userAPI.addToFavoriteStocks(stockId);
+    return res;
+  }
+);
+
+export const asyncDeleteFromFavoriteStocks = createAsyncThunk(
+  "user/asyncDeleteFromFavoriteStocks",
+  async (stockId: string) => {
+    const res = await userAPI.deleteFromFavoriteStocks(stockId);
+    return res;
+  }
+);
+
 export const userSlice = createSlice({
   name: "user",
   initialState,
@@ -104,6 +120,15 @@ export const userSlice = createSlice({
         state.stocks = stocks;
       }
     });
+    builder.addCase(asyncAddToFavoriteStocks.fulfilled, (state, action) => {
+      state.favoriteStocks = action.payload;
+    });
+    builder.addCase(
+      asyncDeleteFromFavoriteStocks.fulfilled,
+      (state, action) => {
+        state.favoriteStocks = action.payload;
+      }
+    );
   },
 });
 

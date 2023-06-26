@@ -4,6 +4,7 @@ import DBClient from "../../prisma/DBClient";
 import { EntityNotFoundError } from "../global/errors.global";
 import stockService from "./stock.service";
 import { InternalServerError } from "../global/errors.global";
+import { OperationResponseDto } from "../interfaces/dto/common.dto";
 
 interface PublicUser {
   id: string;
@@ -100,83 +101,6 @@ const getStocks = async (id: string) => {
   return user.stocks;
 };
 
-const getFavoritePortfolios = async (id: string) => {
-  const user = await DBClient.user.findUnique({
-    where: {
-      id,
-    },
-    select: {
-      favoritePortfolios: true,
-    },
-  });
-  if (!user) {
-    throw new EntityNotFoundError();
-  }
-  return user.favoritePortfolios;
-};
-
-const addToFavoritePortfolios = async (id: string, portfolioId: string) => {
-  const user = await DBClient.user.findUnique({
-    where: {
-      id,
-    },
-    select: {
-      favoritePortfolios: true,
-    },
-  });
-  if (!user) {
-    throw new EntityNotFoundError();
-  }
-  if (user.favoritePortfolios.includes(portfolioId)) {
-    return user.favoritePortfolios;
-  }
-  // add portfolioId to favorites only if it doesn't already exist
-  const udpatedUser = await DBClient.user.update({
-    data: {
-      favoritePortfolios: {
-        set: [...user.favoritePortfolios, portfolioId],
-      },
-    },
-    where: {
-      id,
-    },
-  });
-  return udpatedUser.favoritePortfolios;
-};
-
-const deleteFromFavoritePortfolios = async (
-  id: string,
-  portfolioId: string
-) => {
-  const user = await DBClient.user.findUnique({
-    where: {
-      id,
-    },
-    select: {
-      favoritePortfolios: true,
-    },
-  });
-  if (!user) {
-    throw new EntityNotFoundError();
-  }
-  if (!user.favoritePortfolios.includes(portfolioId)) {
-    return user.favoritePortfolios;
-  }
-  const udpatedUser = await DBClient.user.update({
-    data: {
-      favoritePortfolios: {
-        set: user.favoritePortfolios.filter(
-          favoritePortfolioId => favoritePortfolioId !== portfolioId
-        ),
-      },
-    },
-    where: {
-      id,
-    },
-  });
-  return udpatedUser.favoritePortfolios;
-};
-
 const getFavoritStocks = async (id: string) => {
   const user = await DBClient.user.findUnique({
     where: {
@@ -208,7 +132,10 @@ const getNewStocks = (
     : stocks.filter(stock => stock.id !== stockId);
 };
 
-const addToFavoriteStocks = async (id: string, stockId: string) => {
+const addToFavoriteStocks = async (
+  id: string,
+  stockId: string
+): Promise<string[]> => {
   const user = await DBClient.user.findUnique({
     where: {
       id,
@@ -252,10 +179,16 @@ const addToFavoriteStocks = async (id: string, stockId: string) => {
       id,
     },
   });
+  if (!udpatedUser) {
+    throw new InternalServerError();
+  }
   return udpatedUser.favoriteStocks;
 };
 
-const deleteFromFavoriteStocks = async (id: string, stockId: string) => {
+const deleteFromFavoriteStocks = async (
+  id: string,
+  stockId: string
+): Promise<string[]> => {
   const user = await DBClient.user.findUnique({
     where: {
       id,
@@ -293,6 +226,9 @@ const deleteFromFavoriteStocks = async (id: string, stockId: string) => {
       id,
     },
   });
+  if (!udpatedUser) {
+    throw new InternalServerError();
+  }
   return udpatedUser.favoriteStocks;
 };
 
@@ -431,9 +367,6 @@ export default {
   getUser,
   addStock,
   getStocks,
-  getFavoritePortfolios,
-  addToFavoritePortfolios,
-  deleteFromFavoritePortfolios,
   getFavoritStocks,
   addToFavoriteStocks,
   deleteFromFavoriteStocks,

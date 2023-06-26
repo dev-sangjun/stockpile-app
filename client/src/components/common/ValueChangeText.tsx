@@ -1,10 +1,9 @@
 import { FC } from "react";
-import { HiArrowDown, HiArrowUp } from "react-icons/hi2";
-import { toUSD } from "../../utils/common.utils";
+import { toDecimal, toUSD } from "../../utils/common.utils";
 
 interface ValueChangeTextProps {
-  value: number;
-  usePercentage?: boolean;
+  prevValue: number;
+  curValue: number;
 }
 
 const getGainLossTextColor = (value: number) => {
@@ -16,32 +15,17 @@ const getGainLossTextColor = (value: number) => {
   return "text-slate-400";
 };
 
-const renderDayChangeArrow = (value: number) => {
-  if (value > 0) {
-    return <HiArrowUp />;
-  } else if (value < 0) {
-    return <HiArrowDown />;
-  }
-  return null;
-};
-
-const ValueChangeText: FC<ValueChangeTextProps> = ({
-  value,
-  usePercentage = false,
-}) => {
+const ValueChangeText: FC<ValueChangeTextProps> = ({ prevValue, curValue }) => {
+  const change = toDecimal(curValue - prevValue);
+  const changeInPercentage = toDecimal(
+    ((curValue - prevValue) / prevValue) * 100
+  );
   return (
-    <div className={`flex items-center ${getGainLossTextColor(value)}`}>
+    <div className={`flex items-center ${getGainLossTextColor(change)}`}>
       <span>
-        {isNaN(value) ? (
-          "N/A"
-        ) : (
-          <>
-            {value > 0 && "+"}
-            {usePercentage ? `${value}%` : toUSD(value)}
-          </>
-        )}
+        {change > 0 && "+"}
+        {toUSD(change)} ({Math.abs(changeInPercentage)}%)
       </span>
-      {renderDayChangeArrow(value)}
     </div>
   );
 };

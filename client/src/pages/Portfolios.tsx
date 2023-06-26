@@ -6,10 +6,11 @@ import PortfolioList from "../components/desktop/PortfolioList";
 import PortfoliosOverview from "../components/desktop/PortfoliosOverview";
 import PortfolioDetails from "../components/desktop/PortfolioDetails";
 import InvestmentList from "../components/desktop/InvestmentList";
+import InvestmentDetails from "../components/desktop/InvestmentDetails";
 
 const Portfolios = () => {
-  const { selectedPortfolio } = useSelector((state: RootState) =>
-    getEntity(state)
+  const { selectedPortfolio, selectedInvestment } = useSelector(
+    (state: RootState) => getEntity(state)
   );
   return (
     <div className="w-full grid grid-cols-2 grid-rows-[39rem] gap-4">
@@ -21,7 +22,11 @@ const Portfolios = () => {
         {selectedPortfolio ? (
           <>
             <PortfolioDetails portfolio={selectedPortfolio} />
-            <InvestmentList portfolio={selectedPortfolio} />
+            {selectedInvestment ? (
+              <InvestmentDetails investment={selectedInvestment} />
+            ) : (
+              <InvestmentList portfolio={selectedPortfolio} />
+            )}
           </>
         ) : (
           <PortfolioList />

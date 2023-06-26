@@ -2,7 +2,7 @@ import { useSelector } from "react-redux";
 import { RootState } from "../../../store";
 import { getUser } from "../../../store/user.reducer";
 import { Investment, Stocks } from "../../../global/entity.interfaces";
-import { toDecimal, toUSD } from "../../../utils/common.utils";
+import { toUSD } from "../../../utils/common.utils";
 import {
   getInvestedAmount,
   getTotalNetWorth,
@@ -17,7 +17,6 @@ const getPortfolioOverviewGridItems = (
 ): InnerGridItemProps[] => {
   const totalBalance = getTotalNetWorth(investments, stocks);
   const totalInvestedAmount = getInvestedAmount(investments);
-  const gainLoss = totalBalance - totalInvestedAmount;
   return [
     {
       title: "Total Balance",
@@ -28,15 +27,11 @@ const getPortfolioOverviewGridItems = (
       value: toUSD(totalInvestedAmount),
     },
     {
-      title: "Total Gain/Loss ($)",
-      value: <ValueChangeText value={gainLoss} />,
-    },
-    {
-      title: "Total Gain/Loss (%)",
+      title: "Total Gain/Loss",
       value: (
         <ValueChangeText
-          value={toDecimal(gainLoss / totalInvestedAmount) * 100}
-          usePercentage={true}
+          prevValue={totalInvestedAmount}
+          curValue={totalBalance}
         />
       ),
     },

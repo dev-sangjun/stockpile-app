@@ -45,15 +45,8 @@ const addToFavorites = async (
   next: NextFunction
 ) => {
   const { authorizedUserId } = req as AuthorizedRequest;
-  const { portfolioId, stockId } = req.body;
+  const { stockId } = req.body;
   try {
-    if (portfolioId) {
-      const favoritePortfolios = await userService.addToFavoritePortfolios(
-        authorizedUserId,
-        portfolioId
-      );
-      return res.json(favoritePortfolios);
-    }
     if (stockId) {
       const favoriteStocks = await userService.addToFavoriteStocks(
         authorizedUserId,
@@ -76,17 +69,10 @@ const deleteFromFavorites = async (
     undefined,
     any,
     any,
-    { portfolioId?: string; stockId?: string }
+    { stockId?: string }
   >;
-  const { portfolioId, stockId } = req.query;
+  const { stockId } = req.query;
   try {
-    if (portfolioId) {
-      const favoritePortfolios = await userService.deleteFromFavoritePortfolios(
-        authorizedUserId,
-        portfolioId
-      );
-      return res.json(favoritePortfolios);
-    }
     if (stockId) {
       const favoriteStocks = await userService.deleteFromFavoriteStocks(
         authorizedUserId,

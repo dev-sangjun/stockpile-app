@@ -20,14 +20,14 @@ const InvestmentList: FC<InvestmentListProps> = ({ portfolio }) => {
   const { stocks } = useSelector((state: RootState) => getUser(state));
   const renderInvestmentListItems = () =>
     portfolio.investments.length > 0 ? (
-      <div className={`${ENTITY_LIST_CLASSES} h-[24rem]`}>
+      <div className={`${ENTITY_LIST_CLASSES} h-96`}>
         {portfolio.investments.map(investment => {
           const investmentValue = toDecimal(
             (stocks?.[investment.stockId]?.c || 0) * investment.quantity
           );
           return (
             <EntityListItem
-              title={portfolio.name}
+              title={investment.stockId}
               labelTitle="Current Value"
               labelValue={toUSD(investmentValue)}
               onClick={() => dispatch(selectInvestment(investment))}
