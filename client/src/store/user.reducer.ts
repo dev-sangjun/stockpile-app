@@ -11,6 +11,7 @@ import { RootState } from ".";
 import authAPI from "../api/auth.api";
 import { DeleteInvestmentFromPortfolioDto } from "../api/interfaces";
 import investmentAPI from "../api/investment.api";
+import portfolioAPI from "../api/portfolio.api";
 
 interface UserState {
   userInfo: UserInfo | null;
@@ -66,6 +67,14 @@ export const asyncSignOut = createAsyncThunk("user/asyncSignOut", async () => {
   const res = await authAPI.signOut();
   return res;
 });
+
+export const asyncAddPortfolio = createAsyncThunk(
+  "user/asyncAddPortfolio",
+  async (portfolioName: string) => {
+    const res = await portfolioAPI.addPortfolio(portfolioName);
+    return res;
+  }
+);
 
 export const asyncAddToFavoriteStocks = createAsyncThunk(
   "user/asyncAddToFavoriteStocks",
@@ -149,6 +158,9 @@ export const userSlice = createSlice({
         state.investments = investments;
         state.stocks = stocks;
       }
+    });
+    builder.addCase(asyncAddPortfolio.fulfilled, (state, action) => {
+      state.portfolios = [...state.portfolios, action.payload];
     });
     builder.addCase(asyncAddToFavoriteStocks.fulfilled, (state, action) => {
       state.favoriteStocks = action.payload;

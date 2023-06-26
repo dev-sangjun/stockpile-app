@@ -17,6 +17,12 @@ export interface SignInUserDto {
 }
 
 // investment
+export interface AddInvestmentToPortfolioDto {
+  quantity: number;
+  cost: number | undefined;
+  stockId: string;
+}
+
 export interface DeleteInvestmentFromPortfolioDto {
   portfolioId: string;
   investmentId: string;

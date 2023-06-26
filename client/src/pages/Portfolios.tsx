@@ -4,7 +4,7 @@ import PortfoliosOverview from "../components/desktop/PortfoliosOverview";
 import PortfolioDetails from "../components/desktop/PortfolioDetails";
 import InvestmentList from "../components/desktop/InvestmentList";
 import InvestmentDetails from "../components/desktop/InvestmentDetails";
-import useSelectedEntity from "../hooks/useSelectedEntity";
+import { useSelectedEntity } from "../hooks";
 
 const Portfolios = () => {
   const { selectedPortfolio, selectedInvestment } = useSelectedEntity();

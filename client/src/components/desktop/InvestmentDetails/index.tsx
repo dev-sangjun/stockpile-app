@@ -1,25 +1,19 @@
 import { FC } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { AppDispatch, RootState } from "../../../store";
+import { useSelector } from "react-redux";
+import { RootState } from "../../../store";
 import { Investment, Stocks } from "../../../global/entity.interfaces";
-import Section from "../../common/Section";
-import { deselectInvestment } from "../../../store/entity.reducer";
+import Section, { SectionActionButton } from "../../common/Section";
 import InnerGridItem, { InnerGridItemProps } from "../InnerGridItem";
 import { toDecimal, toUSD } from "../../../utils/common.utils";
 import ValueChangeText from "../../common/ValueChangeText";
-import {
-  asyncAddToFavoriteStocks,
-  asyncDeleteFromFavoriteStocks,
-  getUser,
-} from "../../../store/user.reducer";
-import { BASE_BUTTON_CLASSES } from "../../../constants/classes.constants";
+import { getUser } from "../../../store/user.reducer";
 import {
   HiHeart,
   HiOutlineHeart,
   HiPencilSquare,
   HiTrash,
 } from "react-icons/hi2";
-import { openModal } from "../../../store/modal.reducer";
+import useDispatchActions from "../../../hooks/useDispatchActions";
 
 interface InvestmentDetailsProps {
   investment: Investment;
@@ -40,11 +34,6 @@ const getInvestmentDetailsGridItems = (
       title: "Current Price",
       value: toUSD(currentPrice),
     },
-    {
-      title: "Shares",
-      value: `${quantity}`,
-    },
-
     {
       title: "Total Balance",
       value: toUSD(totalBalance),
@@ -68,57 +57,57 @@ const getInvestmentDetailsGridItems = (
         />
       ),
     },
+    {
+      title: "Shares",
+      value: `${quantity}`,
+    },
   ];
 };
 
 const InvestmentDetails: FC<InvestmentDetailsProps> = ({ investment }) => {
-  const dispatch = useDispatch<AppDispatch>();
+  const { investmentActions, stockActions, modalActions } =
+    useDispatchActions();
   const { stocks, favoriteStocks } = useSelector((state: RootState) =>
     getUser(state)
   );
   const isFavorite = favoriteStocks.includes(investment.stockId);
   const renderInnerGridItems = () => (
-    <div className="grid grid-cols-2 gap-2">
+    <div className="grid grid-cols-3 gap-2">
       {getInvestmentDetailsGridItems(investment, stocks).map(item => (
         <InnerGridItem key={item.title} {...item} />
       ))}
     </div>
   );
-  const handleFavoriteClick = async () => {
-    if (isFavorite) {
-      await dispatch(asyncDeleteFromFavoriteStocks(investment.stockId));
-      return;
-    }
-    await dispatch(asyncAddToFavoriteStocks(investment.stockId));
-  };
+  const actionButtons: SectionActionButton[] = [
+    {
+      icon: isFavorite ? (
+        <HiHeart className="text-red-500" />
+      ) : (
+        <HiOutlineHeart className="text-red-500" />
+      ),
+      onClick: isFavorite
+        ? () => stockActions.deleteFromFavorites(investment.stockId)
+        : () => stockActions.addToFavorites(investment.stockId),
+    },
+    {
+      icon: <HiPencilSquare />,
+      onClick: () => modalActions.open("UPDATE_INVESTMENT"),
+    },
+    {
+      icon: <HiTrash />,
+      onClick: () => modalActions.open("DELETE_INVESTMENT"),
+    },
+  ];
   return (
     <Section
       title={investment.stockId}
       backButton={{
         text: "Investments",
-        onClick: () => dispatch(deselectInvestment()),
+        onClick: investmentActions.deselect,
       }}
+      actionButtons={actionButtons}
     >
-      <div className="flex flex-col gap-4 h-96">
-        {renderInnerGridItems()}
-        <div className="flex justify-around gap-2">
-          <button
-            className={`${BASE_BUTTON_CLASSES.sm} text-red-500`}
-            onClick={handleFavoriteClick}
-          >
-            {isFavorite ? <HiHeart /> : <HiOutlineHeart />}
-          </button>
-          <button className={BASE_BUTTON_CLASSES.sm}>
-            <HiPencilSquare />
-          </button>
-          <button
-            className={BASE_BUTTON_CLASSES.sm}
-            onClick={() => dispatch(openModal("DELETE_INVESTMENT"))}
-          >
-            <HiTrash />
-          </button>
-        </div>
-      </div>
+      <div className="flex flex-col gap-4 h-96">{renderInnerGridItems()}</div>
     </Section>
   );
 };

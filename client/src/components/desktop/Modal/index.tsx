@@ -5,7 +5,7 @@ import { closeModal, getModalType } from "../../../store/modal.reducer";
 import ConfirmActionModal from "./ConfirmActionModal";
 import { deselectInvestment } from "../../../store/entity.reducer";
 import { asyncDeleteInvestmentFromPortfolio } from "../../../store/user.reducer";
-import useSelectedEntity from "../../../hooks/useSelectedEntity";
+import { useSelectedEntity } from "../../../hooks";
 
 const Modal: FC = () => {
   const dispatch = useDispatch<AppDispatch>();

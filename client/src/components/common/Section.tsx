@@ -1,6 +1,11 @@
-import { FC, PropsWithChildren } from "react";
+import { FC, PropsWithChildren, ReactNode } from "react";
 import { BASE_BUTTON_CLASSES } from "../../constants/classes.constants";
 import { HiChevronLeft } from "react-icons/hi2";
+
+export interface SectionActionButton {
+  icon: ReactNode;
+  onClick: () => void;
+}
 
 interface SectionProps {
   title: string;
@@ -8,15 +13,17 @@ interface SectionProps {
     text: string;
     onClick: () => void;
   };
+  actionButtons?: SectionActionButton[];
 }
 
 const Section: FC<PropsWithChildren<SectionProps>> = ({
   title,
   backButton,
+  actionButtons,
   children,
 }) => {
   return (
-    <div className="h-full flex flex-col gap-2">
+    <div className="relative h-full flex flex-col gap-2">
       {backButton && (
         <button
           className={`${BASE_BUTTON_CLASSES.sm} absolute gap-2 text-slate-500`}
@@ -31,6 +38,19 @@ const Section: FC<PropsWithChildren<SectionProps>> = ({
       >
         {title}
       </h2>
+      {actionButtons && (
+        <div className="absolute right-2 flex">
+          {actionButtons.map(({ icon, onClick }, idx) => (
+            <button
+              key={idx}
+              className={BASE_BUTTON_CLASSES.sm}
+              onClick={onClick}
+            >
+              {icon}
+            </button>
+          ))}
+        </div>
+      )}
       {children}
     </div>
   );

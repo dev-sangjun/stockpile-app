@@ -1,7 +1,7 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 import { RootState } from ".";
 
-type ModalType =
+export type ModalType =
   | "ADD_PORTFOLIO"
   | "UPDATE_PORTFOLIO"
   | "DELETE_PORTFOLIO"

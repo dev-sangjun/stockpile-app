@@ -1,12 +1,8 @@
 import { FC } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { Portfolio, Stocks } from "../../../global/entity.interfaces";
-import Section from "../../common/Section";
-import { AppDispatch, RootState } from "../../../store";
-import {
-  deselectInvestment,
-  deselectPortfolio,
-} from "../../../store/entity.reducer";
+import Section, { SectionActionButton } from "../../common/Section";
+import { RootState } from "../../../store";
 import InnerGridItem, { InnerGridItemProps } from "../InnerGridItem";
 import {
   getInvestedAmount,
@@ -15,6 +11,8 @@ import {
 import { toUSD } from "../../../utils/common.utils";
 import ValueChangeText from "../../common/ValueChangeText";
 import { getUser } from "../../../store/user.reducer";
+import { HiPencilSquare, HiTrash } from "react-icons/hi2";
+import useDispatchActions from "../../../hooks/useDispatchActions";
 
 interface PortfolioDetailsProps {
   portfolio: Portfolio;
@@ -48,25 +46,33 @@ const getPortfolioDetailsGridItems = (
 };
 
 const PortfolioDetails: FC<PortfolioDetailsProps> = ({ portfolio }) => {
-  const dispatch = useDispatch<AppDispatch>();
+  const { portfolioActions, modalActions } = useDispatchActions();
   const { stocks } = useSelector((state: RootState) => getUser(state));
   const renderInnerGridItems = () => (
-    <div className="grid grid-cols-2 gap-2">
+    <div className="grid grid-cols-3 gap-2">
       {getPortfolioDetailsGridItems(portfolio, stocks).map(item => (
         <InnerGridItem key={item.title} {...item} />
       ))}
     </div>
   );
+  const actionButtons: SectionActionButton[] = [
+    {
+      icon: <HiPencilSquare />,
+      onClick: () => modalActions.open("UPDATE_PORTFOLIO"),
+    },
+    {
+      icon: <HiTrash />,
+      onClick: () => modalActions.open("DELETE_PORTFOLIO"),
+    },
+  ];
   return (
     <Section
       title={portfolio.name}
       backButton={{
         text: "Portfolios",
-        onClick: () => {
-          dispatch(deselectPortfolio());
-          dispatch(deselectInvestment());
-        },
+        onClick: portfolioActions.deselect,
       }}
+      actionButtons={actionButtons}
     >
       {renderInnerGridItems()}
     </Section>
