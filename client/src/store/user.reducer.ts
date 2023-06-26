@@ -9,6 +9,8 @@ import {
 import { getInvestmentsObject, getStocksObject } from "../utils/entity.utils";
 import { RootState } from ".";
 import authAPI from "../api/auth.api";
+import { DeleteInvestmentFromPortfolioDto } from "../api/interfaces";
+import investmentAPI from "../api/investment.api";
 
 interface UserState {
   userInfo: UserInfo | null;
@@ -81,6 +83,34 @@ export const asyncDeleteFromFavoriteStocks = createAsyncThunk(
   }
 );
 
+export const asyncDeleteInvestmentFromPortfolio = createAsyncThunk(
+  "user/asyncDeleteInvestmentFromPortfolio",
+  async (
+    dto: DeleteInvestmentFromPortfolioDto
+  ): Promise<{
+    success: boolean;
+    data?: {
+      portfolioId: string;
+      investmentId: string;
+    };
+  }> => {
+    const res = await investmentAPI.deleteInvestmentFromPortfolio(dto);
+    if (res.success) {
+      const { portfolioId, investmentId } = dto;
+      return {
+        success: res.success,
+        data: {
+          portfolioId,
+          investmentId,
+        },
+      };
+    }
+    return {
+      success: false,
+    };
+  }
+);
+
 export const userSlice = createSlice({
   name: "user",
   initialState,
@@ -127,6 +157,29 @@ export const userSlice = createSlice({
       asyncDeleteFromFavoriteStocks.fulfilled,
       (state, action) => {
         state.favoriteStocks = action.payload;
+      }
+    );
+    builder.addCase(
+      asyncDeleteInvestmentFromPortfolio.fulfilled,
+      (state, action) => {
+        const { success, data } = action.payload;
+        if (success && data) {
+          const { portfolioId, investmentId } = data;
+          const updatedPortfolios = state.portfolios.map(portfolio => {
+            if (portfolio.id !== portfolioId) {
+              return portfolio;
+            }
+            const updatedInvestments = portfolio.investments.filter(
+              ({ id }) => id !== investmentId
+            );
+            return {
+              ...portfolio,
+              investments: updatedInvestments,
+            };
+          });
+          console.log("updated portfolios", updatedPortfolios);
+          state.portfolios = updatedPortfolios;
+        }
       }
     );
   },

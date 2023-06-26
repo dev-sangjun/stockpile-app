@@ -5,20 +5,18 @@ import { SERVER_ENDPOINT } from "./constants";
 import { OperationResponseDto } from "./interfaces";
 import { CreateUserDto, SignInUserDto } from "./interfaces";
 
-const createUser = async (
-  createUserDto: CreateUserDto
-): Promise<User | PrismaError> => {
+const createUser = async (dto: CreateUserDto): Promise<User | PrismaError> => {
   const res: AxiosResponse<User | PrismaError> = await axios.post(
     `${SERVER_ENDPOINT}/auth/signup`,
-    createUserDto
+    dto
   );
   return res.data;
 };
 
-const signIn = async (signInUserDto: SignInUserDto): Promise<string> => {
+const signIn = async (dto: SignInUserDto): Promise<string> => {
   const res: AxiosResponse<{ userId: string }> = await axios.post(
     `${SERVER_ENDPOINT}/auth/signin`,
-    signInUserDto,
+    dto,
     { withCredentials: true }
   );
   // returns userId on successful sign in

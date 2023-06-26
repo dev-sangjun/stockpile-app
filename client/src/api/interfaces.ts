@@ -15,3 +15,9 @@ export interface SignInUserDto {
   email: string;
   password: string;
 }
+
+// investment
+export interface DeleteInvestmentFromPortfolioDto {
+  portfolioId: string;
+  investmentId: string;
+}

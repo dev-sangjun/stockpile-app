@@ -5,6 +5,7 @@ import SignIn from "./SignIn";
 import Navbar from "../components/desktop/Navbar";
 import Settings from "./Settings";
 import Portfolios from "./Portfolios";
+import Modal from "../components/desktop/Modal";
 
 const BASE_CONTAINER_CLASSES =
   "flex justify-center h-screen max-w-[1440px] min-w-[1080px] mx-auto bg-base-100";
@@ -19,6 +20,7 @@ export const privateRouter = createBrowserRouter([
           <Outlet />
         </div>
         <Toaster />
+        <Modal />
       </div>
     ),
     children: [

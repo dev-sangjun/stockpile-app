@@ -1,17 +1,13 @@
-import { useSelector } from "react-redux";
-import { RootState } from "../store";
-import { getEntity } from "../store/entity.reducer";
 import DistributionChart from "../components/common/DistributionChart";
 import PortfolioList from "../components/desktop/PortfolioList";
 import PortfoliosOverview from "../components/desktop/PortfoliosOverview";
 import PortfolioDetails from "../components/desktop/PortfolioDetails";
 import InvestmentList from "../components/desktop/InvestmentList";
 import InvestmentDetails from "../components/desktop/InvestmentDetails";
+import useSelectedEntity from "../hooks/useSelectedEntity";
 
 const Portfolios = () => {
-  const { selectedPortfolio, selectedInvestment } = useSelector(
-    (state: RootState) => getEntity(state)
-  );
+  const { selectedPortfolio, selectedInvestment } = useSelectedEntity();
   return (
     <div className="w-full grid grid-cols-2 grid-rows-[39rem] gap-4">
       <div className="flex flex-col gap-4">

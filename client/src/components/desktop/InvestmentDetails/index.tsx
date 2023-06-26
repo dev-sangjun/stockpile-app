@@ -19,6 +19,7 @@ import {
   HiPencilSquare,
   HiTrash,
 } from "react-icons/hi2";
+import { openModal } from "../../../store/modal.reducer";
 
 interface InvestmentDetailsProps {
   investment: Investment;
@@ -110,7 +111,10 @@ const InvestmentDetails: FC<InvestmentDetailsProps> = ({ investment }) => {
           <button className={BASE_BUTTON_CLASSES.sm}>
             <HiPencilSquare />
           </button>
-          <button className={BASE_BUTTON_CLASSES.sm}>
+          <button
+            className={BASE_BUTTON_CLASSES.sm}
+            onClick={() => dispatch(openModal("DELETE_INVESTMENT"))}
+          >
             <HiTrash />
           </button>
         </div>

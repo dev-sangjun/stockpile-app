@@ -19,6 +19,7 @@ const PortfolioList = () => {
         const totalBalance = getPortfolioTotalValue(portfolio, stocks);
         return (
           <EntityListItem
+            key={portfolio.id}
             title={portfolio.name}
             labelTitle="Total Balance"
             labelValue={toUSD(totalBalance)}

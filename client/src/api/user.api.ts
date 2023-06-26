@@ -1,7 +1,6 @@
 import axios, { AxiosResponse } from "axios";
 import { User } from "../global/entity.interfaces";
 import { SERVER_ENDPOINT } from "./constants";
-import { OperationResponseDto } from "./interfaces";
 
 const fetchUser = async (): Promise<User> => {
   const res: AxiosResponse<User> = await axios.get(`${SERVER_ENDPOINT}/me`, {

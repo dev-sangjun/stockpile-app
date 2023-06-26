@@ -24,7 +24,8 @@ const ValueChangeText: FC<ValueChangeTextProps> = ({ prevValue, curValue }) => {
     <div className={`flex items-center ${getGainLossTextColor(change)}`}>
       <span>
         {change > 0 && "+"}
-        {toUSD(change)} ({Math.abs(changeInPercentage)}%)
+        {toUSD(change)} (
+        {isNaN(changeInPercentage) ? "--" : `${Math.abs(changeInPercentage)}%`})
       </span>
     </div>
   );

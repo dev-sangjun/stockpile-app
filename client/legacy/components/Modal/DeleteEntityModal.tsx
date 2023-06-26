@@ -16,11 +16,11 @@ interface DeleteEntityModalProps {
 }
 
 const DeleteEntityModal: FC<DeleteEntityModalProps> = ({
-  entity,
-  entityType,
+  entityName,
+  onConfirm,
 }) => {
   const dispatch = useDispatch<AppDispatch>();
-  const { isOpen } = useSelector((state: RootState) => getModal(state));
+  const { type } = useSelector((state: RootState) => getModal(state));
   const dialogRef = useRef<HTMLDialogElement>(null);
   useEffect(() => {
     if (dialogRef.current) {

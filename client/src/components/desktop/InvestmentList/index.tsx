@@ -27,6 +27,7 @@ const InvestmentList: FC<InvestmentListProps> = ({ portfolio }) => {
           );
           return (
             <EntityListItem
+              key={investment.id}
               title={investment.stockId}
               labelTitle="Current Value"
               labelValue={toUSD(investmentValue)}
