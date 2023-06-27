@@ -1,10 +1,10 @@
 import { RouterProvider } from "react-router-dom";
 import { privateRouter, publicRouter } from "./pages";
 import "./App.css";
-import { useFetchUser } from "./hooks";
+import { useInit } from "./hooks";
 
 function App() {
-  const { isFetched, isSignedIn } = useFetchUser();
+  const { isFetched, isSignedIn } = useInit();
   if (!isFetched) {
     return null;
   }

@@ -54,13 +54,16 @@ const constructChartConfig = (
       plugins: {
         tooltip: {
           callbacks: {
-            label: ({ formattedValue }) => {
-              return `Total value: ${toUSD(formattedValue)}`;
+            beforeLabel: ({ formattedValue }) => {
+              return `Value: ${toUSD(formattedValue)}`;
             },
-            afterLabel({ raw }) {
-              return `${toDecimal(
+            label({ raw }) {
+              return `Portion: ${toDecimal(
                 ((raw as number) / totalInvestmentValue) * 100
               )}%`;
+            },
+            afterLabel({ datasetIndex }) {
+              return `Qty: ${investments[datasetIndex].quantity}`;
             },
           },
           yAlign: "bottom",

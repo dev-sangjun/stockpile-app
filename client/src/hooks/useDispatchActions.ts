@@ -11,11 +11,19 @@ import {
 import { ModalType, closeModal, openModal } from "../store/modal.reducer";
 import { notify, notifyError } from "../utils/common.utils";
 import { investmentAPI, portfolioAPI, stockAPI } from "../api";
+import { asyncFetchSymbols } from "../store/stocks.reducer";
+import {
+  AddInvestmentToPortfolioDto,
+  UpdateInvestmentDto,
+} from "../api/interfaces";
 
 const useDispatchActions = () => {
   const dispatch = useDispatch<AppDispatch>();
   const authActions = {
     signOut: () => dispatch(asyncSignOut()),
+  };
+  const userActions = {
+    fetch: () => dispatch(asyncFetchUser()),
   };
   const portfolioActions = {
     select: (portfolio: Portfolio) => dispatch(selectPortfolio(portfolio)),
@@ -55,11 +63,28 @@ const useDispatchActions = () => {
   const investmentActions = {
     select: (investment: Investment) => dispatch(selectInvestment(investment)),
     deselect: () => dispatch(deselectInvestment()),
-    delete: async (portfolioId: string, investmentId: string) => {
-      const res = await investmentAPI.deleteInvestmentFromPortfolio({
+    add: async (portfolioId: string, dto: AddInvestmentToPortfolioDto) => {
+      const investment = await investmentAPI.addInvestmentToPortfolio(
         portfolioId,
-        investmentId,
-      });
+        dto
+      );
+      await dispatch(asyncFetchUser());
+      notify(`Successfully added ${investment.stockId}!`);
+    },
+    update: async (investmentId: string, dto: UpdateInvestmentDto) => {
+      const res = await investmentAPI.updateInvestment(investmentId, dto);
+      if (res.success) {
+        await dispatch(asyncFetchUser());
+        notify(`Successfully updated the investment!`);
+      } else {
+        notifyError();
+      }
+    },
+    delete: async (portfolioId: string, investmentId: string) => {
+      const res = await investmentAPI.deleteInvestmentFromPortfolio(
+        portfolioId,
+        investmentId
+      );
       if (res.success) {
         await dispatch(asyncFetchUser());
         notify(`Successfully deleted the investment!`);
@@ -70,6 +95,7 @@ const useDispatchActions = () => {
     },
   };
   const stockActions = {
+    fetchSymbols: () => dispatch(asyncFetchSymbols()),
     addToFavorites: async (stockId: string) => {
       const res = await stockAPI.addToFavoriteStocks(stockId);
       if (res.success) {
@@ -94,6 +120,7 @@ const useDispatchActions = () => {
 
   return {
     authActions,
+    userActions,
     portfolioActions,
     investmentActions,
     stockActions,

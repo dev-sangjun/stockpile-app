@@ -1,35 +1,40 @@
 import axios, { AxiosResponse } from "axios";
 import {
   AddInvestmentToPortfolioDto,
-  DeleteInvestmentFromPortfolioDto,
   OperationResponseDto,
+  UpdateInvestmentDto,
 } from "./interfaces";
 import { SERVER_ENDPOINT } from "./constants";
 import { Investment } from "../global/entity.interfaces";
 
 const addInvestmentToPortfolio = async (
-  dto: AddInvestmentToPortfolioDto & {
-    portfolioId: string;
-  }
+  portfolioId: string,
+  dto: AddInvestmentToPortfolioDto
 ): Promise<Investment> => {
-  const { quantity, cost, stockId, portfolioId } = dto;
-  const body: AddInvestmentToPortfolioDto = {
-    quantity,
-    cost,
-    stockId,
-  };
   const res: AxiosResponse<Investment> = await axios.post(
     `${SERVER_ENDPOINT}/portfolios/${portfolioId}/investments`,
-    body,
+    dto,
+    { withCredentials: true }
+  );
+  return res.data;
+};
+
+const updateInvestment = async (
+  investmentId: string,
+  dto: UpdateInvestmentDto
+): Promise<OperationResponseDto> => {
+  const res: AxiosResponse<OperationResponseDto> = await axios.patch(
+    `${SERVER_ENDPOINT}/investments/${investmentId}`,
+    dto,
     { withCredentials: true }
   );
   return res.data;
 };
 
 const deleteInvestmentFromPortfolio = async (
-  dto: DeleteInvestmentFromPortfolioDto
+  portfolioId: string,
+  investmentId: string
 ): Promise<OperationResponseDto> => {
-  const { portfolioId, investmentId } = dto;
   const res: AxiosResponse<OperationResponseDto> = await axios.delete(
     `${SERVER_ENDPOINT}/portfolios/${portfolioId}/investments/${investmentId}`,
     { withCredentials: true }
@@ -39,6 +44,7 @@ const deleteInvestmentFromPortfolio = async (
 
 const investmentAPI = {
   addInvestmentToPortfolio,
+  updateInvestment,
   deleteInvestmentFromPortfolio,
 };
 

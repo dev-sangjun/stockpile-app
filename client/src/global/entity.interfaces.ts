@@ -75,4 +75,4 @@ export interface Company {
   name: string;
 }
 
-export type EntityType = "Portfolio" | "Investment";
+export type EntityType = "PORTFOLIO" | "INVESTMENT";

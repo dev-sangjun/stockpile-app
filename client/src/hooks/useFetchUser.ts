@@ -1,20 +1,23 @@
 import { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { AppDispatch, RootState } from "../store";
-import { asyncFetchUser, getUser } from "../store/user.reducer";
+import { useSelector } from "react-redux";
+import { RootState } from "../store";
+import { getUser } from "../store/user.reducer";
+import useDispatchActions from "./useDispatchActions";
 
 const useFetchUser = () => {
-  const dispatch = useDispatch<AppDispatch>();
+  const { userActions } = useDispatchActions();
   const user = useSelector((state: RootState) => getUser(state));
   const [isFetched, setIsFetched] = useState(false);
   const isSignedIn = !!user.userInfo?.id;
   useEffect(() => {
     const fetchUser = async () => {
-      await dispatch(asyncFetchUser());
+      await userActions.fetch();
       setIsFetched(true);
     };
-    fetchUser();
-  }, [dispatch]);
+    if (!isSignedIn) {
+      fetchUser();
+    }
+  }, [userActions, isSignedIn]);
   return { isFetched, isSignedIn };
 };
 

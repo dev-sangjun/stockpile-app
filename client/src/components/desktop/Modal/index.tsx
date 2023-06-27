@@ -5,7 +5,7 @@ import { getModalType } from "../../../store/modal.reducer";
 import ConfirmActionModal from "./ConfirmActionModal";
 import { useSelectedEntity } from "../../../hooks";
 import useDispatchActions from "../../../hooks/useDispatchActions";
-import PortfolioModal from "./PortfolioModal";
+import EntityModal from "./EntityModal";
 
 const Modal: FC = () => {
   const { portfolioActions, investmentActions, modalActions } =
@@ -44,7 +44,10 @@ const Modal: FC = () => {
     );
   }
   if (modalType === "ADD_PORTFOLIO" || modalType === "UPDATE_PORTFOLIO") {
-    return <PortfolioModal />;
+    return <EntityModal entityType="PORTFOLIO" />;
+  }
+  if (modalType === "ADD_INVESTMENT" || modalType === "UPDATE_INVESTMENT") {
+    return <EntityModal entityType="INVESTMENT" />;
   }
   return null;
 };

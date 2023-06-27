@@ -1,11 +1,12 @@
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { getUser } from "../store/user.reducer";
-import { AppDispatch, RootState } from "../store";
-import { getEntity, selectPortfolio } from "../store/entity.reducer";
+import { RootState } from "../store";
+import { getEntity } from "../store/entity.reducer";
 import { useEffect } from "react";
+import useDispatchActions from "./useDispatchActions";
 
 const useSelectedEntity = () => {
-  const dispatch = useDispatch<AppDispatch>();
+  const { portfolioActions, investmentActions } = useDispatchActions();
   const { portfolios } = useSelector((state: RootState) => getUser(state));
   const { selectedPortfolio, selectedInvestment } = useSelector(
     (state: RootState) => getEntity(state)
@@ -16,10 +17,24 @@ const useSelectedEntity = () => {
         ({ id }) => id === selectedPortfolio.id
       );
       if (updatedPortfolio) {
-        dispatch(selectPortfolio(updatedPortfolio));
+        portfolioActions.select(updatedPortfolio);
+        if (selectedInvestment) {
+          const updatedInvestment = updatedPortfolio.investments.find(
+            ({ id }) => id === selectedInvestment.id
+          );
+          if (updatedInvestment) {
+            investmentActions.select(updatedInvestment);
+          }
+        }
       }
     }
-  }, [dispatch, selectedPortfolio, portfolios]);
+  }, [
+    portfolioActions,
+    investmentActions,
+    selectedPortfolio,
+    selectedInvestment,
+    portfolios,
+  ]);
   return { selectedPortfolio, selectedInvestment };
 };
 
