@@ -69,10 +69,10 @@ const FavoriteStockList = () => {
         className="carousel carousel-center flex items-start gap-4 rounded-box"
         ref={carouselRef}
       >
-        {filteredFavoriteStocks().map((stock, idx) => (
+        {filteredFavoriteStocks().map(stock => (
           <FavoriteStockListItem
             key={stock.id}
-            investment={Object.values(investments)[idx]}
+            investment={investments[stock.id]}
             stock={stock}
             quantity={getQuantity(stock.id)}
           />
