@@ -43,15 +43,11 @@ const getInvestments = (req, res, next) => __awaiter(void 0, void 0, void 0, fun
 });
 const addToFavorites = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     const { authorizedUserId } = req;
-    const { portfolioId, stockId } = req.body;
+    const { stockId } = req.body;
     try {
-        if (portfolioId) {
-            const favoritePortfolios = yield services_1.userService.addToFavoritePortfolios(authorizedUserId, portfolioId);
-            return res.json(favoritePortfolios);
-        }
         if (stockId) {
-            const favoriteStocks = yield services_1.userService.addToFavoriteStocks(authorizedUserId, stockId);
-            return res.json(favoriteStocks);
+            const result = yield services_1.userService.addToFavoriteStocks(authorizedUserId, stockId);
+            return res.json(result);
         }
         throw new errors_global_1.BadRequestError();
     }
@@ -61,15 +57,11 @@ const addToFavorites = (req, res, next) => __awaiter(void 0, void 0, void 0, fun
 });
 const deleteFromFavorites = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     const { authorizedUserId } = req;
-    const { portfolioId, stockId } = req.query;
+    const { stockId } = req.query;
     try {
-        if (portfolioId) {
-            const favoritePortfolios = yield services_1.userService.deleteFromFavoritePortfolios(authorizedUserId, portfolioId);
-            return res.json(favoritePortfolios);
-        }
         if (stockId) {
-            const favoriteStocks = yield services_1.userService.deleteFromFavoriteStocks(authorizedUserId, stockId);
-            return res.json(favoriteStocks);
+            const result = yield services_1.userService.deleteFromFavoriteStocks(authorizedUserId, stockId);
+            return res.json(result);
         }
         throw new errors_global_1.BadRequestError();
     }

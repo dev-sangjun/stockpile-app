@@ -42,10 +42,13 @@ const signInUser = (req, res, next) => __awaiter(void 0, void 0, void 0, functio
 });
 const signOutUser = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     try {
+        const paylaod = {
+            success: true,
+        };
         return res
             .clearCookie("access_token")
             .clearCookie("refresh_token")
-            .sendStatus(200);
+            .json(paylaod);
     }
     catch (e) {
         return next(e);

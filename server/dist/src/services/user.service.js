@@ -82,75 +82,6 @@ const getStocks = (id) => __awaiter(void 0, void 0, void 0, function* () {
     const user = yield getUser(id, ["stocks"]);
     return user.stocks;
 });
-const getFavoritePortfolios = (id) => __awaiter(void 0, void 0, void 0, function* () {
-    const user = yield DBClient_1.default.user.findUnique({
-        where: {
-            id,
-        },
-        select: {
-            favoritePortfolios: true,
-        },
-    });
-    if (!user) {
-        throw new errors_global_1.EntityNotFoundError();
-    }
-    return user.favoritePortfolios;
-});
-const addToFavoritePortfolios = (id, portfolioId) => __awaiter(void 0, void 0, void 0, function* () {
-    const user = yield DBClient_1.default.user.findUnique({
-        where: {
-            id,
-        },
-        select: {
-            favoritePortfolios: true,
-        },
-    });
-    if (!user) {
-        throw new errors_global_1.EntityNotFoundError();
-    }
-    if (user.favoritePortfolios.includes(portfolioId)) {
-        return user.favoritePortfolios;
-    }
-    // add portfolioId to favorites only if it doesn't already exist
-    const udpatedUser = yield DBClient_1.default.user.update({
-        data: {
-            favoritePortfolios: {
-                set: [...user.favoritePortfolios, portfolioId],
-            },
-        },
-        where: {
-            id,
-        },
-    });
-    return udpatedUser.favoritePortfolios;
-});
-const deleteFromFavoritePortfolios = (id, portfolioId) => __awaiter(void 0, void 0, void 0, function* () {
-    const user = yield DBClient_1.default.user.findUnique({
-        where: {
-            id,
-        },
-        select: {
-            favoritePortfolios: true,
-        },
-    });
-    if (!user) {
-        throw new errors_global_1.EntityNotFoundError();
-    }
-    if (!user.favoritePortfolios.includes(portfolioId)) {
-        return user.favoritePortfolios;
-    }
-    const udpatedUser = yield DBClient_1.default.user.update({
-        data: {
-            favoritePortfolios: {
-                set: user.favoritePortfolios.filter(favoritePortfolioId => favoritePortfolioId !== portfolioId),
-            },
-        },
-        where: {
-            id,
-        },
-    });
-    return udpatedUser.favoritePortfolios;
-});
 const getFavoritStocks = (id) => __awaiter(void 0, void 0, void 0, function* () {
     const user = yield DBClient_1.default.user.findUnique({
         where: {
@@ -193,7 +124,9 @@ const addToFavoriteStocks = (id, stockId) => __awaiter(void 0, void 0, void 0, f
         throw new errors_global_1.EntityNotFoundError();
     }
     if (user.favoriteStocks.includes(stockId)) {
-        return user.favoriteStocks;
+        return {
+            success: true,
+        };
     }
     // add portfolioId to favorites only if it doesn't already exist
     const stock = yield stock_service_1.default.getStock(stockId);
@@ -216,7 +149,12 @@ const addToFavoriteStocks = (id, stockId) => __awaiter(void 0, void 0, void 0, f
             id,
         },
     });
-    return udpatedUser.favoriteStocks;
+    if (!udpatedUser) {
+        throw new errors_global_2.InternalServerError();
+    }
+    return {
+        success: true,
+    };
 });
 const deleteFromFavoriteStocks = (id, stockId) => __awaiter(void 0, void 0, void 0, function* () {
     const user = yield DBClient_1.default.user.findUnique({
@@ -252,7 +190,12 @@ const deleteFromFavoriteStocks = (id, stockId) => __awaiter(void 0, void 0, void
             id,
         },
     });
-    return udpatedUser.favoriteStocks;
+    if (!udpatedUser) {
+        throw new errors_global_2.InternalServerError();
+    }
+    return {
+        success: true,
+    };
 });
 const deleteStockWithNoReferenceFromUser = (userId, stockId) => __awaiter(void 0, void 0, void 0, function* () {
     const user = yield getUser(userId);
@@ -360,9 +303,6 @@ exports.default = {
     getUser,
     addStock,
     getStocks,
-    getFavoritePortfolios,
-    addToFavoritePortfolios,
-    deleteFromFavoritePortfolios,
     getFavoritStocks,
     addToFavoriteStocks,
     deleteFromFavoriteStocks,
