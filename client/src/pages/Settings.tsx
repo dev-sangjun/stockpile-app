@@ -2,7 +2,7 @@ import SettingsForm from "../components/SettingsForm";
 
 const Settings = () => {
   return (
-    <div>
+    <div className="p-2">
       <SettingsForm />
     </div>
   );

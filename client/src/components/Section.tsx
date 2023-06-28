@@ -19,7 +19,7 @@ interface SectionProps {
 }
 
 const Section: FC<PropsWithChildren<SectionProps>> = ({
-  className,
+  className = "",
   title,
   backButton,
   actionButtons,
@@ -27,11 +27,7 @@ const Section: FC<PropsWithChildren<SectionProps>> = ({
 }) => {
   const { t } = useTranslation();
   return (
-    <div
-      className={`relative h-full flex flex-col gap-2 ${
-        className ? className : ""
-      }`}
-    >
+    <div className={`relative h-full flex flex-col gap-2 ${className}`}>
       {backButton && (
         <button
           className={`${BASE_BUTTON_CLASSES.sm} absolute gap-2 text-slate-500`}
@@ -42,7 +38,9 @@ const Section: FC<PropsWithChildren<SectionProps>> = ({
         </button>
       )}
       <h2
-        className={`text-xl font-semibold ${backButton ? "text-center" : ""}`}
+        className={`text-lg md:text-xl font-semibold ${
+          backButton ? "text-center" : ""
+        }`}
       >
         {t(title)}
       </h2>

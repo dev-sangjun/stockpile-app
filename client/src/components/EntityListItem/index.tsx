@@ -23,7 +23,7 @@ const EntityListItem: FC<EntityListItemProps> = ({
   const { t } = useTranslation();
   return (
     <div
-      className={`flex items-center p-3 gap-4 bg-base-100 border-b border-slate-100 hover:cursor-pointer ${className}`}
+      className={`flex items-center p-3 gap-4 bg-base-100 border-b border-slate-100 last:border-b-0 hover:cursor-pointer ${className}`}
       onClick={onClick}
     >
       <h3 className="flex-1 text-sm font-semibold">{title}</h3>

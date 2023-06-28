@@ -21,11 +21,14 @@ const PortfolioList = () => {
   );
   const renderPortfolioListItems = () =>
     portfolios.length > 0 ? (
-      <div className={`${ENTITY_LIST_CLASSES} h-full`}>
+      <div
+        className={`${ENTITY_LIST_CLASSES} h-full border-2 md:border snap-y snap-mandatory`}
+      >
         {portfolios.map(portfolio => {
           const totalBalance = getPortfolioTotalValue(portfolio, stocks);
           return (
             <EntityListItem
+              className="snap-start"
               key={portfolio.id}
               title={portfolio.name}
               label={{
@@ -38,7 +41,7 @@ const PortfolioList = () => {
         })}
       </div>
     ) : (
-      <Fallback className="h-full" message={fallbackMessages.portfolios} />
+      <Fallback className="md:h-full" message={fallbackMessages.portfolios} />
     );
   return (
     <Section

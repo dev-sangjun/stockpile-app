@@ -61,7 +61,7 @@ const FavoriteStockListItem: FC<FavoriteStockListItemProps> = ({
   };
 
   const renderInnerGridItems = () => (
-    <div className="grid grid-cols-4 gap-2 min-w-[24rem]">
+    <div className="grid grid-cols-4 gap-2 min-w-[18rem] md:min-w-[24rem]">
       {getFavoriteStockGridItems(investment, stock, quantity).map(item => (
         <InnerGridItem key={item.title} {...item} />
       ))}
@@ -75,7 +75,7 @@ const FavoriteStockListItem: FC<FavoriteStockListItemProps> = ({
   return (
     <div className="flex flex-col">
       <EntityListItem
-        className="border-none hover:cursor-default"
+        className="border-none pr-0 hover:cursor-default"
         title={investment.stockId}
         icon={favoriteButton}
       />

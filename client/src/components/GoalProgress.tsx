@@ -16,8 +16,8 @@ const GoalProgress = () => {
     }, 0);
   const percentage = (getTotalNetWorth() / goalAmount) * 100;
   return (
-    <div className="flex flex-col h-full gap-4">
-      <h3 className="text-lg font-semibold">{t("Goal Progress")}</h3>
+    <div className="flex flex-col h-full gap-2 md:gap-4">
+      <h3 className="md:text-lg font-semibold">{t("Goal Progress")}</h3>
       <progress
         className="progress progress-primary w-full"
         value={percentage}

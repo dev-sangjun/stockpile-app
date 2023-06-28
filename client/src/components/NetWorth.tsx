@@ -12,9 +12,9 @@ const NetWorth = () => {
   );
   return (
     <div className="flex flex-col h-full">
-      <h3 className="text-lg font-semibold">{t("Net Worth")}</h3>
+      <h3 className="md:text-lg font-semibold">{t("Net Worth")}</h3>
       <div className="flex-1 flex flex-row items-center">
-        <span className="text-2xl font-bold text-primary">
+        <span className="text-xl md:text-2xl font-bold text-primary">
           {toUSD(getTotalNetWorth(Object.values(investments), stocks))}
         </span>
       </div>

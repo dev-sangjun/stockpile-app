@@ -21,7 +21,7 @@ const SideNavbar: FC<SideNavbarProps> = ({ navbarItems }) => {
           {text}
         </Link>
       ) : (
-        <div>
+        <div className="flex-1 flex flex-col justify-end">
           <button
             className={`${BASE_BUTTON_CLASSES.sm} w-full justify-start`}
             onClick={onClick}
@@ -35,9 +35,9 @@ const SideNavbar: FC<SideNavbarProps> = ({ navbarItems }) => {
 
   return (
     <div className="flex flex-col justify-between border-r h-full px-8 py-16">
-      <div className="flex flex-col gap-20">
+      <div className="flex flex-col gap-20 h-full">
         <Logo />
-        <div className="flex flex-col gap-4">{renderNavbarItems()}</div>
+        <div className="flex flex-col gap-8 h-full">{renderNavbarItems()}</div>
       </div>
     </div>
   );

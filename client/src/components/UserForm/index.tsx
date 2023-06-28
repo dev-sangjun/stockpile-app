@@ -8,6 +8,10 @@ import {
   renderAlertErrorMessages,
   renderFieldErrorMessages,
 } from "../../utils/error.utils";
+import {
+  BASE_INPUT_CLASSES,
+  PRIMARY_BUTTON_CLASSES,
+} from "../../constants/classes.constants";
 
 const getUserFormTexts = (isSignIn: boolean) => ({
   title: isSignIn ? "Sign in" : "Sign up",
@@ -47,9 +51,9 @@ const UserForm = () => {
     setAlertErrorMessages([]);
   }, [isSignIn, clearErrors]);
   return (
-    <div className="card flex flex-col gap-4 bg-slate-100 p-12 w-full max-w-lg">
+    <div className="card flex flex-col gap-4 bg-slate-100 p-8 md:p-12 w-full max-w-lg">
       <div className="flex flex-col gap-2">
-        <h2 className="text-2xl font-bold">{t(title)}</h2>
+        <h2 className="text-xl md:text-2xl font-bold">{t(title)}</h2>
       </div>
       {renderAlertErrorMessages(alertErrorMessages)}
       <form className="flex flex-col w-full" onSubmit={onSubmit}>
@@ -59,7 +63,7 @@ const UserForm = () => {
               <span className="label-text">{t("Username")}</span>
             </label>
             <input
-              className="input input-bordered w-full"
+              className={BASE_INPUT_CLASSES.sm}
               type="text"
               placeholder={t("Username")}
               {...registerers.username}
@@ -71,7 +75,7 @@ const UserForm = () => {
           <span className="label-text">{t("Email")}</span>
         </label>
         <input
-          className="input input-bordered w-full"
+          className={BASE_INPUT_CLASSES.sm}
           type="email"
           placeholder={t("Email")}
           autoComplete={isSignIn ? "on" : "off"}
@@ -82,18 +86,18 @@ const UserForm = () => {
           <span className="label-text">{t("Password")}</span>
         </label>
         <input
-          className="input input-bordered w-full"
+          className={BASE_INPUT_CLASSES.sm}
           type="password"
           placeholder={t("Password")}
           autoComplete={isSignIn ? "on" : "off"}
           {...registerers.password}
         />
         {renderFieldErrorMessages(errors.password)}
-        <button className="btn btn-primary normal-case text-base-100 mt-4">
+        <button className={`${PRIMARY_BUTTON_CLASSES.sm} mt-4`}>
           {t(action)}
         </button>
       </form>
-      <div className="flex justify-center items-center w-full">
+      <div className="flex justify-center items-center w-full text-sm md:text-md">
         <span>{t(transition)}</span>
         <button
           className="btn btn-link normal-case no-underline hover:no-underline"

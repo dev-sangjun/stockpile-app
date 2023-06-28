@@ -43,7 +43,10 @@ const InvestmentList: FC<InvestmentListProps> = ({ portfolio }) => {
         })}
       </div>
     ) : (
-      <Fallback className="h-[24rem]" message={fallbackMessages.investments} />
+      <Fallback
+        className="md:h-[24rem]"
+        message={fallbackMessages.investments}
+      />
     );
   return (
     <Section

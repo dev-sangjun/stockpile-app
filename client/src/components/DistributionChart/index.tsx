@@ -18,9 +18,9 @@ const DistributionChart = () => {
   return (
     <Section title={t("Distribution")}>
       {isEmpty(investments) ? (
-        <Fallback className="h-96" message={fallbackMessages.investments} />
+        <Fallback className="md:h-96" message={fallbackMessages.investments} />
       ) : (
-        <div className="card justify-center h-96 bg-slate-100 p-6">
+        <div className="card justify-center h-64 md:h-96 bg-slate-100 p-6">
           <PieChart investments={Object.values(investments)} />
         </div>
       )}

@@ -7,13 +7,15 @@ export interface InnerGridItemProps {
   value: ReactNode | string;
 }
 
-const InnerGridItem: FC<InnerGridItemProps> = ({ className, title, value }) => {
+const InnerGridItem: FC<InnerGridItemProps> = ({
+  className = "",
+  title,
+  value,
+}) => {
   const { t } = useTranslation();
   return (
     <div
-      className={`bg-slate-100 rounded-xl p-4 gap-2 text-sm ${
-        className ? className : ""
-      }`}
+      className={`bg-slate-100 rounded-xl p-3 md:p-4 gap-2 text-xs md:text-sm ${className}`}
     >
       <h3 className="text-slate-500">{t(title)}</h3>
       <div className="font-semibold">{value}</div>

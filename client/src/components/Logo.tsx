@@ -6,7 +6,7 @@ const Logo = () => (
     to="/"
     className="btn btn-ghost btn-link normal-case no-underline text-black hover:no-underline"
   >
-    <img className="w-12" src={logo} alt="logo" />
+    <img className="w-8" src={logo} alt="logo" />
     <span className="text-xl">Stockpile</span>
   </Link>
 );
