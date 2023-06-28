@@ -39,7 +39,7 @@ const Section: FC<PropsWithChildren<SectionProps>> = ({
         {title}
       </h2>
       {actionButtons && (
-        <div className="absolute right-2 flex">
+        <div className="absolute right-0 flex">
           {actionButtons.map(({ icon, onClick }, idx) => (
             <button
               key={idx}

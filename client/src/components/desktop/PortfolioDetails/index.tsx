@@ -35,6 +35,7 @@ const getPortfolioDetailsGridItems = (
     },
     {
       title: "Total Gain/Loss",
+      className: "col-span-2",
       value: (
         <ValueChangeText
           prevValue={totalInvestedAmount}
@@ -49,7 +50,7 @@ const PortfolioDetails: FC<PortfolioDetailsProps> = ({ portfolio }) => {
   const { portfolioActions, modalActions } = useDispatchActions();
   const { stocks } = useSelector((state: RootState) => getUser(state));
   const renderInnerGridItems = () => (
-    <div className="grid grid-cols-3 gap-2">
+    <div className="grid grid-cols gap-2">
       {getPortfolioDetailsGridItems(portfolio, stocks).map(item => (
         <InnerGridItem key={item.title} {...item} />
       ))}

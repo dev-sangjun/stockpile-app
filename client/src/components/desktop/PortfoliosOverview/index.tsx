@@ -28,6 +28,7 @@ const getPortfolioOverviewGridItems = (
     },
     {
       title: "Total Gain/Loss",
+      className: "col-span-2",
       value: (
         <ValueChangeText
           prevValue={totalInvestedAmount}
@@ -43,7 +44,7 @@ const PortfoliosOverview = () => {
     getUser(state)
   );
   const renderInnerGridItems = () => (
-    <div className="grid grid-cols-3 gap-2">
+    <div className="grid grid-cols-2 gap-2">
       {getPortfolioOverviewGridItems(Object.values(investments), stocks).map(
         item => (
           <InnerGridItem key={item.title} {...item} />

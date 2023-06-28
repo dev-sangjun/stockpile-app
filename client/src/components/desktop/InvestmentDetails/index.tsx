@@ -35,18 +35,18 @@ const getInvestmentDetailsGridItems = (
       value: toUSD(currentPrice),
     },
     {
+      title: "Day Change",
+      value: (
+        <ValueChangeText prevValue={previousPrice} curValue={currentPrice} />
+      ),
+    },
+    {
       title: "Total Balance",
       value: toUSD(totalBalance),
     },
     {
       title: "Total Invested",
       value: toUSD(totalInvestedAmount),
-    },
-    {
-      title: "Day Change",
-      value: (
-        <ValueChangeText prevValue={previousPrice} curValue={currentPrice} />
-      ),
     },
     {
       title: "Total Gain/Loss",
@@ -72,7 +72,7 @@ const InvestmentDetails: FC<InvestmentDetailsProps> = ({ investment }) => {
   );
   const isFavorite = favoriteStocks.includes(investment.stockId);
   const renderInnerGridItems = () => (
-    <div className="grid grid-cols-3 gap-2">
+    <div className="grid grid-cols-2 gap-2">
       {getInvestmentDetailsGridItems(investment, stocks).map(item => (
         <InnerGridItem key={item.title} {...item} />
       ))}
