@@ -12,5 +12,5 @@ const app = (0, express_1.default)();
 const SCHEDULER_PORT = process.env.SCHEDULER_PORT || 8080;
 app.listen(SCHEDULER_PORT, () => {
     // resync stocks every 10 minutes
-    node_schedule_1.default.scheduleJob("* * * * *", resync_stocks_scheduler_1.default);
+    node_schedule_1.default.scheduleJob("*/10 * * * *", resync_stocks_scheduler_1.default);
 });

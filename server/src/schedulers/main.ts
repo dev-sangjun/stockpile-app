@@ -9,5 +9,5 @@ const app = express();
 const SCHEDULER_PORT = process.env.SCHEDULER_PORT || 8080;
 app.listen(SCHEDULER_PORT, () => {
   // resync stocks every 10 minutes
-  schedule.scheduleJob("* * * * *", resyncStocks);
+  schedule.scheduleJob("*/10 * * * *", resyncStocks);
 });
