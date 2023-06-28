@@ -1,13 +1,14 @@
-import { FC } from "react";
 import { useForm } from "react-hook-form";
+import { useTranslation } from "react-i18next";
 import useDispatchActions from "../../../hooks/useDispatchActions";
 
 interface FormValues {
   delete: string;
 }
 
-const DeleteUserForm: FC = () => {
+const DeleteUserForm = () => {
   const { userActions } = useDispatchActions();
+  const { t } = useTranslation();
   const {
     register,
     handleSubmit,
@@ -23,7 +24,7 @@ const DeleteUserForm: FC = () => {
         <input
           className="input input-bordered input-sm w-full"
           type="text"
-          placeholder="Type DELETE to confirm"
+          placeholder={t("Type DELETE to confirm")}
           {...register("delete", {
             validate: value => value === compareText,
           })}
@@ -33,7 +34,7 @@ const DeleteUserForm: FC = () => {
           className="btn btn-primary btn-sm normal-case"
           disabled={!isValid}
         >
-          Delete
+          {t("Delete")}
         </button>
       </div>
     </form>

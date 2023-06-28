@@ -5,7 +5,7 @@ export interface OperationResponseDto {
 }
 
 // auth
-export interface CreateUserDto {
+export interface SignUpUserDto {
   username: string;
   email: string;
   password: string;

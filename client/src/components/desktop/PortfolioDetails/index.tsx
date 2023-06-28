@@ -1,5 +1,6 @@
 import { FC } from "react";
 import { useSelector } from "react-redux";
+import { useTranslation } from "react-i18next";
 import { Portfolio, Stocks } from "../../../global/entity.interfaces";
 import Section, { SectionActionButton } from "../../common/Section";
 import { RootState } from "../../../store";
@@ -48,6 +49,7 @@ const getPortfolioDetailsGridItems = (
 
 const PortfolioDetails: FC<PortfolioDetailsProps> = ({ portfolio }) => {
   const { portfolioActions, modalActions } = useDispatchActions();
+  const { t } = useTranslation();
   const { stocks } = useSelector((state: RootState) => getUser(state));
   const renderInnerGridItems = () => (
     <div className="grid grid-cols gap-2">
@@ -70,7 +72,7 @@ const PortfolioDetails: FC<PortfolioDetailsProps> = ({ portfolio }) => {
     <Section
       title={portfolio.name}
       backButton={{
-        text: "Portfolios",
+        text: t("Portfolios"),
         onClick: portfolioActions.deselect,
       }}
       actionButtons={actionButtons}

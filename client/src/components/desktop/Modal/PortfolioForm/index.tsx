@@ -1,4 +1,5 @@
 import { useSelector } from "react-redux";
+import { useTranslation } from "react-i18next";
 import usePortfolioForm from "./usePortfolioForm";
 import { getEntity } from "../../../../store/entity.reducer";
 import { RootState } from "../../../../store";
@@ -11,12 +12,13 @@ import {
 import { renderFieldErrorMessages } from "../../../../utils/error.utils";
 
 const PortfolioForm = () => {
+  const { modalActions } = useDispatchActions();
+  const { t } = useTranslation();
   const { selectedPortfolio } = useSelector((state: RootState) =>
     getEntity(state)
   );
   const { registerers, onSubmit, watch, errors, isValid } =
     usePortfolioForm(selectedPortfolio);
-  const { modalActions } = useDispatchActions();
   const title = selectedPortfolio ? "Update Portfolio" : "Add Portfolio";
   const isSubmitButtonDisabled =
     !isValid || (selectedPortfolio && selectedPortfolio.name === watch("name"));
@@ -31,10 +33,10 @@ const PortfolioForm = () => {
       className="modal-box flex flex-col gap-4"
       onSubmit={onSubmit}
     >
-      <h3 className="font-bold text-lg">{title}</h3>
+      <h3 className="font-bold text-lg">{t(title)}</h3>
       <input
         className={BASE_INPUT_CLASSES.sm}
-        placeholder="Portfolio name"
+        placeholder={t("Portfolio name")}
         {...nameInputProps}
         {...registerers.name}
       />
@@ -45,14 +47,14 @@ const PortfolioForm = () => {
           type="button"
           onClick={modalActions.close}
         >
-          Cancel
+          {t("Cancel")}
         </button>
         <button
           className={PRIMARY_BUTTON_CLASSES.sm}
           type="submit"
           disabled={isSubmitButtonDisabled}
         >
-          Confirm
+          {t("Confirm")}
         </button>
       </div>
     </form>

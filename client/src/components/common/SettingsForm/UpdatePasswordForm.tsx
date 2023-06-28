@@ -1,11 +1,12 @@
 import { FC, useState } from "react";
 import { useForm } from "react-hook-form";
+import { useTranslation } from "react-i18next";
+import isEmpty from "is-empty";
 import {
   renderErrorMessage,
   renderFieldErrorMessages,
 } from "../../../utils/error.utils";
 import useDispatchActions from "../../../hooks/useDispatchActions";
-import isEmpty from "is-empty";
 
 interface FormValues {
   password: string;
@@ -13,6 +14,7 @@ interface FormValues {
 
 const UpdateGoalAmountForm: FC = () => {
   const { userActions } = useDispatchActions();
+  const { t } = useTranslation();
   const {
     register,
     handleSubmit,
@@ -42,20 +44,20 @@ const UpdateGoalAmountForm: FC = () => {
           className="input input-bordered input-sm w-full"
           type="password"
           {...register("password", {
-            required: "New password is required.",
+            required: t("New password is required."),
             minLength: {
               value: 8,
-              message: "Password must have at least 8 characters.",
+              message: t("Password must have at least 8 characters."),
             },
           })}
-          placeholder="New Password"
+          placeholder={t("New Password")}
         />
         <button
           type="submit"
           className="btn btn-primary btn-sm normal-case"
           disabled={isSubmitButtonDisabled}
         >
-          {isPasswordUpdated ? "Updated!" : "Update"}
+          {t(isPasswordUpdated ? "Updated!" : "Update")}
         </button>
       </div>
       {renderFieldErrorMessages(errors.password)}

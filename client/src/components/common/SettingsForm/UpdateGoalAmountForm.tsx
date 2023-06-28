@@ -1,6 +1,8 @@
-import { ChangeEvent, FC, useState } from "react";
+import { ChangeEvent, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useSelector } from "react-redux";
+import { useTranslation } from "react-i18next";
+import isEmpty from "is-empty";
 import { RootState } from "../../../store";
 import { getUser } from "../../../store/user.reducer";
 import {
@@ -9,14 +11,14 @@ import {
 } from "../../../utils/error.utils";
 import { toFormattedNumber } from "../../../utils/common.utils";
 import useDispatchActions from "../../../hooks/useDispatchActions";
-import isEmpty from "is-empty";
 
 interface FormValues {
   goalAmount: number;
 }
 
-const UpdateGoalAmountForm: FC = () => {
+const UpdateGoalAmountForm = () => {
   const { userActions } = useDispatchActions();
+  const { t } = useTranslation();
   const {
     register,
     handleSubmit,
@@ -56,7 +58,7 @@ const UpdateGoalAmountForm: FC = () => {
           className="input input-bordered input-sm w-full"
           type="text"
           {...register("goalAmount", {
-            required: "Goal amount is required.",
+            required: t("Goal amount is required."),
           })}
           value={value}
           onChange={handleChange}
@@ -66,7 +68,7 @@ const UpdateGoalAmountForm: FC = () => {
           className="btn btn-primary btn-sm normal-case"
           disabled={isSubmitButtonDisabled}
         >
-          {isGoalAmountUpdated ? "Updated!" : "Update"}
+          {t(isGoalAmountUpdated ? "Updated!" : "Update")}
         </button>
       </div>
       {renderFieldErrorMessages(errors.goalAmount)}

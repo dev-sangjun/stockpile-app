@@ -1,46 +1,36 @@
-import { FC, useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
+import { useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
+import useDispatchActions from "../../../hooks/useDispatchActions";
 import { getUserFormTexts } from "./utils";
 import useUserForm from "./useUserForm";
-import { AppDispatch } from "../../../store";
-import authAPI from "../../../api/auth.api";
-import { asyncFetchUser } from "../../../store/user.reducer";
 import { PrismaError } from "../../../global/error.interfaces";
-import { notify } from "../../../utils/common.utils";
 import {
   getPrismaErrorAlertMessages,
-  isPrismaError,
   renderAlertErrorMessages,
   renderFieldErrorMessages,
 } from "../../../utils/error.utils";
 
-const UserForm: FC = () => {
-  const dispatch = useDispatch<AppDispatch>();
+const UserForm = () => {
+  const { authActions } = useDispatchActions();
+  const { t } = useTranslation();
   const [isSignIn, setIsSignIn] = useState(true);
   const [alertErrorMessages, setAlertErrorMessages] = useState<string[]>([]);
   const { registerers, handleSubmit, errors, clearErrors } =
     useUserForm(isSignIn);
   const onSubmit = handleSubmit(async data => {
     if (isSignIn) {
-      try {
-        await authAPI.signIn(data);
-        dispatch(asyncFetchUser());
-      } catch (e) {
-        setAlertErrorMessages(["Sign in failed."]);
-      }
+      authActions.signIn(data, () =>
+        setAlertErrorMessages([t("Sign in failed.")])
+      );
     } else {
-      const res = await authAPI.createUser(data);
-      if (isPrismaError(res)) {
-        const err = res as PrismaError;
-        const alertMessages = getPrismaErrorAlertMessages(err);
+      const handlePrismaError = (prismaError: PrismaError) => {
+        const alertMessages = getPrismaErrorAlertMessages(prismaError);
         setAlertErrorMessages(alertMessages);
-        return;
-      }
-      notify("Successfully signed up!");
-      setIsSignIn(true);
+      };
+      authActions.signUp(data, () => setIsSignIn(true), handlePrismaError);
     }
   });
-  const { title, greetings, action, transition, transitionButton } =
+  const { title, action, transition, transitionButton } =
     getUserFormTexts(isSignIn);
   useEffect(() => {
     // reset states upon change form mode
@@ -50,58 +40,57 @@ const UserForm: FC = () => {
   return (
     <div className="card flex flex-col gap-4 bg-slate-100 p-12 w-full max-w-lg">
       <div className="flex flex-col gap-2">
-        <h2 className="text-2xl font-bold">{title}</h2>
-        <span className="">{greetings}</span>
+        <h2 className="text-2xl font-bold">{t(title)}</h2>
       </div>
       {renderAlertErrorMessages(alertErrorMessages)}
       <form className="flex flex-col w-full" onSubmit={onSubmit}>
         {!isSignIn && (
           <>
             <label className="label">
-              <span className="label-text">Username</span>
+              <span className="label-text">{t("Username")}</span>
             </label>
             <input
               className="input input-bordered w-full"
               type="text"
-              placeholder="Username"
+              placeholder={t("Username")}
               {...registerers.username}
             />
             {renderFieldErrorMessages(errors.username)}
           </>
         )}
         <label className="label">
-          <span className="label-text">Email</span>
+          <span className="label-text">{t("Email")}</span>
         </label>
         <input
           className="input input-bordered w-full"
-          type="text"
-          placeholder="Email"
+          type="email"
+          placeholder={t("Email")}
           autoComplete={isSignIn ? "on" : "off"}
           {...registerers.email}
         />
         {renderFieldErrorMessages(errors.email)}
         <label className="label">
-          <span className="label-text">Password</span>
+          <span className="label-text">{t("Password")}</span>
         </label>
         <input
           className="input input-bordered w-full"
           type="password"
-          placeholder="Password"
+          placeholder={t("Password")}
           autoComplete={isSignIn ? "on" : "off"}
           {...registerers.password}
         />
         {renderFieldErrorMessages(errors.password)}
         <button className="btn btn-primary normal-case text-base-100 mt-4">
-          {action}
+          {t(action)}
         </button>
       </form>
       <div className="flex justify-center items-center w-full">
-        <span>{transition}</span>
+        <span>{t(transition)}</span>
         <button
           className="btn btn-link normal-case no-underline hover:no-underline"
           onClick={() => setIsSignIn(prev => !prev)}
         >
-          {transitionButton}
+          {t(transitionButton)}
         </button>
       </div>
     </div>

@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { UseFormRegisterReturn, useForm } from "react-hook-form";
+import { useTranslation } from "react-i18next";
 
 interface FormValues {
   username: string;
@@ -14,6 +15,7 @@ interface Registerers {
 }
 
 const useUserForm = (isSignIn: boolean) => {
+  const { t } = useTranslation();
   const {
     register,
     handleSubmit,
@@ -30,7 +32,7 @@ const useUserForm = (isSignIn: boolean) => {
       setRegisterers(prev => ({
         ...prev,
         username: register("username", {
-          required: "Username is required.",
+          required: t("Username is required."),
           minLength: {
             value: 6,
             message: "Username must have at least 6 characters.",
@@ -38,17 +40,17 @@ const useUserForm = (isSignIn: boolean) => {
         }),
       }));
     }
-  }, [register, isSignIn]);
+  }, [t, register, isSignIn]);
   const [registerers, setRegisterers] = useState<Registerers>({
     username: undefined,
-    email: register("email", { required: "Email is required." }),
+    email: register("email", { required: t("Email is required.") }),
     password: register("password", {
-      required: "Password is required.",
+      required: t("Password is required."),
       minLength: isSignIn
         ? { value: 0, message: "" }
         : {
             value: 8,
-            message: "Password must have at least 8 characters.",
+            message: t("Password must have at least 8 characters."),
           },
     }),
   });

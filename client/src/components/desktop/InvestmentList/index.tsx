@@ -1,5 +1,7 @@
 import { FC } from "react";
 import { useSelector } from "react-redux";
+import { useTranslation } from "react-i18next";
+import { HiPlus } from "react-icons/hi2";
 import { getUser } from "../../../store/user.reducer";
 import Section from "../../common/Section";
 import EntityListItem from "../EntityListItem";
@@ -7,10 +9,9 @@ import { RootState } from "../../../store";
 import { toDecimal, toUSD } from "../../../utils/common.utils";
 import { Portfolio } from "../../../global/entity.interfaces";
 import Fallback from "../../common/Fallback";
-import { fallbackMessages } from "../../../constants/messages.constants";
 import { ENTITY_LIST_CLASSES } from "../../../constants/classes.constants";
-import { HiPlus } from "react-icons/hi2";
 import useDispatchActions from "../../../hooks/useDispatchActions";
+import { useFallbackMessages } from "../../../constants/messages.constants";
 
 interface InvestmentListProps {
   portfolio: Portfolio;
@@ -18,6 +19,8 @@ interface InvestmentListProps {
 
 const InvestmentList: FC<InvestmentListProps> = ({ portfolio }) => {
   const { investmentActions, modalActions } = useDispatchActions();
+  const { t } = useTranslation();
+  const fallbackMessages = useFallbackMessages();
   const { stocks } = useSelector((state: RootState) => getUser(state));
   const renderInvestmentListItems = () =>
     portfolio.investments.length > 0 ? (
@@ -30,7 +33,7 @@ const InvestmentList: FC<InvestmentListProps> = ({ portfolio }) => {
             <EntityListItem
               key={investment.id}
               title={investment.stockId}
-              labelTitle="Current Value"
+              labelTitle="Current Balance"
               labelValue={toUSD(investmentValue)}
               onClick={() => investmentActions.select(investment)}
             />
@@ -42,7 +45,7 @@ const InvestmentList: FC<InvestmentListProps> = ({ portfolio }) => {
     );
   return (
     <Section
-      title={`Investments (${portfolio.investments.length})`}
+      title={`${t("Investments")} (${portfolio.investments.length})`}
       actionButtons={[
         {
           icon: <HiPlus />,

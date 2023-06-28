@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 import {
   HiOutlineArrowRightOnRectangle,
   HiOutlineChartBar,
@@ -21,38 +22,38 @@ const Logo = () => (
   </Link>
 );
 
-const renderNavbarItems = () => {
-  const navbarItems = [
-    {
-      path: "/",
-      text: "Dashboard",
-      icon: <HiOutlineSquares2X2 className={NAVBAR_ITEM_ICON_CLASSES} />,
-    },
-    {
-      path: "/portfolios",
-      text: "Portfolios",
-      icon: <HiOutlineChartBar className={NAVBAR_ITEM_ICON_CLASSES} />,
-    },
-    {
-      path: "/settings",
-      text: "Settings",
-      icon: <HiOutlineCog8Tooth className={NAVBAR_ITEM_ICON_CLASSES} />,
-    },
-  ];
-  return navbarItems.map(({ path, text, icon }) => (
-    <Link
-      to={path}
-      key={text}
-      className={`${BASE_BUTTON_CLASSES.md} justify-start`}
-    >
-      {icon}
-      {text}
-    </Link>
-  ));
-};
-
 const Navbar = () => {
   const { authActions } = useDispatchActions();
+  const { t } = useTranslation();
+  const renderNavbarItems = () => {
+    const navbarItems = [
+      {
+        path: "/",
+        text: t("Dashboard"),
+        icon: <HiOutlineSquares2X2 className={NAVBAR_ITEM_ICON_CLASSES} />,
+      },
+      {
+        path: "/portfolios",
+        text: t("Portfolios"),
+        icon: <HiOutlineChartBar className={NAVBAR_ITEM_ICON_CLASSES} />,
+      },
+      {
+        path: "/settings",
+        text: t("Settings"),
+        icon: <HiOutlineCog8Tooth className={NAVBAR_ITEM_ICON_CLASSES} />,
+      },
+    ];
+    return navbarItems.map(({ path, text, icon }) => (
+      <Link
+        to={path}
+        key={text}
+        className={`${BASE_BUTTON_CLASSES.md} justify-start`}
+      >
+        {icon}
+        {text}
+      </Link>
+    ));
+  };
   return (
     <div className="flex flex-col justify-between border-r h-full px-8 py-16">
       <div className="flex flex-col gap-20">
@@ -64,7 +65,7 @@ const Navbar = () => {
         onClick={authActions.signOut}
       >
         <HiOutlineArrowRightOnRectangle className={NAVBAR_ITEM_ICON_CLASSES} />
-        Sign Out
+        {t("Sign Out")}
       </button>
     </div>
   );

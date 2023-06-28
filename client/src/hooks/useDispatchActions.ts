@@ -1,5 +1,8 @@
 import { useDispatch } from "react-redux";
+import { useTranslation } from "react-i18next";
+import numeral from "numeral";
 import { AppDispatch } from "../store";
+import useNotify from "./useNotify";
 import { asyncFetchUser, asyncSignOut } from "../store/user.reducer";
 import { Investment, Portfolio } from "../global/entity.interfaces";
 import {
@@ -9,19 +12,65 @@ import {
   selectPortfolio,
 } from "../store/entity.reducer";
 import { ModalType, closeModal, openModal } from "../store/modal.reducer";
-import { notify, notifyError } from "../utils/common.utils";
-import { investmentAPI, portfolioAPI, stockAPI, userAPI } from "../api";
+import {
+  authAPI,
+  investmentAPI,
+  portfolioAPI,
+  stockAPI,
+  userAPI,
+} from "../api";
 import { asyncFetchSymbols } from "../store/stocks.reducer";
 import {
   AddInvestmentToPortfolioDto,
   OperationResponseDto,
+  SignInUserDto,
+  SignUpUserDto,
   UpdateInvestmentDto,
 } from "../api/interfaces";
-import numeral from "numeral";
+import { isPrismaError } from "../utils/error.utils";
+import { PrismaError } from "../global/error.interfaces";
 
 const useDispatchActions = () => {
   const dispatch = useDispatch<AppDispatch>();
+  const { t } = useTranslation();
+  const { notify, notifyError } = useNotify();
   const authActions = {
+    signUp: async (
+      dto: SignUpUserDto,
+      onSuccess: () => void,
+      onPrismaError?: (prismaError: PrismaError) => void,
+      onError?: () => void
+    ) => {
+      try {
+        const res = await authAPI.signUp(dto);
+        if (isPrismaError(res)) {
+          if (onPrismaError) {
+            const err = res as PrismaError;
+            onPrismaError(err);
+          }
+          return;
+        }
+        dispatch(asyncFetchUser());
+        notify("Successfully signed up!");
+        if (onSuccess) {
+          onSuccess();
+        }
+      } catch (e) {
+        if (onError) {
+          onError();
+        }
+      }
+    },
+    signIn: async (dto: SignInUserDto, onError?: () => void) => {
+      try {
+        await authAPI.signIn(dto);
+        dispatch(asyncFetchUser());
+      } catch (e) {
+        if (onError) {
+          onError();
+        }
+      }
+    },
     signOut: () => dispatch(asyncSignOut()),
   };
   const userActions = {
@@ -54,7 +103,7 @@ const useDispatchActions = () => {
             onSuccess();
           }
         } else if (onError) {
-          onError(res.message || "Something went wrong!");
+          onError(t(res.message || "Something went wrong!"));
         }
       } catch (e) {
         console.error(e);
@@ -65,7 +114,7 @@ const useDispatchActions = () => {
         const res = await userAPI.deleteUser();
         if (res.success) {
           await dispatch(asyncSignOut());
-          notify(`Successfully deleted the user!`);
+          notify("Successfully deleted the user!");
         } else {
           notifyError();
         }
@@ -83,7 +132,7 @@ const useDispatchActions = () => {
     add: async (portfolioName: string) => {
       const portfolio = await portfolioAPI.addPortfolio(portfolioName);
       await dispatch(asyncFetchUser());
-      notify(`Successfully added ${portfolio.name}!`);
+      notify(t("Successfully added", { entityName: portfolio.name }));
     },
     update: async (portfolioId: string, portfolioName: string) => {
       const res = await portfolioAPI.updatePortfolio(
@@ -92,7 +141,7 @@ const useDispatchActions = () => {
       );
       if (res.success) {
         await dispatch(asyncFetchUser());
-        notify(`Successfully updated ${portfolioName}!`);
+        notify(t("Successfully updated", { entityName: portfolioName }));
       } else {
         notifyError();
       }
@@ -101,7 +150,7 @@ const useDispatchActions = () => {
       const res = await portfolioAPI.deletePortfolio(portfolioId);
       if (res.success) {
         await dispatch(asyncFetchUser());
-        notify(`Successfully deleted the portfolio!`);
+        notify("Successfully deleted the portfolio!");
         dispatch(deselectPortfolio());
         dispatch(deselectInvestment());
       } else {
@@ -118,13 +167,13 @@ const useDispatchActions = () => {
         dto
       );
       await dispatch(asyncFetchUser());
-      notify(`Successfully added ${investment.stockId}!`);
+      notify(t("Successfully added", { entityName: investment.stockId }));
     },
     update: async (investmentId: string, dto: UpdateInvestmentDto) => {
       const res = await investmentAPI.updateInvestment(investmentId, dto);
       if (res.success) {
         await dispatch(asyncFetchUser());
-        notify(`Successfully updated the investment!`);
+        notify("Successfully updated the investment!");
       } else {
         notifyError();
       }
@@ -136,7 +185,7 @@ const useDispatchActions = () => {
       );
       if (res.success) {
         await dispatch(asyncFetchUser());
-        notify(`Successfully deleted the investment!`);
+        notify("Successfully deleted the investment!");
         dispatch(deselectInvestment());
       } else {
         notifyError();

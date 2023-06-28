@@ -1,7 +1,8 @@
 import { RouterProvider } from "react-router-dom";
 import { privateRouter, publicRouter } from "./pages";
-import "./App.css";
 import { useInit } from "./hooks";
+import "./utils/i18n.utils";
+import "./App.css";
 
 function App() {
   const { isFetched, isSignedIn } = useInit();

@@ -1,4 +1,5 @@
-import { FC, ReactNode } from "react";
+import { ReactNode } from "react";
+import { useTranslation } from "react-i18next";
 import UpdatePasswordForm from "./UpdatePasswordForm";
 import UpdateGoalAmountForm from "./UpdateGoalAmountForm";
 import DeleteUserForm from "./DeleteUserForm";
@@ -24,20 +25,20 @@ const settingItems: SettingItem[] = [
   },
 ];
 
-const renderSettingItems = () => {
-  return settingItems.map(({ title, content }) => (
-    <div
-      className="collapse collapse-arrow bg-base-100 max-w-xl mx-auto"
-      key={title}
-    >
-      <input type="checkbox" name="accordion" />
-      <div className="collapse-title font-semibold pl-0">{title}</div>
-      <div className="collapse-content pl-0">{content}</div>
-    </div>
-  ));
-};
-
-const SettingsForm: FC = () => {
+const SettingsForm = () => {
+  const { t } = useTranslation();
+  const renderSettingItems = () => {
+    return settingItems.map(({ title, content }) => (
+      <div
+        className="collapse collapse-arrow bg-base-100 max-w-xl mx-auto"
+        key={title}
+      >
+        <input type="checkbox" name="accordion" />
+        <div className="collapse-title font-semibold pl-0">{t(title)}</div>
+        <div className="collapse-content pl-0">{content}</div>
+      </div>
+    ));
+  };
   return <Section title="Settings">{renderSettingItems()}</Section>;
 };
 

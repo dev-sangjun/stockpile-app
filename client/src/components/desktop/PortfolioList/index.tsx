@@ -1,4 +1,5 @@
 import { useSelector } from "react-redux";
+import { useTranslation } from "react-i18next";
 import { getUser } from "../../../store/user.reducer";
 import Section from "../../common/Section";
 import EntityListItem from "../EntityListItem";
@@ -9,10 +10,12 @@ import { ENTITY_LIST_CLASSES } from "../../../constants/classes.constants";
 import { HiPlus } from "react-icons/hi2";
 import useDispatchActions from "../../../hooks/useDispatchActions";
 import Fallback from "../../common/Fallback";
-import { fallbackMessages } from "../../../constants/messages.constants";
+import { useFallbackMessages } from "../../../constants/messages.constants";
 
 const PortfolioList = () => {
   const { portfolioActions, modalActions } = useDispatchActions();
+  const { t } = useTranslation();
+  const fallbackMessages = useFallbackMessages();
   const { portfolios, stocks } = useSelector((state: RootState) =>
     getUser(state)
   );
@@ -37,7 +40,7 @@ const PortfolioList = () => {
     );
   return (
     <Section
-      title={`Portfolios (${portfolios.length})`}
+      title={`${t("Portfolios")} (${portfolios.length})`}
       actionButtons={[
         {
           icon: <HiPlus />,

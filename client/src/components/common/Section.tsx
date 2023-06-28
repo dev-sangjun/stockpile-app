@@ -1,6 +1,7 @@
 import { FC, PropsWithChildren, ReactNode } from "react";
-import { BASE_BUTTON_CLASSES } from "../../constants/classes.constants";
+import { useTranslation } from "react-i18next";
 import { HiChevronLeft } from "react-icons/hi2";
+import { BASE_BUTTON_CLASSES } from "../../constants/classes.constants";
 
 export interface SectionActionButton {
   icon: ReactNode;
@@ -24,6 +25,7 @@ const Section: FC<PropsWithChildren<SectionProps>> = ({
   actionButtons,
   children,
 }) => {
+  const { t } = useTranslation();
   return (
     <div
       className={`relative h-full flex flex-col gap-2 ${
@@ -36,13 +38,13 @@ const Section: FC<PropsWithChildren<SectionProps>> = ({
           onClick={backButton.onClick}
         >
           <HiChevronLeft />
-          {backButton.text}
+          {t(backButton.text)}
         </button>
       )}
       <h2
         className={`text-xl font-semibold ${backButton ? "text-center" : ""}`}
       >
-        {title}
+        {t(title)}
       </h2>
       {actionButtons && (
         <div className="absolute right-0 flex">

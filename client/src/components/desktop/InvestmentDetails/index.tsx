@@ -24,6 +24,10 @@ const getInvestmentDetailsGridItems = (
   stocks: Stocks
 ): InnerGridItemProps[] => {
   const { stockId, avgCost, quantity } = investment;
+  const stock = stocks[stockId];
+  if (!stock) {
+    return [];
+  }
   const { c, pc } = stocks[stockId];
   const currentPrice = toDecimal(c);
   const previousPrice = toDecimal(pc);

@@ -1,4 +1,5 @@
 import { useSelector } from "react-redux";
+import { useTranslation } from "react-i18next";
 import { RootState } from "../../../store";
 import { getUser } from "../../../store/user.reducer";
 import { Investment, Stocks } from "../../../global/entity.interfaces";
@@ -40,6 +41,7 @@ const getPortfolioOverviewGridItems = (
 };
 
 const PortfoliosOverview = () => {
+  const { t } = useTranslation();
   const { investments, stocks } = useSelector((state: RootState) =>
     getUser(state)
   );
@@ -53,7 +55,7 @@ const PortfoliosOverview = () => {
     </div>
   );
 
-  return <Section title="Overview">{renderInnerGridItems()}</Section>;
+  return <Section title={t("Overview")}>{renderInnerGridItems()}</Section>;
 };
 
 export default PortfoliosOverview;
