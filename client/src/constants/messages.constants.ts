@@ -13,5 +13,8 @@ export const useFallbackMessages = () => {
     investments: `${t("Hmm... There is no investment to display.")} ${
       emojis.ponder
     }`,
+    favoriteStocks: `${t("You don't have any favorite stock yet?")} ${
+      emojis.sweat
+    }`,
   };
 };

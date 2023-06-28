@@ -28,8 +28,10 @@ const PortfolioList = () => {
             <EntityListItem
               key={portfolio.id}
               title={portfolio.name}
-              labelTitle="Total Balance"
-              labelValue={toUSD(totalBalance)}
+              label={{
+                title: "Total Balance",
+                value: toUSD(totalBalance),
+              }}
               onClick={() => portfolioActions.select(portfolio)}
             />
           );

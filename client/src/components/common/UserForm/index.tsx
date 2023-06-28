@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import useDispatchActions from "../../../hooks/useDispatchActions";
-import { getUserFormTexts } from "./utils";
 import useUserForm from "./useUserForm";
 import { PrismaError } from "../../../global/error.interfaces";
 import {
@@ -9,6 +8,16 @@ import {
   renderAlertErrorMessages,
   renderFieldErrorMessages,
 } from "../../../utils/error.utils";
+
+const getUserFormTexts = (isSignIn: boolean) => ({
+  title: isSignIn ? "Sign in" : "Sign up",
+  greetings: isSignIn
+    ? "Welcome back! Let's verify your identity."
+    : "Welcome! Please enter your details to sign up.",
+  action: isSignIn ? "Sign in" : "Sign up",
+  transition: isSignIn ? "Don't have an account?" : "Already have an account?",
+  transitionButton: isSignIn ? "Sign up" : "Sign in",
+});
 
 const UserForm = () => {
   const { authActions } = useDispatchActions();

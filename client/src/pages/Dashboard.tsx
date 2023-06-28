@@ -1,3 +1,4 @@
+import FavoriteStockList from "../components/common/FavoriteStockList";
 import GoalProgress from "../components/common/GoalProgress";
 import Greeting from "../components/common/Greeting";
 import NetWorth from "../components/common/NetWorth";
@@ -22,7 +23,7 @@ const Dashboard = () => {
           </div>
         </div>
       </div>
-      {/* <FavoriteStocks /> */}
+      <FavoriteStockList />
     </div>
   );
 };

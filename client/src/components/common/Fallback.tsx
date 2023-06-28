@@ -10,7 +10,7 @@ const Fallback: FC<FallbackProps> = ({ className, message }) => {
   const { t } = useTranslation();
   return (
     <div
-      className={`h-full flex justify-center items-center p-8 border-2 border-dashed border-slate-200 rounded-xl ${
+      className={`flex justify-center items-center p-8 border-2 border-dashed border-slate-200 rounded-xl ${
         className ? className : ""
       }`}
     >

@@ -65,7 +65,7 @@ const Navbar = () => {
         onClick={authActions.signOut}
       >
         <HiOutlineArrowRightOnRectangle className={NAVBAR_ITEM_ICON_CLASSES} />
-        {t("Sign Out")}
+        {t("Sign out")}
       </button>
     </div>
   );

@@ -5,6 +5,7 @@ const emojis = {
   moneyBag: "💰",
   party: "🥳",
   ponder: "🤔",
+  sweat: "😓",
   wink: "😉",
 };
 

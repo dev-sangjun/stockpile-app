@@ -36,6 +36,7 @@ i18next.use(initReactI18next).init({
         "Email is required.": "이메일을 입력하세요.",
         "Go to Portfolios and add your first portfolio!":
           "포트폴리오 탭으로 가서 새로운 포트폴리오를 추가하세요!",
+        "Favorite Stocks": "즐겨찾기",
         Goal: "목표",
         "Goal amount is required.": "목표금액을 입력하세요.",
         "Goal Progress": "목표 진행상태",
@@ -74,7 +75,8 @@ i18next.use(initReactI18next).init({
         "Successfully updated the goal amount!": "목표금액 수정완료!",
         "Successfully updated the investment!": "종목 수정완료!",
         "Successfully updated the password!": "비밀번호 수정완료!",
-        "Today is": "오늘의 날짜는 {{date}} 입니다.",
+        Symbol: "종목",
+        "Today is": "오늘은 {{date}} 입니다.",
         "Total Balance": "총 평가금액",
         "Total Gain/Loss": "총 평가손익",
         "Total Invested": "총 투자금액",
@@ -89,6 +91,8 @@ i18next.use(initReactI18next).init({
         "Username is required.": "닉네임을 입력하세요.",
         "We'll help you reach your financial goal!":
           "이제 재무상태는 저희에게 맡기세요!",
+        "You don't have any favorite stock yet?":
+          "아직 좋아하는 종목이 없나요?",
       },
     },
   },

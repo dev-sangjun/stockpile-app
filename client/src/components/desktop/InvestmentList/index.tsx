@@ -33,8 +33,10 @@ const InvestmentList: FC<InvestmentListProps> = ({ portfolio }) => {
             <EntityListItem
               key={investment.id}
               title={investment.stockId}
-              labelTitle="Current Balance"
-              labelValue={toUSD(investmentValue)}
+              label={{
+                title: "Current Balance",
+                value: toUSD(investmentValue),
+              }}
               onClick={() => investmentActions.select(investment)}
             />
           );
