@@ -1,9 +1,9 @@
-import DistributionChart from "../components/common/DistributionChart";
-import PortfolioList from "../components/desktop/PortfolioList";
-import PortfoliosOverview from "../components/desktop/PortfoliosOverview";
-import PortfolioDetails from "../components/desktop/PortfolioDetails";
-import InvestmentList from "../components/desktop/InvestmentList";
-import InvestmentDetails from "../components/desktop/InvestmentDetails";
+import DistributionChart from "../components/DistributionChart";
+import PortfolioList from "../components/PortfolioList";
+import PortfoliosOverview from "../components/PortfoliosOverview";
+import PortfolioDetails from "../components/PortfolioDetails";
+import InvestmentList from "../components/InvestmentList";
+import InvestmentDetails from "../components/InvestmentDetails";
 import { useSelectedEntity } from "../hooks";
 
 const Portfolios = () => {

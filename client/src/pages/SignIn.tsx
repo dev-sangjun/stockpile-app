@@ -1,5 +1,5 @@
 import { FC } from "react";
-import UserForm from "../components/common/UserForm";
+import UserForm from "../components/UserForm";
 
 const SignIn: FC = () => {
   return (

@@ -2,14 +2,15 @@ import { Navigate, Outlet, createBrowserRouter } from "react-router-dom";
 import { Toaster } from "react-hot-toast";
 import Dashboard from "./Dashboard";
 import SignIn from "./SignIn";
-import Navbar from "../components/desktop/Navbar";
+import Navbar from "../components/Navbar";
 import Settings from "./Settings";
 import Portfolios from "./Portfolios";
-import Modal from "../components/desktop/Modal";
+import Modal from "../components/Modal";
 
 const BASE_CONTAINER_CLASSES =
-  "flex justify-center h-screen max-w-[1440px] min-w-[1080px] mx-auto bg-base-100";
-const OUTLET_CONTAINER_CLASSES = "flex-1 min-w-[840px] p-16";
+  "flex justify-center h-screen max-w-[1440px] mx-auto bg-base-100 md:min-w-[1080px]";
+const OUTLET_CONTAINER_CLASSES =
+  "flex-1  overflow-y-auto md:min-w-[840px] p-2 pb-16 md:p-16";
 
 export const privateRouter = createBrowserRouter([
   {

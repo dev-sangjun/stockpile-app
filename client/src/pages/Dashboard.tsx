@@ -1,8 +1,8 @@
-import FavoriteStockList from "../components/common/FavoriteStockList";
-import GoalProgress from "../components/common/GoalProgress";
-import Greeting from "../components/common/Greeting";
-import NetWorth from "../components/common/NetWorth";
-import PortfolioChart from "../components/common/PortfolioChart";
+import FavoriteStockList from "../components/FavoriteStockList";
+import GoalProgress from "../components/GoalProgress";
+import Greeting from "../components/Greeting";
+import NetWorth from "../components/NetWorth";
+import PortfolioChart from "../components/PortfolioChart";
 
 const Dashboard = () => {
   return (

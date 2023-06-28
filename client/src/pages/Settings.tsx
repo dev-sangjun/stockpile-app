@@ -1,4 +1,4 @@
-import SettingsForm from "../components/common/SettingsForm";
+import SettingsForm from "../components/SettingsForm";
 
 const Settings = () => {
   return (
