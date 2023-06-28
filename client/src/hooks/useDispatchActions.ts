@@ -10,12 +10,13 @@ import {
 } from "../store/entity.reducer";
 import { ModalType, closeModal, openModal } from "../store/modal.reducer";
 import { notify, notifyError } from "../utils/common.utils";
-import { investmentAPI, portfolioAPI, stockAPI } from "../api";
+import { investmentAPI, portfolioAPI, stockAPI, userAPI } from "../api";
 import { asyncFetchSymbols } from "../store/stocks.reducer";
 import {
   AddInvestmentToPortfolioDto,
   UpdateInvestmentDto,
 } from "../api/interfaces";
+import numeral from "numeral";
 
 const useDispatchActions = () => {
   const dispatch = useDispatch<AppDispatch>();
@@ -24,6 +25,35 @@ const useDispatchActions = () => {
   };
   const userActions = {
     fetch: () => dispatch(asyncFetchUser()),
+    update: async (
+      type: "password" | "goal-amount",
+      value: string,
+      onSuccess?: () => void,
+      onError?: (message: string) => void
+    ) => {
+      if (type === "password") {
+        //
+      } else {
+        const goalAMount = numeral(value).value();
+        if (!goalAMount) {
+          return;
+        }
+        try {
+          const res = await userAPI.updateGoalAmount(goalAMount);
+          if (res.success) {
+            await dispatch(asyncFetchUser());
+            notify("Successfully updated the goal amount!");
+            if (onSuccess) {
+              onSuccess();
+            }
+          } else if (onError) {
+            onError(res.message || "Something went wrong!");
+          }
+        } catch (e) {
+          console.error(e);
+        }
+      }
+    },
   };
   const portfolioActions = {
     select: (portfolio: Portfolio) => dispatch(selectPortfolio(portfolio)),
