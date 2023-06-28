@@ -1,55 +1,59 @@
 import { FC, useState } from "react";
 import { useForm } from "react-hook-form";
-import { userAPI } from "../../../api";
 import {
   renderErrorMessage,
   renderFieldErrorMessages,
 } from "../../../utils/error.utils";
+import useDispatchActions from "../../../hooks/useDispatchActions";
+import isEmpty from "is-empty";
 
 interface FormValues {
   password: string;
 }
 
-const UpdatePasswordForm: FC = () => {
+const UpdateGoalAmountForm: FC = () => {
+  const { userActions } = useDispatchActions();
   const {
     register,
     handleSubmit,
-    formState: { errors },
+    watch,
+    reset,
+    formState: { errors, isValid },
   } = useForm<FormValues>();
   const [isPasswordUpdated, setIsPasswordUpdated] = useState(false);
   const [serverMessage, setServerMessage] = useState("");
-  const onSubmit = handleSubmit(async data => {
-    try {
-      const res = await userAPI.updatePassword(data.password);
-      if (res.success) {
-        setIsPasswordUpdated(true);
-        setServerMessage("");
-      } else {
-        setServerMessage(res.message || "Something went wrong!");
-      }
-    } catch (e) {
-      console.error(e);
-    }
+  const isSubmitButtonDisabled =
+    !isValid || isEmpty(watch("password")) || isPasswordUpdated;
+  const onSubmit = handleSubmit(data => {
+    const onSuccess = () => {
+      reset();
+      setIsPasswordUpdated(true);
+      setServerMessage("");
+    };
+    const onError = (message: string) => {
+      setServerMessage(message);
+    };
+    userActions.update("password", data.password, onSuccess, onError);
   });
   return (
     <form onSubmit={onSubmit}>
-      <div className="flex gap-2">
+      <div className="flex gap-2 px-2">
         <input
           className="input input-bordered input-sm w-full"
           type="password"
-          placeholder="Password"
           {...register("password", {
-            required: "Password is required.",
+            required: "New password is required.",
             minLength: {
-              value: 6,
-              message: "Password has to be at least 6 characters",
+              value: 8,
+              message: "Password must have at least 8 characters.",
             },
           })}
+          placeholder="New Password"
         />
         <button
           type="submit"
           className="btn btn-primary btn-sm normal-case"
-          disabled={isPasswordUpdated}
+          disabled={isSubmitButtonDisabled}
         >
           {isPasswordUpdated ? "Updated!" : "Update"}
         </button>
@@ -60,4 +64,4 @@ const UpdatePasswordForm: FC = () => {
   );
 };
 
-export default UpdatePasswordForm;
+export default UpdateGoalAmountForm;

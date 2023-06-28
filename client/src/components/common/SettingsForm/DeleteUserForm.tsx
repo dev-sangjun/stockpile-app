@@ -1,35 +1,30 @@
-import { FC, useState } from "react";
+import { FC } from "react";
 import { useForm } from "react-hook-form";
-import { useDispatch } from "react-redux";
-import {
-  renderErrorMessage,
-  renderFieldErrorMessages,
-} from "../../../utils/error.utils";
+import useDispatchActions from "../../../hooks/useDispatchActions";
 
 interface FormValues {
   delete: string;
 }
 
 const DeleteUserForm: FC = () => {
+  const { userActions } = useDispatchActions();
   const {
     register,
     handleSubmit,
-    formState: { errors, isValid },
+    formState: { isValid },
   } = useForm<FormValues>();
-  const [serverMessage, setServerMessage] = useState("");
   const compareText = "DELETE";
-  const onSubmit = handleSubmit(async data => {
-    //
+  const onSubmit = handleSubmit(() => {
+    userActions.deleteUser();
   });
   return (
     <form onSubmit={onSubmit}>
-      <div className="flex gap-2">
+      <div className="flex gap-2 px-2">
         <input
           className="input input-bordered input-sm w-full"
           type="text"
           placeholder="Type DELETE to confirm"
           {...register("delete", {
-            required: "Goal amount is required.",
             validate: value => value === compareText,
           })}
         />
@@ -41,8 +36,6 @@ const DeleteUserForm: FC = () => {
           Delete
         </button>
       </div>
-      {renderFieldErrorMessages(errors.delete)}
-      {renderErrorMessage(serverMessage)}
     </form>
   );
 };

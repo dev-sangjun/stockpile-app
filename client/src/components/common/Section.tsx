@@ -8,6 +8,7 @@ export interface SectionActionButton {
 }
 
 interface SectionProps {
+  className?: string;
   title: string;
   backButton?: {
     text: string;
@@ -17,13 +18,18 @@ interface SectionProps {
 }
 
 const Section: FC<PropsWithChildren<SectionProps>> = ({
+  className,
   title,
   backButton,
   actionButtons,
   children,
 }) => {
   return (
-    <div className="relative h-full flex flex-col gap-2">
+    <div
+      className={`relative h-full flex flex-col gap-2 ${
+        className ? className : ""
+      }`}
+    >
       {backButton && (
         <button
           className={`${BASE_BUTTON_CLASSES.sm} absolute gap-2 text-slate-500`}

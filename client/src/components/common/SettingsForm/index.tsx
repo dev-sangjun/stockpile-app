@@ -2,6 +2,7 @@ import { FC, ReactNode } from "react";
 import UpdatePasswordForm from "./UpdatePasswordForm";
 import UpdateGoalAmountForm from "./UpdateGoalAmountForm";
 import DeleteUserForm from "./DeleteUserForm";
+import Section from "../Section";
 
 interface SettingItem {
   title: string;
@@ -25,21 +26,19 @@ const settingItems: SettingItem[] = [
 
 const renderSettingItems = () => {
   return settingItems.map(({ title, content }) => (
-    <div className="collapse collapse-arrow bg-base-100" key={title}>
+    <div
+      className="collapse collapse-arrow bg-base-100 max-w-xl mx-auto"
+      key={title}
+    >
       <input type="checkbox" name="accordion" />
-      <div className="collapse-title font-medium pl-0">{title}</div>
+      <div className="collapse-title font-semibold pl-0">{title}</div>
       <div className="collapse-content pl-0">{content}</div>
     </div>
   ));
 };
 
 const SettingsForm: FC = () => {
-  return (
-    <div className="flex flex-col gap-4 md:max-w-2xl mx-auto">
-      <h2 className="text-xl font-bold">Settings</h2>
-      {renderSettingItems()}
-    </div>
-  );
+  return <Section title="Settings">{renderSettingItems()}</Section>;
 };
 
 export default SettingsForm;

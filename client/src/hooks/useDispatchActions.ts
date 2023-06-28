@@ -14,6 +14,7 @@ import { investmentAPI, portfolioAPI, stockAPI, userAPI } from "../api";
 import { asyncFetchSymbols } from "../store/stocks.reducer";
 import {
   AddInvestmentToPortfolioDto,
+  OperationResponseDto,
   UpdateInvestmentDto,
 } from "../api/interfaces";
 import numeral from "numeral";
@@ -31,27 +32,45 @@ const useDispatchActions = () => {
       onSuccess?: () => void,
       onError?: (message: string) => void
     ) => {
-      if (type === "password") {
-        //
-      } else {
-        const goalAMount = numeral(value).value();
-        if (!goalAMount) {
-          return;
-        }
-        try {
-          const res = await userAPI.updateGoalAmount(goalAMount);
-          if (res.success) {
-            await dispatch(asyncFetchUser());
-            notify("Successfully updated the goal amount!");
-            if (onSuccess) {
-              onSuccess();
-            }
-          } else if (onError) {
-            onError(res.message || "Something went wrong!");
+      let res: OperationResponseDto;
+      try {
+        if (type === "password") {
+          res = await userAPI.updatePassword(value);
+        } else {
+          const goalAMount = numeral(value).value();
+          if (!goalAMount) {
+            return;
           }
-        } catch (e) {
-          console.error(e);
+          res = await userAPI.updateGoalAmount(goalAMount);
         }
+        if (res.success) {
+          await dispatch(asyncFetchUser());
+          notify(
+            `Successfully updated the ${
+              type === "password" ? "password" : "goal amount"
+            }!`
+          );
+          if (onSuccess) {
+            onSuccess();
+          }
+        } else if (onError) {
+          onError(res.message || "Something went wrong!");
+        }
+      } catch (e) {
+        console.error(e);
+      }
+    },
+    deleteUser: async () => {
+      try {
+        const res = await userAPI.deleteUser();
+        if (res.success) {
+          await dispatch(asyncSignOut());
+          notify(`Successfully deleted the user!`);
+        } else {
+          notifyError();
+        }
+      } catch (e) {
+        console.error(e);
       }
     },
   };

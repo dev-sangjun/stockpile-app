@@ -51,7 +51,7 @@ const UpdateGoalAmountForm: FC = () => {
   });
   return (
     <form onSubmit={onSubmit}>
-      <div className="flex gap-2 p-2">
+      <div className="flex gap-2 px-2">
         <input
           className="input input-bordered input-sm w-full"
           type="text"

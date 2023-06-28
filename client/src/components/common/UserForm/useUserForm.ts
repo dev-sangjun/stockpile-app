@@ -32,8 +32,8 @@ const useUserForm = (isSignIn: boolean) => {
         username: register("username", {
           required: "Username is required.",
           minLength: {
-            value: 4,
-            message: "Username has to be at least 4 characters",
+            value: 6,
+            message: "Username must have at least 6 characters.",
           },
         }),
       }));
@@ -44,10 +44,12 @@ const useUserForm = (isSignIn: boolean) => {
     email: register("email", { required: "Email is required." }),
     password: register("password", {
       required: "Password is required.",
-      minLength: {
-        value: 6,
-        message: "Password has to be at least 6 characters",
-      },
+      minLength: isSignIn
+        ? { value: 0, message: "" }
+        : {
+            value: 8,
+            message: "Password must have at least 8 characters.",
+          },
     }),
   });
   return { registerers, handleSubmit, errors, clearErrors };
