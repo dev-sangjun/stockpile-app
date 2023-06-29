@@ -22,7 +22,7 @@ const SideNavbar: FC<SideNavbarProps> = ({ navbarItems }) => {
           {text}
         </Link>
       ) : (
-        <div className="flex-1 flex flex-col justify-end">
+        <div key={text} className="flex-1 flex flex-col justify-end">
           <button
             className={`${BASE_BUTTON_CLASSES.sm} w-full justify-start`}
             onClick={onClick}

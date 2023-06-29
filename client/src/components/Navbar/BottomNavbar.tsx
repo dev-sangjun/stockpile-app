@@ -22,7 +22,7 @@ const BottomNavbar: FC<BottomNavbarProps> = ({ navbarItems }) => {
           {icon}
         </Link>
       ) : (
-        <div>
+        <div key={text}>
           <button className={BASE_BUTTON_CLASSES.sm} onClick={onClick}>
             {icon}
           </button>
@@ -32,7 +32,7 @@ const BottomNavbar: FC<BottomNavbarProps> = ({ navbarItems }) => {
   };
   return (
     <div className="navbar bg-base-100 p-0 mx-auto">
-      <div className="btm-nav z-10">{renderBottomNavbarItems()}</div>
+      <div className="btm-nav z-10 bottom-2">{renderBottomNavbarItems()}</div>
     </div>
   );
 };
