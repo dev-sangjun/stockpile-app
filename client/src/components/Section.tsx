@@ -1,7 +1,10 @@
 import { FC, PropsWithChildren, ReactNode } from "react";
 import { useTranslation } from "react-i18next";
 import { HiChevronLeft } from "react-icons/hi2";
-import { BASE_BUTTON_CLASSES } from "../constants/classes.constants";
+import {
+  BASE_BUTTON_CLASSES,
+  LINK_BUTTON_CLASSES,
+} from "../constants/classes.constants";
 
 export interface SectionActionButton {
   icon: ReactNode;
@@ -30,7 +33,7 @@ const Section: FC<PropsWithChildren<SectionProps>> = ({
     <div className={`relative h-full flex flex-col gap-2 ${className}`}>
       {backButton && (
         <button
-          className={`${BASE_BUTTON_CLASSES.sm} absolute gap-2 text-slate-500 btn-link p-0 no-underline hover:no-underline`}
+          className={`${LINK_BUTTON_CLASSES.sm} absolute`}
           onClick={backButton.onClick}
         >
           <HiChevronLeft />

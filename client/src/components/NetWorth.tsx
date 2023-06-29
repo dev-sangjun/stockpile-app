@@ -6,7 +6,7 @@ import { getTotalNetWorth } from "../utils/entity.utils";
 import { toUSD } from "../utils/common.utils";
 import { RootState } from "../store";
 import { getUser } from "../store/user.reducer";
-import { BASE_BUTTON_CLASSES } from "../constants/classes.constants";
+import { LINK_BUTTON_CLASSES } from "../constants/classes.constants";
 
 const NetWorth = () => {
   const { t } = useTranslation();
@@ -17,10 +17,7 @@ const NetWorth = () => {
     <div className="flex flex-col md:gap-1">
       <div className="flex justify-between items-center">
         <h3 className="md:text-lg font-semibold">{t("Net Worth")}</h3>
-        <Link
-          className={`${BASE_BUTTON_CLASSES.sm} btn-link p-0 no-underline hover:no-underline text-black`}
-          to="/settings"
-        >
+        <Link className={`${LINK_BUTTON_CLASSES.sm}`} to="/settings">
           <HiOutlineCog8Tooth />
         </Link>
       </div>
