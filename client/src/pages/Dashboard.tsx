@@ -23,11 +23,9 @@ const Dashboard = () => {
         <div className="col-span-4 md:col-span-3">
           <PortfolioChart />
         </div>
-        <div className="col-span-4 md:col-span-1 flex flex-col card border-2 border-dashed border-slate-200 p-2">
-          <div className="p-2 md:p-4">
-            <NetWorth />
-          </div>
-          <div className="flex-1 p-2 md:p-4">
+        <div className="col-span-4 md:col-span-1 flex flex-col card border-2 border-dashed border-slate-200 p-4 md:p-8 gap-2 md:gap-4">
+          <NetWorth />
+          <div className="flex-1">
             <GoalProgress />
           </div>
         </div>

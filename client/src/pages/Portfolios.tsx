@@ -17,7 +17,7 @@ const Portfolios = () => {
       investmentActions.deselect();
     };
     return reset;
-  }, []);
+  }, [portfolioActions, investmentActions]);
   return (
     <div className="w-full p-2 flex flex-col md:grid md:grid-cols-2 md:grid-rows-[39rem] gap-4 overflow-hidden">
       <div
