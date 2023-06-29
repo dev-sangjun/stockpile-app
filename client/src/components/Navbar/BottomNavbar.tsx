@@ -16,13 +16,15 @@ const BottomNavbar: FC<BottomNavbarProps> = ({ navbarItems }) => {
       path ? (
         <Link
           key={text}
-          className={`${isNavbarItemActive(path) ? "active" : ""}`}
+          className={`border-t-2 border-slate-100 ${
+            isNavbarItemActive(path) ? "active border-black" : ""
+          }`}
           to={path}
         >
           {icon}
         </Link>
       ) : (
-        <div key={text}>
+        <div key={text} className="border-t-2 border-slate-100">
           <button className={BASE_BUTTON_CLASSES.sm} onClick={onClick}>
             {icon}
           </button>
@@ -31,7 +33,7 @@ const BottomNavbar: FC<BottomNavbarProps> = ({ navbarItems }) => {
     );
   };
   return (
-    <div className="navbar bg-base-100 p-0 mx-auto">
+    <div className="navbar bg-base-100 p-0 mx-auto border-t">
       <div className="btm-nav z-10 bottom-2">{renderBottomNavbarItems()}</div>
     </div>
   );

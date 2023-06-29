@@ -16,14 +16,14 @@ const Fallback: FC<FallbackProps> = ({
   const { t } = useTranslation();
   return (
     <div
-      className={`flex justify-center items-center p-8 border-2 border-dashed border-slate-200 rounded-xl ${className}`}
+      className={`flex justify-center items-center p-4 md:p-8 border-2 border-dashed border-slate-200 rounded-xl ${className}`}
     >
       {redirectTo ? (
         <Link to={redirectTo}>
-          <p className="text-lg text-slate-500">{t(message)}</p>
+          <p className="text-sm md:text-lg text-slate-500">{t(message)}</p>
         </Link>
       ) : (
-        <p className="text-lg text-slate-500">{t(message)}</p>
+        <p className="text-sm md:text-lg text-slate-500">{t(message)}</p>
       )}
     </div>
   );

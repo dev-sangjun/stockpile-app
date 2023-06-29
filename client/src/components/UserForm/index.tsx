@@ -10,6 +10,7 @@ import {
 } from "../../utils/error.utils";
 import {
   BASE_INPUT_CLASSES,
+  BASE_LABEL_CLASSES,
   PRIMARY_BUTTON_CLASSES,
 } from "../../constants/classes.constants";
 
@@ -59,8 +60,8 @@ const UserForm = () => {
       <form className="flex flex-col w-full" onSubmit={onSubmit}>
         {!isSignIn && (
           <>
-            <label className="label">
-              <span className="label-text">{t("Username")}</span>
+            <label className={BASE_LABEL_CLASSES.default}>
+              {t("Username")}
             </label>
             <input
               className={BASE_INPUT_CLASSES.sm}
@@ -71,9 +72,7 @@ const UserForm = () => {
             {renderFieldErrorMessages(errors.username)}
           </>
         )}
-        <label className="label">
-          <span className="label-text">{t("Email")}</span>
-        </label>
+        <label className={BASE_LABEL_CLASSES.default}>{t("Email")}</label>
         <input
           className={BASE_INPUT_CLASSES.sm}
           type="email"
@@ -82,9 +81,7 @@ const UserForm = () => {
           {...registerers.email}
         />
         {renderFieldErrorMessages(errors.email)}
-        <label className="label">
-          <span className="label-text">{t("Password")}</span>
-        </label>
+        <label className={BASE_LABEL_CLASSES.default}>{t("Password")}</label>
         <input
           className={BASE_INPUT_CLASSES.sm}
           type="password"
@@ -93,7 +90,7 @@ const UserForm = () => {
           {...registerers.password}
         />
         {renderFieldErrorMessages(errors.password)}
-        <button className={`${PRIMARY_BUTTON_CLASSES.sm} mt-4`}>
+        <button className={`${PRIMARY_BUTTON_CLASSES.md} mt-4`}>
           {t(action)}
         </button>
       </form>

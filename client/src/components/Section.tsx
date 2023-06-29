@@ -30,7 +30,7 @@ const Section: FC<PropsWithChildren<SectionProps>> = ({
     <div className={`relative h-full flex flex-col gap-2 ${className}`}>
       {backButton && (
         <button
-          className={`${BASE_BUTTON_CLASSES.sm} absolute gap-2 text-slate-500`}
+          className={`${BASE_BUTTON_CLASSES.sm} absolute gap-2 text-slate-500 btn-link p-0 no-underline hover:no-underline`}
           onClick={backButton.onClick}
         >
           <HiChevronLeft />

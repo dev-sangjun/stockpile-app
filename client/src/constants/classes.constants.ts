@@ -6,12 +6,16 @@ export const BASE_BUTTON_CLASSES = {
 
 export const PRIMARY_BUTTON_CLASSES = {
   sm: "btn btn-primary btn-sm normal-case",
-  md: "btn btn-primary btn-md normal-case",
+  md: "btn btn-primary btn-md normal-case h-10 min-h-[2.5rem]",
+};
+
+export const BASE_LABEL_CLASSES = {
+  default: "label text-[16px]",
 };
 
 export const BASE_INPUT_CLASSES = {
-  sm: "input input-sm input-bordered w-full",
-  md: "input input-md input-bordered w-full",
+  sm: "input input-sm input-bordered w-full text-[16px]",
+  md: "input input-md input-bordered w-full text-[16px]",
 };
 
 export const ENTITY_LIST_CLASSES =

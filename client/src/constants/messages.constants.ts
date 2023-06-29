@@ -10,9 +10,7 @@ export const useFallbackMessages = () => {
     portfolioValues: `${t("Go to Portfolios and add your first portfolio!")} ${
       emojis.wink
     }`,
-    investments: `${t("Hmm... There is no investment to display.")} ${
-      emojis.ponder
-    }`,
+    investments: `${t("Let's first add a new investment.")} ${emojis.ponder}`,
     favoriteStocks: `${t("You don't have any favorite stock yet?")} ${
       emojis.sweat
     }`,
