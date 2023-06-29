@@ -11,6 +11,7 @@ const useNotify = () => {
       duration: 3000,
       position: "bottom-right",
       icon: type === "success" ? emojis.clap : emojis.crying,
+      className: "mb-16 md:mb-4",
     });
 
   const notifyError = () => notify("Something went wrong!", "error");
