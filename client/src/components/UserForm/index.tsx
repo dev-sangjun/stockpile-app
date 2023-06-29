@@ -13,6 +13,7 @@ import {
   BASE_LABEL_CLASSES,
   PRIMARY_BUTTON_CLASSES,
 } from "../../constants/classes.constants";
+import LanguageSelect from "../LanguageSelect";
 
 const getUserFormTexts = (isSignIn: boolean) => ({
   title: isSignIn ? "Sign in" : "Sign up",
@@ -52,9 +53,18 @@ const UserForm = () => {
     setAlertErrorMessages([]);
   }, [isSignIn, clearErrors]);
   return (
-    <div className="card flex flex-col gap-4 bg-slate-100 p-8 md:p-12 w-full max-w-lg">
-      <div className="flex flex-col gap-2">
-        <h2 className="text-xl md:text-2xl font-bold">{t(title)}</h2>
+    <div className="card flex flex-col gap-2 bg-slate-100 p-6 md:p-12 w-full max-w-lg">
+      <div className="flex flex-col items-center gap-4 md:gap-6">
+        <h1 className="logo-text text-3xl md:text-4xl">Stockpile</h1>
+        <div className="w-full flex justify-between items-center">
+          <h2 className="md:text-xl font-bold">{t(title)}</h2>
+          <div className="md:hidden ml-auto">
+            <LanguageSelect isMobile />
+          </div>
+          <div className="hidden md:block ml-auto">
+            <LanguageSelect isMobile={false} />
+          </div>
+        </div>
       </div>
       {renderAlertErrorMessages(alertErrorMessages)}
       <form className="flex flex-col w-full" onSubmit={onSubmit}>

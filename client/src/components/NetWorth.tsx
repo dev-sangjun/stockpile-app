@@ -14,10 +14,13 @@ const NetWorth = () => {
     getUser(state)
   );
   return (
-    <div className="flex flex-col md:gap-2">
+    <div className="flex flex-col md:gap-1">
       <div className="flex justify-between items-center">
         <h3 className="md:text-lg font-semibold">{t("Net Worth")}</h3>
-        <Link className={BASE_BUTTON_CLASSES.sm} to="/settings">
+        <Link
+          className={`${BASE_BUTTON_CLASSES.sm} btn-link p-0 no-underline hover:no-underline text-black`}
+          to="/settings"
+        >
           <HiOutlineCog8Tooth />
         </Link>
       </div>

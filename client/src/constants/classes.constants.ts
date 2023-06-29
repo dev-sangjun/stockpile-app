@@ -10,7 +10,7 @@ export const PRIMARY_BUTTON_CLASSES = {
 };
 
 export const BASE_LABEL_CLASSES = {
-  default: "label text-[16px]",
+  default: "label text-sm",
 };
 
 export const BASE_INPUT_CLASSES = {

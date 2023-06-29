@@ -3,7 +3,7 @@ import UserForm from "../components/UserForm";
 
 const SignIn: FC = () => {
   return (
-    <div className="flex justify-center items-center h-full p-2">
+    <div className="flex flex-col justify-center items-center h-full p-2 gap-8">
       <UserForm />
     </div>
   );
