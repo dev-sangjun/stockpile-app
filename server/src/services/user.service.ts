@@ -10,7 +10,6 @@ interface PublicUser {
   id: string;
   email: string;
   username: string;
-  favoritePortfolios: string[];
   favoriteStocks: string[];
   goalAmount: number;
 
@@ -24,7 +23,6 @@ const getPublicUser = async (id: string): Promise<PublicUser> => {
   const {
     email,
     username,
-    favoritePortfolios,
     favoriteStocks,
     goalAmount,
     portfolios,
@@ -38,7 +36,6 @@ const getPublicUser = async (id: string): Promise<PublicUser> => {
     portfolios,
     investments,
     stocks,
-    favoritePortfolios,
     favoriteStocks,
     goalAmount,
   };
@@ -56,11 +53,24 @@ const getUser = async (
       portfolios: include.includes("portfolios")
         ? {
             include: {
-              investments: true,
+              investments: {
+                orderBy: {
+                  createdAt: "asc",
+                },
+              },
+            },
+            orderBy: {
+              createdAt: "asc",
             },
           }
         : false,
-      investments: include.includes("investments"),
+      investments: include.includes("investments")
+        ? {
+            orderBy: {
+              createdAt: "asc",
+            },
+          }
+        : false,
       stocks: include.includes("stocks")
         ? {
             include: {

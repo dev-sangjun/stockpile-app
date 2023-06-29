@@ -27,7 +27,14 @@ const getPortfoliosByUserId = async (userId: string): Promise<Portfolio[]> => {
       userId,
     },
     include: {
-      investments: true,
+      investments: {
+        orderBy: {
+          createdAt: "asc",
+        },
+      },
+    },
+    orderBy: {
+      createdAt: "asc",
     },
   });
   return portfolios;

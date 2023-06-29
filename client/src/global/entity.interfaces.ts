@@ -2,7 +2,6 @@ export interface User {
   id: string;
   email: string;
   username: string;
-  favoritePortfolios: string[];
   favoriteStocks: string[];
   goalAmount: number;
 

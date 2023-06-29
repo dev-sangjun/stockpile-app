@@ -35,7 +35,6 @@ export const asyncFetchUser = createAsyncThunk(
       id,
       email,
       username,
-      favoritePortfolios,
       favoriteStocks,
       goalAmount,
       portfolios,
@@ -49,7 +48,6 @@ export const asyncFetchUser = createAsyncThunk(
     };
     return {
       userInfo,
-      favoritePortfolios,
       favoriteStocks,
       goalAmount,
       portfolios,

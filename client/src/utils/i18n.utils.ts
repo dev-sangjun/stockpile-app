@@ -46,11 +46,10 @@ i18next
           "Goal amount is required.": "목표금액을 입력하세요.",
           "Goal Progress": "목표 진행상태",
           Hello: "반가워요, {{username}}님",
-          "Hmm... There is no investment to display.":
-            "표시할 종목이 없네요...",
+          "Let's first add an investment.": "아직은 표시할 종목이 없네요...",
           Investments: "보유종목",
-          "Let's add your first portfolio to get started.":
-            "시작하려면 새로운 포트폴리오를 추가하세요.",
+          "Add your first portfolio to get started!":
+            "시작하려면 새로운 포트폴리오를 추가하세요!",
           "Net Worth": "총 자산",
           "New Password": "새로운 비밀번호",
           "New password is required.": "새로운 비밀번호를 입력하세요.",

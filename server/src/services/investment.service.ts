@@ -22,6 +22,9 @@ const getInvestmentsByPortfolioId = async (
     where: {
       portfolioId,
     },
+    orderBy: {
+      createdAt: "asc",
+    },
   });
   return investments;
 };

@@ -11,13 +11,14 @@ datasource db {
 }
 
 model User {
-  id                 String   @id @default(uuid())
-  username           String   @unique
-  email              String   @unique
-  password           String
-  favoritePortfolios String[] // portfolioIds
-  favoriteStocks     String[] // stockIds
-  goalAmount         Float    @default(100000)
+  id             String   @id @default(uuid())
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+  username       String   @unique
+  email          String   @unique
+  password       String
+  favoriteStocks String[] // stockIds
+  goalAmount     Float    @default(100000)
 
   portfolios    Portfolio[]
   investments   Investment[]
@@ -27,13 +28,14 @@ model User {
 
 model Stock {
   id        String   @id // stock symbol
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
   c         Float
   d         Float
   dp        Float
   h         Float
   l         Float
   pc        Float
-  updatedAt DateTime @updatedAt
 
   investments Investment[]
   company     Company?
@@ -41,9 +43,11 @@ model Stock {
 }
 
 model Company {
-  id   String @id @default(uuid())
-  name String
-  logo String
+  id        String   @id @default(uuid())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  name      String
+  logo      String
 
   stock   Stock  @relation(fields: [stockId], references: [id])
   stockId String @unique
@@ -51,6 +55,8 @@ model Company {
 
 model Investment {
   id          String    @id @default(uuid())
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
   quantity    Float
   avgCost     Float
   user        User      @relation(fields: [userId], references: [id], onDelete: Cascade)
@@ -62,8 +68,10 @@ model Investment {
 }
 
 model Portfolio {
-  id   String @id @default(uuid())
-  name String
+  id        String   @id @default(uuid())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  name      String
 
   user        User         @relation(fields: [userId], references: [id], onDelete: Cascade)
   userId      String

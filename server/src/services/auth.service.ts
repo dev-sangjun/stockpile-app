@@ -27,7 +27,6 @@ const createUser = async (
         email,
         username,
         password: hashedPassword,
-        favoritePortfolios: [],
         favoriteStocks: [],
       },
     });
