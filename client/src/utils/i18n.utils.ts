@@ -24,6 +24,7 @@ i18next
           "Already have an account?": "이미 계정이 있으신가요?",
           "Are you sure you want to delete":
             "{{entityName}}를/을 삭제하시겠습니까?",
+          "Are you sure you want to sign out?": "로그아웃 하시겠습니까?",
           Cancel: "취소",
           Confirm: "확인",
           Current: "현재",

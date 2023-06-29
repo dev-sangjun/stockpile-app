@@ -28,7 +28,14 @@ const getPortfoliosByUserId = (userId) => __awaiter(void 0, void 0, void 0, func
             userId,
         },
         include: {
-            investments: true,
+            investments: {
+                orderBy: {
+                    createdAt: "asc",
+                },
+            },
+        },
+        orderBy: {
+            createdAt: "asc",
         },
     });
     return portfolios;

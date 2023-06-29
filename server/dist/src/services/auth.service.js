@@ -30,7 +30,6 @@ const createUser = (authUserSignUpRequestDto) => __awaiter(void 0, void 0, void 
                 email,
                 username,
                 password: hashedPassword,
-                favoritePortfolios: [],
                 favoriteStocks: [],
             },
         });

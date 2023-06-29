@@ -19,7 +19,7 @@ const stock_service_1 = __importDefault(require("./stock.service"));
 const errors_global_2 = require("../global/errors.global");
 const getPublicUser = (id) => __awaiter(void 0, void 0, void 0, function* () {
     const user = yield getUser(id);
-    const { email, username, favoritePortfolios, favoriteStocks, goalAmount, portfolios, investments, stocks, } = user;
+    const { email, username, favoriteStocks, goalAmount, portfolios, investments, stocks, } = user;
     return {
         id,
         email,
@@ -27,7 +27,6 @@ const getPublicUser = (id) => __awaiter(void 0, void 0, void 0, function* () {
         portfolios,
         investments,
         stocks,
-        favoritePortfolios,
         favoriteStocks,
         goalAmount,
     };
@@ -41,11 +40,24 @@ const getUser = (id, include = ["portfolios", "investments", "stocks"]) => __awa
             portfolios: include.includes("portfolios")
                 ? {
                     include: {
-                        investments: true,
+                        investments: {
+                            orderBy: {
+                                createdAt: "asc",
+                            },
+                        },
+                    },
+                    orderBy: {
+                        createdAt: "asc",
                     },
                 }
                 : false,
-            investments: include.includes("investments"),
+            investments: include.includes("investments")
+                ? {
+                    orderBy: {
+                        createdAt: "asc",
+                    },
+                }
+                : false,
             stocks: include.includes("stocks")
                 ? {
                     include: {

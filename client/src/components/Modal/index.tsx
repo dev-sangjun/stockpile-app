@@ -9,11 +9,29 @@ import useDispatchActions from "../../hooks/useDispatchActions";
 import EntityModal from "./EntityModal";
 
 const Modal: FC = () => {
-  const { portfolioActions, investmentActions, modalActions } =
+  const { authActions, portfolioActions, investmentActions, modalActions } =
     useDispatchActions();
   const { t } = useTranslation();
   const modalType = useSelector((state: RootState) => getModalType(state));
   const { selectedPortfolio, selectedInvestment } = useSelectedEntity();
+  if (modalType === "SIGN_OUT") {
+    return (
+      <ConfirmActionModal
+        title="Sign out"
+        questionLabel={t("Are you sure you want to sign out?")}
+        onConfirm={async () => {
+          await authActions.signOut();
+          modalActions.close();
+        }}
+      />
+    );
+  }
+  if (modalType === "ADD_PORTFOLIO" || modalType === "UPDATE_PORTFOLIO") {
+    return <EntityModal entityType="PORTFOLIO" />;
+  }
+  if (modalType === "ADD_INVESTMENT" || modalType === "UPDATE_INVESTMENT") {
+    return <EntityModal entityType="INVESTMENT" />;
+  }
   if (modalType === "DELETE_PORTFOLIO" && selectedPortfolio) {
     return (
       <ConfirmActionModal
@@ -48,12 +66,6 @@ const Modal: FC = () => {
         }}
       />
     );
-  }
-  if (modalType === "ADD_PORTFOLIO" || modalType === "UPDATE_PORTFOLIO") {
-    return <EntityModal entityType="PORTFOLIO" />;
-  }
-  if (modalType === "ADD_INVESTMENT" || modalType === "UPDATE_INVESTMENT") {
-    return <EntityModal entityType="INVESTMENT" />;
   }
   return null;
 };

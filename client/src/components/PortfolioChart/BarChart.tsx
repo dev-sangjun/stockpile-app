@@ -99,7 +99,7 @@ const BarChart: FC<BarChartProps> = ({ portfolios }) => {
     };
   };
   return (
-    <div className="flex-1 mt-4">
+    <div className="flex-1">
       <Bar {...constructChartConfig()} />
     </div>
   );

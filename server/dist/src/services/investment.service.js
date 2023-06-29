@@ -27,6 +27,9 @@ const getInvestmentsByPortfolioId = (portfolioId) => __awaiter(void 0, void 0, v
         where: {
             portfolioId,
         },
+        orderBy: {
+            createdAt: "asc",
+        },
     });
     return investments;
 });

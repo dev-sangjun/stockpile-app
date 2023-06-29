@@ -20,7 +20,7 @@ export interface NavbarItem {
 }
 
 const Navbar = () => {
-  const { authActions } = useDispatchActions();
+  const { modalActions } = useDispatchActions();
   const { t } = useTranslation();
   const navbarItems: NavbarItem[] = [
     {
@@ -43,7 +43,7 @@ const Navbar = () => {
       icon: (
         <HiOutlineArrowRightOnRectangle className={NAVBAR_ITEM_ICON_CLASSES} />
       ),
-      onClick: authActions.signOut,
+      onClick: () => modalActions.open("SIGN_OUT"),
     },
   ];
   return (
