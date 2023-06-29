@@ -34,7 +34,9 @@ const BottomNavbar: FC<BottomNavbarProps> = ({ navbarItems }) => {
   };
   return (
     <div className="navbar bg-base-100 p-0 mx-auto border-t">
-      <div className="btm-nav z-10 bottom-2">{renderBottomNavbarItems()}</div>
+      <div className="btm-nav z-10 h-[4.5rem] pb-2">
+        {renderBottomNavbarItems()}
+      </div>
     </div>
   );
 };
