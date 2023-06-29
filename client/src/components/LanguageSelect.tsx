@@ -17,7 +17,7 @@ const LanguageSelect: FC<LanguageSelectProps> = ({
   className = "",
   isMobile,
 }) => {
-  const [language, setLanguage] = useState(i18next.language);
+  const [language, setLanguage] = useState(i18next.language || "en");
   const handleClick = (lang: string) => {
     changeLanguage(lang);
     setLanguage(lang);
