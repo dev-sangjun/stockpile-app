@@ -17,7 +17,7 @@ const LanguageSelect: FC<LanguageSelectProps> = ({
   className = "",
   isMobile,
 }) => {
-  const [language, setLanguage] = useState(i18next.language || "en");
+  const [language, setLanguage] = useState(i18next.language || "en-US");
   const handleClick = (lang: string) => {
     changeLanguage(lang);
     setLanguage(lang);
@@ -35,22 +35,24 @@ const LanguageSelect: FC<LanguageSelectProps> = ({
       {
         fullText: "한국어",
         shortText: "가",
-        lang: "kr",
+        lang: "ko-KR",
       },
     ];
-    return buttons.map(({ fullText, shortText, lang }) => (
-      <button
-        key={lang}
-        className={`${BASE_BUTTON_CLASSES.xs} ${
-          lang === language
-            ? "text-black font-bold underline"
-            : "text-slate-500 font-light"
-        } px-2 py-0`}
-        onClick={() => handleClick(lang)}
-      >
-        {isMobile ? shortText : fullText}
-      </button>
-    ));
+    return buttons.map(({ fullText, shortText, lang }) => {
+      return (
+        <button
+          key={lang}
+          className={`${BASE_BUTTON_CLASSES.xs} ${
+            lang === language
+              ? "text-black font-bold underline"
+              : "text-slate-500 font-light"
+          } px-2 py-0`}
+          onClick={() => handleClick(lang)}
+        >
+          {isMobile ? shortText : fullText}
+        </button>
+      );
+    });
   };
   return <div className={`flex ${className}`}>{renderButtons()}</div>;
 };

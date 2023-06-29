@@ -11,6 +11,7 @@ import {
 } from "../../utils/error.utils";
 import { toFormattedNumber } from "../../utils/common.utils";
 import useDispatchActions from "../../hooks/useDispatchActions";
+import { BASE_INPUT_CLASSES } from "../../constants/classes.constants";
 
 interface FormValues {
   goalAmount: number;
@@ -55,7 +56,7 @@ const UpdateGoalAmountForm = () => {
     <form onSubmit={onSubmit}>
       <div className="flex gap-2 px-2">
         <input
-          className="input input-bordered input-sm w-full"
+          className={BASE_INPUT_CLASSES.sm}
           type="text"
           {...register("goalAmount", {
             required: t("Goal amount is required."),

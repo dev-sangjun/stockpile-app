@@ -8,7 +8,7 @@ i18next
   .init({
     detection: { order: ["localStorage", "navigator"] },
     resources: {
-      en: {
+      "en-US": {
         translation: {
           "Are you sure you want to delete":
             "Are you sure you want to delete {{entityName}}?",
@@ -17,7 +17,7 @@ i18next
           "Today is": "Today is {{date}}",
         },
       },
-      kr: {
+      "ko-KR": {
         translation: {
           "Add Investment": "종목 추가하기",
           "Add Portfolio": "포트폴리오 추가하기",

@@ -1,6 +1,7 @@
 import { useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import useDispatchActions from "../../hooks/useDispatchActions";
+import { BASE_INPUT_CLASSES } from "../../constants/classes.constants";
 
 interface FormValues {
   delete: string;
@@ -22,7 +23,7 @@ const DeleteUserForm = () => {
     <form onSubmit={onSubmit}>
       <div className="flex gap-2 px-2">
         <input
-          className="input input-bordered input-sm w-full"
+          className={BASE_INPUT_CLASSES.sm}
           type="text"
           placeholder={t("Type DELETE to confirm")}
           {...register("delete", {

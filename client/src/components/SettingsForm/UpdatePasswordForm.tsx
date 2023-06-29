@@ -7,6 +7,7 @@ import {
   renderFieldErrorMessages,
 } from "../../utils/error.utils";
 import useDispatchActions from "../../hooks/useDispatchActions";
+import { BASE_INPUT_CLASSES } from "../../constants/classes.constants";
 
 interface FormValues {
   password: string;
@@ -41,7 +42,7 @@ const UpdateGoalAmountForm: FC = () => {
     <form onSubmit={onSubmit}>
       <div className="flex gap-2 px-2">
         <input
-          className="input input-bordered input-sm w-full"
+          className={BASE_INPUT_CLASSES.sm}
           type="password"
           {...register("password", {
             required: t("New password is required."),
