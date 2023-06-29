@@ -30,7 +30,12 @@ const FavoriteStockList = () => {
 
   // Fallback
   if (isEmpty(filteredFavoriteStocks())) {
-    return <Fallback message={fallbackMessages.favoriteStocks} />;
+    return (
+      <Fallback
+        message={fallbackMessages.favoriteStocks}
+        redirectTo="/portfolios"
+      />
+    );
   }
 
   const getQuantity = (stockId: string) => {

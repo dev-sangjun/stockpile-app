@@ -10,7 +10,7 @@ import Modal from "../components/Modal";
 const BASE_CONTAINER_CLASSES =
   "flex justify-center h-screen max-w-[1440px] mx-auto bg-base-100 md:min-w-[1080px]";
 const OUTLET_CONTAINER_CLASSES =
-  "flex-1 flex flex-col overflow-y-auto md:min-w-[840px] p-2 pb-16 md:p-16";
+  "flex-1 flex flex-col overflow-y-auto md:min-w-[840px] p-2 pb-[4.5rem] md:p-16";
 
 export const privateRouter = createBrowserRouter([
   {

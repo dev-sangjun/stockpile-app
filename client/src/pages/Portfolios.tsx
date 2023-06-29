@@ -1,3 +1,5 @@
+import { useEffect } from "react";
+import useDispatchActions from "../hooks/useDispatchActions";
 import DistributionChart from "../components/DistributionChart";
 import PortfolioList from "../components/PortfolioList";
 import PortfoliosOverview from "../components/PortfoliosOverview";
@@ -7,7 +9,15 @@ import InvestmentDetails from "../components/InvestmentDetails";
 import { useSelectedEntity } from "../hooks";
 
 const Portfolios = () => {
+  const { portfolioActions, investmentActions } = useDispatchActions();
   const { selectedPortfolio, selectedInvestment } = useSelectedEntity();
+  useEffect(() => {
+    const reset = () => {
+      portfolioActions.deselect();
+      investmentActions.deselect();
+    };
+    return reset;
+  }, []);
   return (
     <div className="w-full p-2 flex flex-col md:grid md:grid-cols-2 md:grid-rows-[39rem] gap-4 overflow-hidden">
       <div

@@ -62,8 +62,10 @@ i18next
           "Portfolio name": "포트폴리오 이름",
           Portfolios: "포트폴리오",
           "Portfolio Values": "포트폴리오 분석하기",
+          Portion: "차지비율",
           Price: "매수가",
           Progress: "달성률",
+          Qty: "수량",
           Quantity: "수량",
           "Search stocks...": "종목을 검색하세요...",
           Settings: "설정",
@@ -95,6 +97,7 @@ i18next
           "Update Portfolio": "프토폴리오 수정하기",
           Username: "닉네임",
           "Username is required.": "닉네임을 입력하세요.",
+          Value: "평가금액",
           "We'll help you reach your financial goal!":
             "이제 재무상태는 저희에게 맡기세요!",
           "You don't have any favorite stock yet?":

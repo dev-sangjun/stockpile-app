@@ -43,7 +43,7 @@ const LanguageSelect: FC<LanguageSelectProps> = ({
         key={lang}
         className={`${BASE_BUTTON_CLASSES.xs} ${
           lang === language
-            ? "text-black font-bold"
+            ? "text-black font-bold underline"
             : "text-slate-500 font-light"
         } px-2 py-0`}
         onClick={() => handleClick(lang)}
