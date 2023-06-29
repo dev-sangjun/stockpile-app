@@ -1,6 +1,7 @@
 import FavoriteStockList from "../components/FavoriteStockList";
 import GoalProgress from "../components/GoalProgress";
 import Greeting from "../components/Greeting";
+import LanguageSelect from "../components/LanguageSelect";
 import Logo from "../components/Logo";
 import NetWorth from "../components/NetWorth";
 import PortfolioChart from "../components/PortfolioChart";
@@ -8,7 +9,13 @@ import PortfolioChart from "../components/PortfolioChart";
 const Dashboard = () => {
   return (
     <div className="flex flex-col gap-4 w-full p-2">
-      <Logo />
+      <div className="relative flex justify-center md:hidden">
+        <Logo />
+        <LanguageSelect
+          className="absolute right-0 top-1/2 translate-y-[-50%]"
+          isMobile
+        />
+      </div>
       <div className="md:mb-8">
         <Greeting />
       </div>

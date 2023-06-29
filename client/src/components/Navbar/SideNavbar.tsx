@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { NavbarItem } from ".";
 import { BASE_BUTTON_CLASSES } from "../../constants/classes.constants";
 import Logo from "../Logo";
+import LanguageSelect from "../LanguageSelect";
 
 interface SideNavbarProps {
   navbarItems: NavbarItem[];
@@ -36,7 +37,10 @@ const SideNavbar: FC<SideNavbarProps> = ({ navbarItems }) => {
   return (
     <div className="flex flex-col justify-between border-r h-full px-8 py-16">
       <div className="flex flex-col gap-20 h-full">
-        <Logo />
+        <div className="flex flex-col items-center gap-4">
+          <Logo />
+          <LanguageSelect isMobile={false} />
+        </div>
         <div className="flex flex-col gap-8 h-full">{renderNavbarItems()}</div>
       </div>
     </div>
