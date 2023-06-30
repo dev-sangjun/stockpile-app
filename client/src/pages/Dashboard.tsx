@@ -1,4 +1,7 @@
 import PullToRefresh from "react-simple-pull-to-refresh";
+import { useTranslation } from "react-i18next";
+import useDispatchActions from "../hooks/useDispatchActions";
+import useNotify from "../hooks/useNotify";
 import FavoriteStockList from "../components/FavoriteStockList";
 import GoalProgress from "../components/GoalProgress";
 import Greeting from "../components/Greeting";
@@ -6,12 +9,20 @@ import LanguageSelect from "../components/LanguageSelect";
 import Logo from "../components/Logo";
 import NetWorth from "../components/NetWorth";
 import PortfolioChart from "../components/PortfolioChart";
-import useDispatchActions from "../hooks/useDispatchActions";
 
 const Dashboard = () => {
   const { userActions } = useDispatchActions();
+  const { t } = useTranslation();
+  const { notify } = useNotify();
+  const handleRefresh = async () => {
+    const timeout = () =>
+      setTimeout(() => {
+        notify(t("Successfully refreshed data!"));
+      }, 500);
+    userActions.fetch(timeout);
+  };
   return (
-    <PullToRefresh onRefresh={userActions.fetch}>
+    <PullToRefresh onRefresh={handleRefresh}>
       <div className="flex flex-col gap-4 w-full p-2">
         <div className="relative flex justify-center md:hidden">
           <Logo />

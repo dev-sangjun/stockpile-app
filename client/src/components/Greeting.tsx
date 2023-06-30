@@ -4,6 +4,7 @@ import moment from "moment";
 import { RootState } from "../store";
 import { getUser } from "../store/user.reducer";
 import emojis from "../constants/emoji.constants";
+import Refresh from "./Refresh";
 
 const Greeting = () => {
   const { t } = useTranslation();
@@ -14,9 +15,12 @@ const Greeting = () => {
   return (
     <div className="flex justify-between items-center">
       <div className="flex flex-col gap-2">
-        <h2 className="text-2xl md:text-3xl font-semibold">
-          {t("Hello", { username: userInfo.username })} {emojis.handWave}
-        </h2>
+        <div className="flex items-center gap-4">
+          <h2 className="text-2xl md:text-3xl font-semibold">
+            {t("Hello", { username: userInfo.username })} {emojis.handWave}
+          </h2>
+          <Refresh className="hidden md:inline-flex" />
+        </div>
         <p className="text-sm text-slate-500">
           {t("We'll help you reach your financial goal!")} {emojis.moneyBag}
         </p>

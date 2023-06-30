@@ -79,6 +79,7 @@ i18next
           "Successfully deleted the investment!": "종목 삭제완료!",
           "Successfully deleted the portfolio!": "포트폴리오 삭제완료!",
           "Successfully deleted the user!": "계정 삭제완료!",
+          "Successfully refreshed data!": "데이터 새로고침완료!",
           "Successfully updated": "{{entityName}} 수정완료!",
           "Successfully updated the goal amount!": "목표금액 수정완료!",
           "Successfully updated the investment!": "종목 수정완료!",

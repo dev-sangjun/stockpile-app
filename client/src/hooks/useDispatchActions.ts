@@ -74,7 +74,12 @@ const useDispatchActions = () => {
     signOut: () => dispatch(asyncSignOut()),
   };
   const userActions = {
-    fetch: () => dispatch(asyncFetchUser()),
+    fetch: async (callback?: () => void) => {
+      await dispatch(asyncFetchUser());
+      if (callback) {
+        callback();
+      }
+    },
     update: async (
       type: "password" | "goal-amount",
       value: string,
@@ -109,7 +114,7 @@ const useDispatchActions = () => {
         console.error(e);
       }
     },
-    deleteUser: async () => {
+    delete: async () => {
       try {
         const res = await userAPI.deleteUser();
         if (res.success) {

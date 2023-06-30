@@ -17,7 +17,7 @@ const DeleteUserForm = () => {
   } = useForm<FormValues>();
   const compareText = "DELETE";
   const onSubmit = handleSubmit(() => {
-    userActions.deleteUser();
+    userActions.delete();
   });
   return (
     <form onSubmit={onSubmit}>
