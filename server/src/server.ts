@@ -1,10 +1,12 @@
-import express, { NextFunction, Request, Response } from "express";
+import express from "express";
 import dotenv from "dotenv";
 import cors from "cors";
-import rootRouter from "./routes";
-import { errorHandler } from "./utils/errorHandler";
 import cookieParser from "cookie-parser";
 import path from "path";
+import schedule from "node-schedule";
+import rootRouter from "./routes";
+import { errorHandler } from "./utils/errorHandler";
+import resyncStocks from "./schedulers/resync-stocks.scheduler";
 
 dotenv.config();
 
@@ -27,3 +29,9 @@ if (process.env.NODE_ENV === "production") {
   });
 }
 app.listen(PORT, () => console.log(`Server running at ${PORT}...`));
+
+const SCHEDULER_PORT = process.env.SCHEDULER_PORT || 8080;
+app.listen(SCHEDULER_PORT, () => {
+  // resync stocks every 5 minutes
+  schedule.scheduleJob("*/5 * * * *", resyncStocks);
+});

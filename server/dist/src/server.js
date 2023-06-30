@@ -6,10 +6,12 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
 const dotenv_1 = __importDefault(require("dotenv"));
 const cors_1 = __importDefault(require("cors"));
-const routes_1 = __importDefault(require("./routes"));
-const errorHandler_1 = require("./utils/errorHandler");
 const cookie_parser_1 = __importDefault(require("cookie-parser"));
 const path_1 = __importDefault(require("path"));
+const node_schedule_1 = __importDefault(require("node-schedule"));
+const routes_1 = __importDefault(require("./routes"));
+const errorHandler_1 = require("./utils/errorHandler");
+const resync_stocks_scheduler_1 = __importDefault(require("./schedulers/resync-stocks.scheduler"));
 dotenv_1.default.config();
 const PORT = process.env.PORT || 5000;
 const app = (0, express_1.default)();
@@ -30,3 +32,8 @@ if (process.env.NODE_ENV === "production") {
     });
 }
 app.listen(PORT, () => console.log(`Server running at ${PORT}...`));
+const SCHEDULER_PORT = process.env.SCHEDULER_PORT || 8080;
+app.listen(SCHEDULER_PORT, () => {
+    // resync stocks every 5 minutes
+    node_schedule_1.default.scheduleJob("*/5 * * * *", resync_stocks_scheduler_1.default);
+});
