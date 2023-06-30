@@ -73,7 +73,7 @@ const FavoriteStockListItem: FC<FavoriteStockListItemProps> = ({
     </button>
   );
   return (
-    <div className="flex flex-col">
+    <div className="carousel-item flex flex-col">
       <EntityListItem
         className="border-none pr-0 hover:cursor-default"
         title={investment.stockId}

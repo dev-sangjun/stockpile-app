@@ -71,7 +71,7 @@ const FavoriteStockList = () => {
   return (
     <Section title="Favorite Stocks" actionButtons={actionButtons}>
       <ul
-        className="carousel carousel-center flex items-start gap-4 rounded-box"
+        className="carousel flex items-start gap-4 rounded-box"
         ref={carouselRef}
       >
         {filteredFavoriteStocks().map(stock => (

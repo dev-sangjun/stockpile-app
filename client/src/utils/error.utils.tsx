@@ -33,7 +33,7 @@ export const renderErrorMessage = (message: string) => {
 export const renderAlertErrorMessages = (errorAlerts: string[]) => {
   return (
     errorAlerts.length > 0 && (
-      <div className="alert alert-error">
+      <div className="alert alert-error flex">
         <svg
           xmlns="http://www.w3.org/2000/svg"
           className="stroke-current shrink-0 h-6 w-6"
