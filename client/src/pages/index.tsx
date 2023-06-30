@@ -6,6 +6,7 @@ import Navbar from "../components/Navbar";
 import Settings from "./Settings";
 import Portfolios from "./Portfolios";
 import Modal from "../components/Modal";
+import PullToRefreshContainer from "../components/PullToRefreshContainer";
 
 const BASE_CONTAINER_CLASSES =
   "flex justify-center h-screen max-w-[1440px] mx-auto bg-base-100 md:min-w-[1080px]";
@@ -17,9 +18,11 @@ export const privateRouter = createBrowserRouter([
     element: (
       <div className={BASE_CONTAINER_CLASSES}>
         <Navbar />
-        <div className={`${OUTLET_CONTAINER_CLASSES}`}>
-          <Outlet />
-        </div>
+        <PullToRefreshContainer>
+          <div className={`${OUTLET_CONTAINER_CLASSES}`}>
+            <Outlet />
+          </div>
+        </PullToRefreshContainer>
         <Toaster />
         <Modal />
       </div>
