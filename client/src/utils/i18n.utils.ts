@@ -67,6 +67,7 @@ i18next
           Progress: "달성률",
           Qty: "수량",
           Quantity: "수량",
+          "Refreshing data...": "데이터 새로고침중...",
           "Search stocks...": "종목을 검색하세요...",
           Settings: "설정",
           Shares: "수량",

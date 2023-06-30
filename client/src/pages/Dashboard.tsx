@@ -9,6 +9,7 @@ import LanguageSelect from "../components/LanguageSelect";
 import Logo from "../components/Logo";
 import NetWorth from "../components/NetWorth";
 import PortfolioChart from "../components/PortfolioChart";
+import emojis from "../constants/emoji.constants";
 
 const Dashboard = () => {
   const { userActions } = useDispatchActions();
@@ -21,8 +22,18 @@ const Dashboard = () => {
       }, 500);
     userActions.fetch(timeout);
   };
+  const pullingContent = (
+    <div className="w-full text-center p-2">
+      {t("Refreshing data...")}
+      {emojis.smile}
+    </div>
+  );
   return (
-    <PullToRefresh onRefresh={handleRefresh}>
+    <PullToRefresh
+      onRefresh={handleRefresh}
+      pullDownThreshold={84}
+      pullingContent={pullingContent}
+    >
       <div className="flex flex-col gap-4 w-full p-2">
         <div className="relative flex justify-center md:hidden">
           <Logo />
