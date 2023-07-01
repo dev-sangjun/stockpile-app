@@ -12,14 +12,14 @@ const PullToRefreshContainer: FC<PropsWithChildren> = ({ children }) => {
   const handleRefresh: () => Promise<void> = () =>
     new Promise((resolve, reject) => {
       return setTimeout(() => {
-        userActions.fetch(() => notify(t("Successfully refreshed data!")));
+        userActions.fetch(() => notify(t("Successfully refreshed the data!")));
         resolve();
         reject();
       }, 1500);
     });
   const pullingContent = (
     <div className="w-full text-center p-2">
-      {t("Refreshing data...")}
+      {t("Refreshing the data...")}
       {emojis.smile}
     </div>
   );
