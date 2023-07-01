@@ -1,8 +1,8 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { UseFormRegisterReturn, useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 
-interface FormValues {
+export interface FormValues {
   username: string;
   email: string;
   password: string;
@@ -18,31 +18,27 @@ const useUserForm = (isSignIn: boolean) => {
   const { t } = useTranslation();
   const {
     register,
+    unregister,
     handleSubmit,
     formState: { errors },
     clearErrors,
   } = useForm<FormValues>();
   useEffect(() => {
-    if (isSignIn) {
-      setRegisterers(prev => ({
-        email: prev.email,
-        password: prev.password,
-      }));
-    } else {
-      setRegisterers(prev => ({
-        ...prev,
-        username: register("username", {
-          required: t("Username is required."),
-          minLength: {
-            value: 6,
-            message: "Username must have at least 6 characters.",
-          },
-        }),
-      }));
-    }
-  }, [t, register, isSignIn]);
-  const [registerers, setRegisterers] = useState<Registerers>({
-    username: undefined,
+    unregister();
+  }, [isSignIn, unregister]);
+  const registerers: Registerers = {
+    username: register(
+      "username",
+      isSignIn
+        ? {}
+        : {
+            required: t("Username is required."),
+            minLength: {
+              value: 6,
+              message: t("Username must have at least 6 characters."),
+            },
+          }
+    ),
     email: register("email", { required: t("Email is required.") }),
     password: register("password", {
       required: t("Password is required."),
@@ -53,8 +49,13 @@ const useUserForm = (isSignIn: boolean) => {
             message: t("Password must have at least 8 characters."),
           },
     }),
-  });
-  return { registerers, handleSubmit, errors, clearErrors };
+  };
+  return {
+    registerers,
+    handleSubmit,
+    errors,
+    clearErrors,
+  };
 };
 
 export default useUserForm;

@@ -20,7 +20,7 @@ const Refresh: FC<RefreshProps> = ({ className = "" }) => {
     const timeout = () =>
       setTimeout(() => {
         setIsRefreshed(true);
-        notify(t("Successfully refreshed data!"));
+        notify(t("Successfully refreshed the data!"));
       }, 1000);
     userActions.fetch(timeout);
   };

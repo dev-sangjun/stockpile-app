@@ -15,7 +15,7 @@ const PullToRefreshContainer: FC<PropsWithChildren> = ({ children }) => {
         userActions.fetch(() => notify(t("Successfully refreshed the data!")));
         resolve();
         reject();
-      }, 1500);
+      }, 1000);
     });
   const pullingContent = (
     <div className="w-full text-center p-2">

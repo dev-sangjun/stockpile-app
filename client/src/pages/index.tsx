@@ -6,24 +6,21 @@ import Navbar from "../components/Navbar";
 import Settings from "./Settings";
 import Portfolios from "./Portfolios";
 import Modal from "../components/Modal";
-import PullToRefreshContainer from "../components/PullToRefreshContainer";
 
 const BASE_CONTAINER_CLASSES =
   "flex justify-center h-screen max-w-[1440px] mx-auto bg-base-100 md:min-w-[1080px]";
 const OUTLET_CONTAINER_CLASSES =
-  "flex-1 flex flex-col overflow-y-auto md:min-w-[840px] p-2 pt-0 pb-[5rem] md:p-16";
+  "flex-1 flex flex-col overflow-hidden md:min-w-[840px] pt-0 pb-[4.5rem] md:p-16";
 
 export const privateRouter = createBrowserRouter([
   {
     element: (
       <div className={BASE_CONTAINER_CLASSES}>
         <Navbar />
-        <PullToRefreshContainer>
-          <div className={`${OUTLET_CONTAINER_CLASSES}`}>
-            <Outlet />
-          </div>
-        </PullToRefreshContainer>
-        <Toaster />
+        <div className={`${OUTLET_CONTAINER_CLASSES}`}>
+          <Outlet />
+        </div>
+        <Toaster containerClassName="custom-toaster" />
         <Modal />
       </div>
     ),

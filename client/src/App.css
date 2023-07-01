@@ -3,3 +3,12 @@
 .logo-text {
   font-family: "Bungee Shade";
 }
+
+.custom-toaster > div {
+  bottom: 64px !important;
+}
+@media (min-width: 768px) {
+  .custom-toaster > div {
+    bottom: 0 !important;
+  }
+}
