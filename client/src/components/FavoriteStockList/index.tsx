@@ -21,7 +21,8 @@ const FavoriteStockList = () => {
     const filteredFavoriteStocks: Stock[] = [];
     favoriteStocks.forEach(stockId => {
       const stock = stocks[stockId];
-      if (stock) {
+      const investment = investments[stock.id];
+      if (stock && investment) {
         filteredFavoriteStocks.push(stock);
       }
     });

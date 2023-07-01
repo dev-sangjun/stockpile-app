@@ -116,10 +116,9 @@ const deleteInvestment = async (
   if (!investment) {
     throw new InternalServerError();
   }
-  await userService.deleteStockWithNoReferenceFromUser(
-    investment.userId,
-    investment.stockId
-  );
+  const { userId, stockId } = investment;
+  await userService.deleteStockWithNoReferenceFromUser(userId, stockId);
+  await userService.deleteFromFavoriteStocks(userId, stockId);
   return {
     success: true,
   };

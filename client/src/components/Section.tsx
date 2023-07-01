@@ -30,7 +30,7 @@ const Section: FC<PropsWithChildren<SectionProps>> = ({
 }) => {
   const { t } = useTranslation();
   return (
-    <div className={`relative h-full flex flex-col gap-2 ${className}`}>
+    <div className={`relative flex flex-col gap-2 ${className}`}>
       {backButton && (
         <button
           className={`${LINK_BUTTON_CLASSES.sm} absolute`}
