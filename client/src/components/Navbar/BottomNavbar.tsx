@@ -26,7 +26,7 @@ const BottomNavbar: FC<BottomNavbarProps> = ({ navbarItems }) => {
           {icon}
         </Link>
       ) : (
-        <div key={text} className="border-t-2 border-slate-100">
+        <div key={text} className="border-t-2 border-slate-300">
           <button className={BASE_BUTTON_CLASSES.sm} onClick={onClick}>
             {icon}
           </button>
