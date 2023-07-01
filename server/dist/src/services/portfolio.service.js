@@ -105,7 +105,9 @@ const deleteInvestment = (investmentId) => __awaiter(void 0, void 0, void 0, fun
     if (!investment) {
         throw new errors_global_1.InternalServerError();
     }
-    yield user_service_1.default.deleteStockWithNoReferenceFromUser(investment.userId, investment.stockId);
+    const { userId, stockId } = investment;
+    yield user_service_1.default.deleteStockWithNoReferenceFromUser(userId, stockId);
+    yield user_service_1.default.deleteFromFavoriteStocks(userId, stockId);
     return {
         success: true,
     };
