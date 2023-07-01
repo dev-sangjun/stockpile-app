@@ -34,8 +34,8 @@ const useUserForm = (isSignIn: boolean) => {
         : {
             required: t("Username is required."),
             minLength: {
-              value: 6,
-              message: t("Username must have at least 6 characters."),
+              value: 2,
+              message: t("Username must have at least 2 characters."),
             },
           }
     ),

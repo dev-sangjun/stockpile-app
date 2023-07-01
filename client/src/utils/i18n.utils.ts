@@ -99,8 +99,8 @@ i18next
           "Update Portfolio": "프토폴리오 수정하기",
           Username: "닉네임",
           "Username is required.": "닉네임을 입력하세요.",
-          "Username must have at least 6 characters.":
-            "닉네임은 6자리 이상이어야 합니다.",
+          "Username must have at least 2 characters.":
+            "닉네임은 2자리 이상이어야 합니다.",
           Value: "평가금액",
           "We'll help you reach your financial goal!":
             "이제 재무상태는 저희에게 맡기세요!",
