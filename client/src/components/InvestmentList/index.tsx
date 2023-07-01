@@ -53,7 +53,7 @@ const InvestmentList: FC<InvestmentListProps> = ({ portfolio }) => {
     );
   return (
     <Section
-      className="overflow-hidden"
+      className="h-full overflow-hidden"
       title={`${t("Investments")} (${portfolio.investments.length})`}
       actionButtons={[
         {

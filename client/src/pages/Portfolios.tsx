@@ -20,7 +20,7 @@ const Portfolios = () => {
     return reset;
   }, [dispatch]);
   return (
-    <div className="w-full p-4 flex flex-col md:grid md:grid-cols-2 md:grid-rows-[39rem] gap-4 overflow-hidden">
+    <div className="w-full h-full p-4 flex flex-col md:grid md:grid-cols-2 md:grid-rows-[39rem] gap-4 overflow-hidden">
       <div
         className={`${
           selectedPortfolio ? "hidden" : "flex"
@@ -29,7 +29,7 @@ const Portfolios = () => {
         <PortfoliosOverview />
         <DistributionChart />
       </div>
-      <div className="flex flex-col gap-4 overflow-hidden">
+      <div className="flex flex-col gap-4 h-full overflow-hidden">
         {selectedPortfolio ? (
           <>
             <PortfolioDetails portfolio={selectedPortfolio} />

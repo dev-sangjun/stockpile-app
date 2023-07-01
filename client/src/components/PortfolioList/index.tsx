@@ -45,6 +45,7 @@ const PortfolioList = () => {
     );
   return (
     <Section
+      className="h-full"
       title={`${t("Portfolios")} (${portfolios.length})`}
       actionButtons={[
         {
