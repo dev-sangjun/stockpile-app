@@ -24,13 +24,16 @@ const InvestmentList: FC<InvestmentListProps> = ({ portfolio }) => {
   const { stocks } = useSelector((state: RootState) => getUser(state));
   const renderInvestmentListItems = () =>
     portfolio.investments.length > 0 ? (
-      <div className={`${ENTITY_LIST_CLASSES} h-96`}>
+      <div
+        className={`${ENTITY_LIST_CLASSES} h-full border-2 md:border snap-y snap-mandatory`}
+      >
         {portfolio.investments.map(investment => {
           const investmentValue = toDecimal(
             (stocks?.[investment.stockId]?.c || 0) * investment.quantity
           );
           return (
             <EntityListItem
+              className="snap-start"
               key={investment.id}
               title={investment.stockId}
               label={{
@@ -50,6 +53,7 @@ const InvestmentList: FC<InvestmentListProps> = ({ portfolio }) => {
     );
   return (
     <Section
+      className="overflow-hidden"
       title={`${t("Investments")} (${portfolio.investments.length})`}
       actionButtons={[
         {

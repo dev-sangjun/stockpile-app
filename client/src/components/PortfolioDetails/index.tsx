@@ -70,6 +70,7 @@ const PortfolioDetails: FC<PortfolioDetailsProps> = ({ portfolio }) => {
   ];
   return (
     <Section
+      className="h-fit"
       title={portfolio.name}
       backButton={{
         text: t("Portfolios"),
