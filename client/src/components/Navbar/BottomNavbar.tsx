@@ -16,8 +16,10 @@ const BottomNavbar: FC<BottomNavbarProps> = ({ navbarItems }) => {
       path ? (
         <Link
           key={text}
-          className={`border-t-2 border-slate-100 ${
-            isNavbarItemActive(path) ? "active border-black" : ""
+          className={`border-t-2 ${
+            isNavbarItemActive(path)
+              ? "active border-black"
+              : "border-slate-300"
           }`}
           to={path}
         >
