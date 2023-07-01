@@ -113,6 +113,19 @@ const UserForm = () => {
           {t(userFormTexts.switchMode)}
         </button>
       </div>
+      <a
+        className="mx-auto"
+        href="https://www.producthunt.com/posts/stockpile-fyi?utm_source=badge-featured&utm_medium=badge&utm_souce=badge-stockpile&#0045;fyi"
+        target="_blank"
+      >
+        <img
+          className="w-48 md:w-[250px]"
+          src="https://api.producthunt.com/widgets/embed-image/v1/featured.svg?post_id=402478&theme=light"
+          alt="Stockpile&#0032;fyi - Personalized&#0032;stock&#0032;tracking&#0032;&#0038;&#0032;mock&#0032;investing&#0032;app | Product Hunt"
+          width="250"
+          height="54"
+        />
+      </a>
     </div>
   );
 };
