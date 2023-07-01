@@ -19,7 +19,7 @@ const Greeting = () => {
           <h2 className="text-2xl md:text-3xl font-semibold">
             {t("Hello", { username: userInfo.username })} {emojis.handWave}
           </h2>
-          <Refresh className="hidden md:inline-flex" />
+          <Refresh />
         </div>
         <p className="text-sm text-slate-500">
           {t("We'll help you reach your financial goal!")} {emojis.moneyBag}
