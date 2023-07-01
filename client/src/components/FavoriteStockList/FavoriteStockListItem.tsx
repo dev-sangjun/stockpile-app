@@ -55,7 +55,6 @@ const FavoriteStockListItem: FC<FavoriteStockListItemProps> = ({
   stock,
   quantity,
 }) => {
-  console.log(investment);
   const { stockActions } = useDispatchActions();
   const handleFavoriteClick = () => {
     stockActions.deleteFromFavorites(stock.id);

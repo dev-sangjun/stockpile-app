@@ -20,10 +20,16 @@ import { toDecimal, toUSD } from "../../utils/common.utils";
 ChartJS.register(ArcElement, Tooltip, ChartDataLabels);
 
 interface PieChartProps {
+  className?: string;
   investments: Investment[];
+  responsive?: boolean;
 }
 
-const PieChart: FC<PieChartProps> = ({ investments }) => {
+const PieChart: FC<PieChartProps> = ({
+  className = "",
+  investments,
+  responsive = true,
+}) => {
   const { t } = useTranslation();
   const { stocks } = useSelector((state: RootState) => getUser(state));
   const constructChartConfig = (): {
@@ -52,6 +58,7 @@ const PieChart: FC<PieChartProps> = ({ investments }) => {
         datasets,
       },
       options: {
+        responsive,
         plugins: {
           tooltip: {
             callbacks: {
@@ -86,8 +93,15 @@ const PieChart: FC<PieChartProps> = ({ investments }) => {
       },
     };
   };
-  console.log(constructChartConfig());
-  return <Pie {...constructChartConfig()} className="mx-auto w-full" />;
+  return (
+    <Pie
+      {...constructChartConfig()}
+      className={`mx-auto w-full ${className}`}
+      style={{
+        width: "100%",
+      }}
+    />
+  );
 };
 
 export default PieChart;

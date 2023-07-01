@@ -20,8 +20,16 @@ const DistributionChart = () => {
       {isEmpty(investments) ? (
         <Fallback className="md:h-96" message={fallbackMessages.investments} />
       ) : (
-        <div className="card justify-center h-[25vh] md:h-96 md:max-h-96 bg-slate-100 p-2 md:p-6">
-          <PieChart investments={Object.values(investments)} />
+        <div className="card bg-slate-100">
+          <div className="flex h-[25vh] min-h-[180px] items-center md:hidden p-4">
+            <PieChart
+              responsive={false}
+              investments={Object.values(investments)}
+            />
+          </div>
+          <div className="hidden md:block h-96 p-6">
+            <PieChart investments={Object.values(investments)} />
+          </div>
         </div>
       )}
     </Section>
