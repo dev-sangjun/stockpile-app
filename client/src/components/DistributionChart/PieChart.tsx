@@ -86,6 +86,7 @@ const PieChart: FC<PieChartProps> = ({ investments }) => {
       },
     };
   };
+  console.log(constructChartConfig());
   return <Pie {...constructChartConfig()} className="mx-auto w-full" />;
 };
 

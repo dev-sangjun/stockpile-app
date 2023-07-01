@@ -21,14 +21,16 @@ const Portfolios = () => {
   }, [dispatch]);
   return (
     <div className="w-full h-full p-4 flex flex-col md:grid md:grid-cols-2 md:grid-rows-[39rem] gap-4 overflow-hidden">
-      <div
-        className={`${
-          selectedPortfolio ? "hidden" : "flex"
-        } md:flex flex-col gap-4 `}
-      >
+      <div className="hidden md:flex flex-col gap-4">
         <PortfoliosOverview />
         <DistributionChart />
       </div>
+      {!selectedPortfolio && (
+        <div className="flex md:hidden flex-col gap-4">
+          <PortfoliosOverview />
+          <DistributionChart />
+        </div>
+      )}
       <div className="flex flex-col gap-4 h-full overflow-hidden">
         {selectedPortfolio ? (
           <>
