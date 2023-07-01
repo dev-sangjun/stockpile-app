@@ -34,6 +34,6 @@ if (process.env.NODE_ENV === "production") {
 app.listen(PORT, () => console.log(`Server running at ${PORT}...`));
 const SCHEDULER_PORT = process.env.SCHEDULER_PORT || 8080;
 app.listen(SCHEDULER_PORT, () => {
-    // resync stocks every 5 minutes
-    node_schedule_1.default.scheduleJob("*/5 * * * *", resync_stocks_scheduler_1.default);
+    // resync stocks every 5 minutes from 12 - 21 UTC M-F
+    node_schedule_1.default.scheduleJob("*/5 12-21 * * 1-5", resync_stocks_scheduler_1.default);
 });
