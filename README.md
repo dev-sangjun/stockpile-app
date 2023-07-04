@@ -7,7 +7,7 @@
   3. Users cannot manually add/update/delete investments
   4. Don't have functionality to create portfolios & add investments
 
-- I brought the following solutions to resolve the above concerns.
+- I brought the following solutions to resolve the above concerns:
 	1. Calculates total balance of the user's entire assets & shows progress based on the user's goal amount
   2. Allows users to create portfolios & add investments by submitting purchase price & quantity 
 	3. Uses JWT access & refresh token for authentication
