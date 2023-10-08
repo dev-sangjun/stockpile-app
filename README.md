@@ -30,7 +30,7 @@
 ### 
 
 ## Getting Started
-- Go to https://stockpile.fyi
+- Go to https://www.stockpile.fyi
 - Create a new account
 - Create a new portfolio & add investments by submitting a stock symbol, quantity, and price
 - Add your favorite investments to track it in the Dashboard
