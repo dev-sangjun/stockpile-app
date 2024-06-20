@@ -14,5 +14,11 @@
     "dev-client": "cd client && npm run dev",
     "dev-server": "cd server && npm run dev",
     "dev": "npm run dev-server & npm run dev-client"
+  },
+  "devDependencies": {
+    "@types/bun": "latest"
+  },
+  "peerDependencies": {
+    "typescript": "^5.0.0"
   }
 }

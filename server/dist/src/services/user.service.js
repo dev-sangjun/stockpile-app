@@ -31,7 +31,7 @@ const getPublicUser = (id) => __awaiter(void 0, void 0, void 0, function* () {
         goalAmount,
     };
 });
-const getUser = (id, include = ["portfolios", "investments", "stocks"]) => __awaiter(void 0, void 0, void 0, function* () {
+const getUser = (id_1, ...args_1) => __awaiter(void 0, [id_1, ...args_1], void 0, function* (id, include = ["portfolios", "investments", "stocks"]) {
     const user = yield DBClient_1.default.user.findUnique({
         where: {
             id,
